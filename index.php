@@ -35,7 +35,7 @@
                   <p class="card-category">Fill the following details</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action=<?php echo $_SERVER['PHP_SELF'].'/../backend/signup.php' ?> method="Post">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">

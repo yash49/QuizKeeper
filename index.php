@@ -12,7 +12,20 @@
 </head>
 
 <body class="bg-white">
+
+<nav class="navbar navbar-success bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand text-bold">QUIZKepeer</a>
+    <form class="d-flex">
+      <input class="form-control " type="text" placeholder="Email" name="login_email">
+      <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
+      <input class="btn btn-secondary ml-2" type="submit" name="login_submit" value="Login">
+    </form>
+  </div>
+</nav>
     <div class="container text-center bg-white mt-5">
+
+
         <div class="row justify-content-center bg-white">
             <div class="col-md-6 col-sm-6 col-xs-12 mt-2 text-center">
                 <h1><strong>Host or attempt the quiz with ease!</strong></h1>
@@ -27,30 +40,30 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
-                          <input type="text" class="form-control">
+                          <input type="text" name="signup_name" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email</label>
-                          <input type="Email" class="form-control">
+                          <input type="Email" name="signup_email" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone</label>
-                          <input type="tel" class="form-control">
+                          <input type="tel" name="signup_phone" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Password</label>
-                          <input type="password" class="form-control">
+                          <input type="password" name="signup_password" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-12 text-center">
                         <div class="form-group">
-                          <input type="submit" value="Create Account" class="btn btn-success">
+                          <input type="submit" name="signup_submit" value="Create Account" class="btn btn-success">
                         </div>
                       </div>
                     </div>
@@ -63,7 +76,42 @@
             <div class="col-md-6 col-sm-6 col-xs-12 bg-white">
                 <img width="450" height="450" src="assets/img/Exams_header_animated.gif"/>
             </div>
-        </div>    
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-4 col-xs-12 col-lg-4 p-2">
+                <div class="card border border-success">
+                    <div class="card-body">
+                        <img src="assets/img/Teachers.svg" width="90%" />
+                        <h3 style="margin-top:-30px">Evaluation Made Easy</h3>
+                        <p>Evaluate your targeted audience, wether you are teacher, interviewer, community leader. Just prepare quiz with few clicks and leave rest on Quizkeeper.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-lg-4 p-2">
+                  <div class="card border border-success">
+                       <div class="card-body">
+                            <img src="assets/img/Grades.svg" width="90%" />
+                            <h3 style="margin-top:-30px">Get your results</h3>
+                            <p> attempt the quiz and get the detailed result to test your knowledge, share your results to share your success.
+                       </div>
+                  </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-lg-4 p-2">
+                  <div class="card border border-success">
+                       <div class="card-body">
+                           <img src="assets/img/Analysis.svg" width="90%" />
+                           <h3 style="margin-top:-30px">Statistics of hosted quiz</h3>
+                           <p> Get the detailed report of your hosted quiz, number of participants, question-wise analysis, obtained mark distribution analysis and more.
+                       </div>
+                  </div>
+            </div>
+
+        </div>
     </div>
 </body>
 

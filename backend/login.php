@@ -27,6 +27,7 @@
             if($result -> num_rows>0)
             {
                 $row = $result->fetch_assoc();
+                $_SESSION['isverified']=$row['isverified'];
                 if($row['isverified']==0)
                 {
                     // set session variable

@@ -12,6 +12,7 @@ function sendRequest(url, data, callback){
                callback(response.message,"danger");
            }
         }
+
     });
 }
 

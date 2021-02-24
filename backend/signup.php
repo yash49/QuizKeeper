@@ -77,10 +77,10 @@
         if ($stmt->execute() === TRUE) {
             
             // redirect to login sigup page for re login
-            echo json_encode(array("message"=>"Success"));
+            echo json_encode(array("result"=>"Success","message"=>"Signup successfully! check email for verification"));
 
         } else {
-            echo json_encode(array("message"=>"Failed"));
+            echo json_encode(array("result"=>"Fail","message"=>"Something went wrong!"));
         }
 
         $conn->close();
@@ -88,7 +88,7 @@
     }
     else
     {
-        echo json_encode(array("message"=>400));
+        echo json_encode(array("result"=>"Bad-request","message"=>"400"));
     }
 
 ?>

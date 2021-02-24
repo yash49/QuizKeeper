@@ -29,6 +29,7 @@
                 $row = $result->fetch_assoc();
                 if($row['isverified']==0)
                 {
+                    // set session variable
                     echo json_encode(array("result"=>"Fail", "message"=>"Please verify your email"));
                 }
                 else

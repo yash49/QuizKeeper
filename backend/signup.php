@@ -37,9 +37,10 @@
             
             echo '{message:"fail"}';
 
-            echo $sql;
+            //echo $sql;
         }
 
+        $conn->close();
 
     }
     else

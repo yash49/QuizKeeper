@@ -16,7 +16,7 @@
 <nav class="navbar navbar-success bg-success">
   <div class="container-fluid">
     <a class="navbar-brand text-bold">QUIZKepeer</a>
-    <form class="d-flex">
+    <form class="d-flex" method="post" action=<?php echo $_SERVER['PHP_SELF'].'/../backend/login.php'; ?>>
       <input class="form-control " type="text" placeholder="Email" name="login_email">
       <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
       <input class="btn btn-secondary ml-2" type="submit" name="login_submit" value="Login">
@@ -35,7 +35,7 @@
                   <p class="card-category">Fill the following details</p>
                 </div>
                 <div class="card-body">
-                  <form action=<?php echo $_SERVER['PHP_SELF'].'/../backend/signup.php' ?> method="Post">
+                  <form action=<?php echo $_SERVER['PHP_SELF'].'/../backend/signup.php'; ?> method="Post">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">

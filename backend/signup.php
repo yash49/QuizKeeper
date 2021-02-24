@@ -1,6 +1,7 @@
 <?php
     session_start();
     // if session set then redirect to dashboard
+header("Content-Type: application/json");
     if(isset($_SESSION['uid']))
     {
         echo json_encode(array("message"=>"already logged in"));
@@ -29,18 +30,10 @@
         if ($stmt->execute() === TRUE) {
             
             // redirect to login sigup page for re login
-            //echo "login ma jay che<br>";
-            
-            echo '{message:"success"}';
+            echo json_encode(array("message"=>"Success"));
 
-            //echo "<script>window.location.href ='../index.php'</script>";
         } else {
-            // some error has occured
-            // echo "locha thaya<br>";
-            
-            echo '{message:"fail"}';
-
-            //echo $sql;
+            echo json_encode(array("message"=>"Failed"));
         }
 
         $conn->close();
@@ -48,8 +41,7 @@
     }
     else
     {
-        // bad request 400 
-        echo '{message:"Bad Request:400"}';
+        echo json_encode(array("message"=>400));
     }
 
 ?>

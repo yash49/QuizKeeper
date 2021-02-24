@@ -4,7 +4,7 @@
     header('Content-Type: application/json');
     if(isset($_SESSION['uid']))
     {
-        echo json_encode(array("message"=>"already logged in"));
+        echo json_encode(array("result"=>"Success","message"=>"already logged in"));
     }
     else if(isset($_POST['login_email'],$_POST['login_password']))
     {
@@ -29,24 +29,24 @@
                 $row = $result->fetch_assoc();
                 if($row['isverified']==0)
                 {
-                    echo json_encode(array("message"=>"Please verify your email"));
+                    echo json_encode(array("result"=>"Fail", "message"=>"Please verify your email"));
                 }
                 else
                 {
                     // start session and stuff
-                    echo json_encode(array("message"=>"successfully logged in"));
+                    echo json_encode(array("result"=>"Success","message"=>"successfully logged in"));
                     $_SESSION['uid'] = $row['uid'];
                     $_SESSION['name'] = $row['name'];
                 }
             }
             else
             {
-                echo json_encode(array("message"=>"please check your id password"));
+                echo json_encode(array("result"=>"Fail","message"=>"please enter your correct email and password"));
             }
         }
         else
         {
-            echo json_encode(array("message"=>"sql error"));
+            echo json_encode(array("result"=>"Fail","message"=>"DB error"));
         }
 
 
@@ -56,7 +56,7 @@
     else
     {
         // bad request 400 
-        echo '{message:"Bad Request:400"}';
+        echo json_encode(array("result"=>"Bad-request","message"=>"400"));
     }
 
 ?>

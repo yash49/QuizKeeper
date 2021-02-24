@@ -15,7 +15,6 @@
 
   <script src="js/controller.js"></script>
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
-  <script src="assets/js/material-dashboard.js"></script>
 
 </head>
 
@@ -24,11 +23,22 @@
 <nav class="navbar navbar-success bg-success">
   <div class="container-fluid">
     <a class="navbar-brand text-bold">QUIZKepeer</a>
+
+     <?php
+        session_start();
+        if(isset($_SESSION['uid'])){
+     ?>
+      <p><?php echo $_SESSION['name']; ?></p>
+      <?php }
+
+      else { ?>
     <form class="d-flex" method="post" action=<?php echo $_SERVER['PHP_SELF'].'/../backend/login.php'; ?>>
       <input class="form-control " type="text" placeholder="Email" name="login_email">
       <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
       <input class="btn btn-secondary ml-2" type="submit" name="login_submit" value="Login">
     </form>
+     <?php } ?>
+
   </div>
 </nav>
     <div class="container text-center bg-white mt-5">
@@ -71,7 +81,7 @@
                       </div>
                       <div class="col-md-12 text-center">
                         <div class="form-group">
-                          <input type="button" onclick="prepareRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success">
+                          <input type="button" onclick="prepareSignupRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success">
                         </div>
                       </div>
                     </div>
@@ -125,7 +135,7 @@
 
 <script>
 
-    function prepareRequest(url){
+    function prepareSignupRequest(url){
         let name = document.getElementsByName("signup_name")[0].value;
         let email = document.getElementsByName("signup_email")[0].value;
         let phone = document.getElementsByName("signup_phone")[0].value;
@@ -133,18 +143,21 @@
 
         let data = {signup_name:name, signup_email:email, signup_phone:phone, signup_password:password};
 
-       sendRequest(url,data,(message,type)=>{
-           $.notify({
-               message: message
-           }, {
-               type: type,
-               timer: 2000,
-               placement: {
-                   from: 'top',
-                   align: 'right'
-               }
-           });
+        sendRequest(url,data,(message,type)=>{
+           $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
         })
+
+    }
+    function prepareLoginRequest(url){
+        let email = document.getElementsByName("login_email")[0].value;
+        let password = document.getElementsByName("login_password")[0].value;
+
+        let data = {login_email:email, login_password:password};
+
+        sendRequest(url,data,(message,type)=>{
+            $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+        })
+
     }
 </script>
 </html>

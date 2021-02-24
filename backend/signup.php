@@ -11,16 +11,14 @@ header("Content-Type: application/json");
         $name  = $_POST['signup_name'];
         $email  = $_POST['signup_email'];
         $mobile  = $_POST['signup_phone'];
-        $password  = $_POST['signup_password'];
-
-        $password = md5($password);
+        $signup_password  = md5($_POST['signup_password']);
 
         require 'connector.php';
-        
+
         $verified=0;
 
         $stmt = $conn->prepare("INSERT INTO Users(name,password,email,mobile,isverified) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi",$name,$password,$email,$mobile,$verified);
+        $stmt->bind_param("ssssi",$name,$signup_password,$email,$mobile,$verified);
 
 
         // $sql = "INSERT INTO Users(name,password,email,mobile,isverified) values ('".$name."','".$password."','".$email."','".$mobile."',0)";
@@ -30,10 +28,11 @@ header("Content-Type: application/json");
         if ($stmt->execute() === TRUE) {
             
             // redirect to login sigup page for re login
-            echo json_encode(array("message"=>"Success"));
+            echo json_encode(array("result"=>"Success","message"=>"Signup successfully! check email for verification".$signup_password.$_POST['signup_password']));
 
         } else {
-            echo json_encode(array("message"=>"Failed"));
+            echo json_encode(array("result"=>"Fail","message"=>"Something went wrong!"));
+
         }
 
         $conn->close();
@@ -41,7 +40,7 @@ header("Content-Type: application/json");
     }
     else
     {
-        echo json_encode(array("message"=>400));
+        echo json_encode(array("result"=>"Fail","message"=>400));
     }
 
 ?>

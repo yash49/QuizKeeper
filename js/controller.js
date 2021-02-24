@@ -47,7 +47,7 @@ function sendVerifyRequest(url, data, callback){
 
                 case "Success":
                     callback(response.message,"success");
-                    window.location.href = "dashboard.php";
+                    window.location.href = "index.php";
                     break;
                 case "Fail":
                     callback(response.message,"danger");

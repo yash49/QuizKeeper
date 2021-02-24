@@ -30,8 +30,7 @@
                 $_SESSION['isverified']=$row['isverified'];
                 if($row['isverified']==0)
                 {
-                    // set session variable
-                    echo json_encode(array("result"=>"Fail", "message"=>"Please verify your email"));
+                    echo json_encode(array("result"=>"verify", "message"=>"Please verify your email"));
                 }
                 else
                 {

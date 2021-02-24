@@ -83,7 +83,7 @@
             echo json_encode(array("result"=>"Fail","message"=>"Something went wrong!"));
         }
 
-        $conn->close(); 
+        $conn->close();
 
     }
     else

@@ -1,7 +1,11 @@
 <?php
-
+    session_start();
     // if session set then redirect to dashboard
-    if(isset($_POST['signup_name'],$_POST['signup_email'],$_POST['signup_phone'],$_POST['signup_password']))
+    if(isset($_SESSION['uid']))
+    {
+        echo json_encode(array("message"=>"already logged in"));
+    }
+    else if(isset($_POST['signup_name'],$_POST['signup_email'],$_POST['signup_phone'],$_POST['signup_password']))
     {
         $name  = $_POST['signup_name'];
         $email  = $_POST['signup_email'];
@@ -13,31 +17,39 @@
         require 'connector.php';
         
         $verified=0;
-        header('Content-Type: application/json');
 
         $stmt = $conn->prepare("INSERT INTO Users(name,password,email,mobile,isverified) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssi",$name,$password,$email,$mobile,$verified);
 
 
         // $sql = "INSERT INTO Users(name,password,email,mobile,isverified) values ('".$name."','".$password."','".$email."','".$mobile."',0)";
+
         // fire verification email
 
         if ($stmt->execute() === TRUE) {
+            
             // redirect to login sigup page for re login
-            echo json_encode(array("message"=>"Success"));
+            //echo "login ma jay che<br>";
+            
+            echo '{message:"success"}';
 
+            //echo "<script>window.location.href ='../index.php'</script>";
         } else {
-            echo json_encode(array("message"=>"Failed"));
+            // some error has occured
+            // echo "locha thaya<br>";
+            
+            echo '{message:"fail"}';
 
+            //echo $sql;
         }
 
+        $conn->close();
 
     }
     else
     {
-        // bad request 400
-        echo json_encode(array("message"=>"400"));
-
+        // bad request 400 
+        echo '{message:"Bad Request:400"}';
     }
 
 ?>

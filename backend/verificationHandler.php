@@ -21,7 +21,7 @@
         if($stmt->execute()===TRUE)
         {
             $affected = $stmt->affected_rows;
-            if($affected>0)
+            if($affected<=0)
             {
                 echo json_encode(array("result"=>"Success","message"=>"OTP or Email is wrong"));
             }

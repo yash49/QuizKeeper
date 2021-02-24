@@ -4,11 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>QUIZKepeer</title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/material-dashboard.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+  <script src="js/controller.js"></script>
+  <script src="assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="assets/js/material-dashboard.js"></script>
+
 </head>
 
 <body class="bg-white">
@@ -63,7 +71,7 @@
                       </div>
                       <div class="col-md-12 text-center">
                         <div class="form-group">
-                          <input type="submit" name="signup_submit" value="Create Account" class="btn btn-success">
+                          <input type="button" onclick="prepareRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success">
                         </div>
                       </div>
                     </div>
@@ -96,7 +104,7 @@
                        <div class="card-body">
                             <img src="assets/img/Grades.svg" width="90%" />
                             <h3 style="margin-top:-30px">Get your results</h3>
-                            <p> attempt the quiz and get the detailed result to test your knowledge, share your results to share your success.
+                            <p> attempt the quiz and get the detailed result to test your knowledge, ace your test and share your results to share your success.
                        </div>
                   </div>
             </div>
@@ -115,4 +123,28 @@
     </div>
 </body>
 
+<script>
+
+    function prepareRequest(url){
+        let name = document.getElementsByName("signup_name")[0].value;
+        let email = document.getElementsByName("signup_email")[0].value;
+        let phone = document.getElementsByName("signup_phone")[0].value;
+        let password = document.getElementsByName("signup_password")[0].value;
+
+        let data = {signup_name:name, signup_email:email, signup_phone:phone, signup_password:password};
+
+       sendRequest(url,data,(message,type)=>{
+           $.notify({
+               message: message
+           }, {
+               type: type,
+               timer: 2000,
+               placement: {
+                   from: 'top',
+                   align: 'right'
+               }
+           });
+        })
+    }
+</script>
 </html>

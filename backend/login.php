@@ -1,8 +1,12 @@
 <?php
-
+    session_start();
     // if session set then redirect to dashboard
-
-    if(isset($_POST['login_email'],$_POST['login_password']))
+    header('Content-Type: application/json');
+    if(isset($_SESSION['uid']))
+    {
+        echo json_encode(array("message"=>"already logged in"));
+    }
+    else if(isset($_POST['login_email'],$_POST['login_password']))
     {
         $email  = $_POST['login_email'];
        
@@ -22,17 +26,27 @@
             $result = $stmt->get_result();
             if($result -> num_rows>0)
             {
-                // start session and stuff
-                echo '{message:"successfully logged in"}';
+                $row = $result->fetch_assoc();
+                if($row['isverified']==0)
+                {
+                    echo json_encode(array("message"=>"Please verify your email"));
+                }
+                else
+                {
+                    // start session and stuff
+                    echo json_encode(array("message"=>"successfully logged in"));
+                    $_SESSION['uid'] = $row['uid'];
+                    $_SESSION['name'] = $row['name'];
+                }
             }
             else
             {
-                echo '{message:"please check your id password"}';
+                echo json_encode(array("message"=>"please check your id password"));
             }
         }
         else
         {
-            echo '{message:"sql error"}';
+            echo json_encode(array("message"=>"sql error"));
         }
 
 

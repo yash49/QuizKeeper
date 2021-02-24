@@ -1,8 +1,11 @@
 <?php
-
+    session_start();
     // if session set then redirect to dashboard
-
-    if(isset($_POST['signup_name'],$_POST['signup_email'],$_POST['signup_phone'],$_POST['signup_password']))
+    if(isset($_SESSION['uid']))
+    {
+        echo json_encode(array("message"=>"already logged in"));
+    }
+    else if(isset($_POST['signup_name'],$_POST['signup_email'],$_POST['signup_phone'],$_POST['signup_password']))
     {
         $name  = $_POST['signup_name'];
         $email  = $_POST['signup_email'];

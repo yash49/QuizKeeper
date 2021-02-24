@@ -28,14 +28,14 @@
         session_start();
         if(isset($_SESSION['uid'])){
      ?>
-      <p><?php echo $_SESSION['name']; ?></p>
+            <script> window.location.href = "dashboard.php";</script>
       <?php }
 
       else { ?>
-    <form class="d-flex" method="post" action=<?php echo $_SERVER['PHP_SELF'].'/../backend/login.php'; ?>>
+    <form class="d-flex" method="post">
       <input class="form-control " type="text" placeholder="Email" name="login_email">
       <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
-      <input class="btn btn-secondary ml-2" type="submit" name="login_submit" value="Login">
+      <input class="btn btn-secondary ml-2" type="button" onclick="prepareLoginRequest('backend/login.php')" name="login_submit" value="Login">
     </form>
      <?php } ?>
 
@@ -154,7 +154,7 @@
 
         let data = {login_email:email, login_password:password};
 
-        sendRequest(url,data,(message,type)=>{
+        sendLoginRequest(url,data,(message,type)=>{
             $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
         })
 

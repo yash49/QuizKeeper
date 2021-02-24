@@ -70,7 +70,7 @@
                 <img src="assets/img/mailCover.svg" class="col-md-5 col-sm-6 col-xs-6 mail" style="position: absolute;z-index: -1"/>
                 <div class="col-md-3 text-center card-container" style="position: fixed;z-index: 0;height:412px">
                 </div>
-                <form  class="card col-md-4 text-center" action="/verificationHandler.php" method="post" style="z-index: 1">
+                <form  class="card col-md-4 text-center" method="post" style="z-index: 1">
 
                     <div class="card-header card-header-success">VERIFICATION</div>
                     <p class="text-muted">You will need to verify your email to complete the registration</p>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <input type="submit" class="btn btn-success w-50" style="margin:auto;margin-bottom: 100px" value="Verify"/>
+                    <input type="button" onclick="prepareVerificationRequest('backend/verificationHandler.php')" class="btn btn-success w-50" style="margin:auto;margin-bottom: 100px" value="Verify"/>
                 </form>
             </div>
 
@@ -97,4 +97,17 @@
 
         </div>
     </body>
+
+<script>
+    function prepareVerificationRequest(url){
+        let email = document.getElementsByName("verify_email")[0].value;
+        let password = document.getElementsByName("verify_otp")[0].value;
+
+        let data = {verify_email:email, verify_otp:password};
+
+        sendVerifyRequest(url,data,(message,type)=>{
+            $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+        })
+    }
+</script>
 </html>

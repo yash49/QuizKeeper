@@ -21,9 +21,9 @@
         if($stmt->execute()===TRUE)
         {
             $affected = $stmt->affected_rows;
-            if($affected>0)
+            if($affected<=0)
             {
-                echo json_encode(array("result"=>"Success","message"=>"OTP or Email is wrong"));
+                echo json_encode(array("result"=>"Fail","message"=>"OTP or Email is wrong"));
             }
             else
             {
@@ -33,11 +33,11 @@
         }
         else
         {
-            echo json_encode(array("result"=>"Failed","message"=>"SQL Error"));
+            echo json_encode(array("result"=>"Fail","message"=>"DB Error"));
         }
     }
     else
     {
-        echo json_encode(array("result"=>"Failed","message"=>"Bad Request:400"));
+        echo json_encode(array("result"=>"Fail","message"=>"Bad Request:400"));
     }
 ?>

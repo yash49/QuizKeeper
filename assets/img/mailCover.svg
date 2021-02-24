@@ -4,5 +4,8 @@
 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <path style="fill:#127215;" d="M242.757,6.452L0.351,202.324v36.503H256h255.649v-36.503L269.243,6.452
 	C261.518,0.21,250.482,0.21,242.757,6.452z"/>
+	<g transform="matrix(1 0 0 1 256 486)" id="379d0adb-0366-413c-ba6f-14076c202dfc"  >
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill:#127215; fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  x="-256" y="-256" rx="0" ry="0" width="512" height="175" />
+</g>
 
 </svg>

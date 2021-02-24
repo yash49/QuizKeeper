@@ -75,10 +75,7 @@
         sendMail($to,$subject,$body);
 
         if ($stmt->execute() === TRUE) {
-            
-            // redirect to login sigup page for re login
             echo json_encode(array("result"=>"Success","message"=>"Signup successfully! check email for verification"));
-
         } else {
             echo json_encode(array("result"=>"Fail","message"=>"Something went wrong!"));
         }

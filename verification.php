@@ -66,22 +66,21 @@
         <div class="row justify-content-center">
 
             <div class="col-md-12 row justify-content-center">
-                <img src="assets/img/mail.svg" class="col-md-5 col-sm-6 col-xs-12 mail" style="position: absolute;z-index: 2"/>
+                <img src="assets/img/mail.svg" class="col-md-5 col-sm-6 col-xs-12 mail" style="position: absolute;transform:translate(0px,170px);z-index: 2"/>
                 <img src="assets/img/mailCover.svg" class="col-md-5 col-sm-6 col-xs-6 mail" style="position: absolute;z-index: -1"/>
-                <div class="col-md-3 text-center card-container" style="position: fixed;z-index: 0;height:412px">
-                </div>
-                <form  class="card col-md-4 text-center" method="post" style="z-index: 1">
+
+                <form  class="card col-md-4 text-center" method="post" style="z-index: 1;padding-bottom:160px">
 
                     <div class="card-header card-header-success">VERIFICATION</div>
-                    <p class="text-muted">You will need to verify your email to complete the registration</p>
+                    <p class="text-muted mt-1">You will need to verify your email to complete the registration</p>
                     <div class="row justify-content-center p-3">
-                        <div class="input-group col-md-10 mb-3 pb-1">
+                        <div class="input-group col-md-10 pb-1">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-info text-white" id="basic-addon1">@</span>
                             </div>
                             <input name="verify_email" id="verify_email" type="email" required class="form-control" placeholder="Email address" aria-label="Email">
                         </div>
-                        <div class="input-group col-md-10 mb-3 pb-1">
+                        <div class="input-group col-md-10 pb-1">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-info text-white" id="basic-addon1">*</span>
                             </div>
@@ -89,7 +88,7 @@
                         </div>
                     </div>
 
-                    <input type="button" onclick="prepareVerificationRequest('backend/verificationHandler.php')" class="btn btn-success w-50" style="margin:auto;margin-bottom: 100px" value="Verify"/>
+                    <input type="button" onclick="prepareVerificationRequest('backend/verificationHandler.php')" class="btn btn-success w-50" style="margin:auto;transform:translate(0px,-15px);z-index: 15" value="Verify"/>
                 </form>
             </div>
 

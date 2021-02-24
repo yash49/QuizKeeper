@@ -46,14 +46,14 @@
 
         <div class="row justify-content-center bg-white">
             <div class="col-md-6 col-sm-6 col-xs-12 mt-2 text-center">
-                <h1><strong>Host or attempt the quiz with ease!</strong></h1>
+                <h1><strong style="text-shadow: #0a6ebd;">Host or attempt the quiz with ease!</strong></h1>
                 <div class="card">
                 <div class="card-header card-header-success">
                   <h4 class="card-title">Signup</h4>
                   <p class="card-category">Fill the following details</p>
                 </div>
                 <div class="card-body">
-                  <form action=<?php echo $_SERVER['PHP_SELF'].'/../backend/signup.php'; ?> method="Post">
+                  <form method="Post">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -80,8 +80,10 @@
                         </div>
                       </div>
                       <div class="col-md-12 text-center">
-                        <div class="form-group">
-                          <input type="button" onclick="prepareSignupRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success">
+                        <div class="text-center">
+                          <input type="button" onclick="prepareSignupRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success"/>
+                            <div style="position:absolute; display: none; margin-bottom:-12px; right:15px;bottom:15px" id="loadbar" class="ml-2 spinner-border text-success">
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -136,6 +138,7 @@
 <script>
 
     function prepareSignupRequest(url){
+        document.getElementsByName("signup_submit")[0].disabled = true;
         let name = document.getElementsByName("signup_name")[0].value;
         let email = document.getElementsByName("signup_email")[0].value;
         let phone = document.getElementsByName("signup_phone")[0].value;
@@ -143,8 +146,11 @@
 
         let data = {signup_name:name, signup_email:email, signup_phone:phone, signup_password:password};
 
+        document.getElementById("loadbar").style.display = "inline-block";
         sendRequest(url,data,(message,type)=>{
            $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+            document.getElementById("loadbar").style.display = "none";
+            document.getElementsByName("signup_submit")[0].disabled = false;
         })
 
     }

@@ -16,6 +16,7 @@
   <script src="js/controller.js"></script>
   <script src="assets/js/plugins/bootstrap-notify.js"></script>
 
+
 </head>
 
 <body class="bg-white">
@@ -45,6 +46,9 @@
 
 
         <div class="row justify-content-center bg-white">
+            <div class="col-md-6 col-sm-6 col-xs-12 order-md-2 order-sm-2 order-lg-2 bg-white">
+                <img width="450" height="450" src="assets/img/Exams_header_animated.gif"/>
+            </div>
             <div class="col-md-6 col-sm-6 col-xs-12 mt-2 text-center">
                 <h1><strong style="text-shadow: #0a6ebd;">Host or attempt the quiz with ease!</strong></h1>
                 <div class="card">
@@ -90,12 +94,8 @@
                    </form> 
                 </div>   
                 </div>
-
-
             </div>    
-            <div class="col-md-6 col-sm-6 col-xs-12 bg-white">
-                <img width="450" height="450" src="assets/img/Exams_header_animated.gif"/>
-            </div>
+            
         </div>
 
 
@@ -166,4 +166,5 @@
 
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
 </html>

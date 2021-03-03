@@ -16,38 +16,16 @@
         <script src="js/controller.js"></script>
         <script src="assets/js/plugins/bootstrap-notify.js"></script>
         <style>
-            #full-size{
-                height:100%;
-                width:100%;
-                overflow:hidden; /* or overflow:auto; if you want scrollbars */
-            }
-            .card-container{
-                color: #F37335;
-                border-radius: 10px;
-                box-shadow: 1px 1px 10px #c3c3c3;
-                background: white;
-            }
-            input::placeholder{
-                color:white;
-            }
-
-            .left:hover{
-                box-shadow: 1px 1px 40px #c3c3c3;
-            }
-            .right:hover{
-                box-shadow: 1px 1px 40px #c3c3c3;
-            }
-            .title-holder{
-                border-radius: 0 0 10px 10px;
-                width: fit-content;
-                padding: 15px;
-                margin:0 auto 20px auto ;
-                box-shadow: 1px 1px 10px #c1c1c1;
-
-                color: white;
+            .anim-container{
+                transform:translate(0px,10px);
+                animation: paper 2s;
             }
             .mail{
                 animation: move 2s infinite;
+            }
+            @keyframes paper{
+                0%{transform:translate(0px,25%)}
+                100%{transform:translate(0px,10px);}
             }
             @keyframes move {
                 0%{margin-top: 50px}
@@ -69,7 +47,7 @@
                 <img src="assets/img/mail.svg" class="col-md-5 col-sm-6 col-xs-12 mail" style="position: absolute;transform:translate(0px,170px);z-index: 2"/>
                 <img src="assets/img/mailCover.svg" class="col-md-5 col-sm-6 col-xs-6 mail" style="position: absolute;z-index: -1"/>
 
-                <form  class="card col-md-4 text-center" method="post" style="z-index: 1;padding-bottom:160px">
+                <form  class="card anim-container col-md-4 text-center" method="post" style="z-index: 1;padding-bottom:160px">
 
                     <div class="card-header card-header-success">VERIFICATION</div>
                     <p class="text-muted mt-1">You will need to verify your email to complete the registration</p>

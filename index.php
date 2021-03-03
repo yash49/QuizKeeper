@@ -34,7 +34,7 @@
 
       else { ?>
     <form class="d-flex" method="post">
-      <input class="form-control " type="text" placeholder="Email" name="login_email">
+      <input class="form-control" type="text" placeholder="Email" name="login_email">
       <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
       <input class="btn btn-secondary ml-2" type="button" onclick="prepareLoginRequest('backend/login.php')" name="login_submit" value="Login">
     </form>
@@ -46,7 +46,7 @@
 
 
         <div class="row justify-content-center bg-white">
-            <div class="col-md-6 col-sm-6 col-xs-12 order-md-2 order-sm-2 order-lg-2 bg-white">
+            <div class="col-md-6 col-sm-6 col-xs-12 order-md-2 order-sm-2  order-lg-2 bg-white">
                 <img width="450" height="450" src="assets/img/Exams_header_animated.gif"/>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-12 mt-2 text-center">

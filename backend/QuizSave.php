@@ -1,5 +1,9 @@
 <?php
 
+    
+    session_start();
+    header("Content-Type: application/json");
+
     function getQuestionTypeInt($s)
     {
         $a = array("radio"=>3,"checkbox"=>2,"loose_text"=>1,"strict_text"=>0);
@@ -220,8 +224,6 @@
     }
         
 
-    session_start();
-    header("Content-Type: application/json");
     if(!isset($_SESSION['uid']))
     {
         echo json_encode(array("result"=>"Failed","message"=>"User not logged in"));

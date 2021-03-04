@@ -26,7 +26,6 @@
                 renderTextQuestions($qns,$start);*/
         ?>
 
-
     <div class="row justify-content-center">
         <div class="col-lg-10 col-md-10 col-sm-12">
             <div class="card">
@@ -42,7 +41,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="quiz_questions_tab" href="#quiz_questions" data-toggle="tab">
+                                    <!--onclick="validateQuizDetails()"-->
+                                    <a class="nav-link" id="quiz_questions_tab"  href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="quiz_details">
-                            <form class="row p-3" id="quiz_details_form">
+                            <form class="row p-3" id="quiz_details_form" onsubmit="event.preventDefault();document.getElementById('quiz_questions_tab').click()">
                                 <div class="col-md-6 mb-4 order-md-0 order-sm-0 order-xs-0 col-sm-12">
                                     <input type="text" required name="quiz_title" placeholder="Quiz Title"  class="form-control">
                                 </div>
@@ -69,11 +69,11 @@
                                 </div>
 
                                 <div class="col-md-6 mb-4 order-md-1 order-sm-2 order-xs-2 col-sm-12">
-                                    <input type="date" required name="quiz_start_date" class="form-control">
+                                    <input type="datetime-local" required name="quiz_start_date" placeholder="Start At " class="form-control">
                                 </div>
 
                                 <div class="col-md-6 mb-4 order-md-3 order-sm-3 order-xs-3 col-sm-12">
-                                    <input type="date" required name="quiz_end_date" class="form-control">
+                                    <input type="datetime-local" required name="quiz_end_date" placeholder="Ends At " class="form-control">
                                 </div>
 
 
@@ -83,10 +83,11 @@
                                             Shuffle Questions?
                                         </label>
                                 </div>
+                                <div class="col-6 order-5 text-right">
+                                    <button class="mr-4 btn btn-info" onclick="validateQuizDetails()"> Next </button>
+                                </div>
                             </form>
-                            <div class="float-right">
-                                <button class="mr-4 btn btn-info" onclick="document.getElementById('quiz_questions_tab').click()"> Next </button>
-                            </div>
+
                         </div>
 
                         <div class="tab-pane" id="quiz_questions">
@@ -109,6 +110,9 @@
                                         <a href="#" class="list-group-item list-group-item-action p-3">
                                             <i class="material-icons">assignment_turned_in</i> Loose Text Input (Manual evaluation)
                                         </a>
+                                    </div>
+                                    <div class="col-6 order-5 text-right">
+                                        <button class="mr-4 btn btn-info" onclick="sendQReq()"> Next </button>
                                     </div>
                                 </div>
 
@@ -134,30 +138,34 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="radio_modal_title"></h5>
+                    <h5 class="modal-title" id="radio_modal_title">Single Choice Question</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                   <form id="radio_q_form" class="row justify-content-center">
+                   <form id="radio_q_form" onsubmit="event.preventDefault();" class="row justify-content-center">
 
-                       <div class="col-md-6 col-sm-6">
+                       <div class="col-md-12 col-sm-12 m-3">
                            <input type="text" id="radio_q_question" placeholder="Question" required class="form-control">
                        </div>
 
-                       <div class="col-md-6 col-sm-6">
+                       <div class="col-md-12 col-sm-12 m-3">
+                           <input type="number" min="0" id="radio_q_marks" placeholder="Mark" required class="form-control">
+                       </div>
+
+                       <div class="col-md-12 col-sm-12 m-3">
                            <input type="number" min="2" max="15" id="radio_q_options_count" value="4" required class="form-control">
                            <input type="button" class="btn btn-info" value="Add Options" onclick="addOptions('radio')">
                        </div>
 
+                       <div class="modal-footer">
+                           <button class="btn btn-primary" onclick="addRadioQuestion()">Add Question</button>
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                       </div>
                    </form>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -169,25 +177,28 @@
 
 
 <script>
+    let Qdata = {questionData:[]};
     function addOptions(type){
 
         let handler_form = document.getElementById(type=='radio'?'radio_q_form':'check_q_form');
 
         let count = document.getElementById(type=='radio'?"radio_q_options_count":"check_q_options_count").value;
 
-        let opTrack = handler_form.childElementCount-2;
+        let opTrack = handler_form.childElementCount-4;
         for(let i = 0; i < count; i++,opTrack++){
             let optionContainer = document.createElement("div");
             optionContainer.name = type=='radio'?"radio_q_option":"check_q_option";
-            optionContainer.classList.add("col-md-6","col-sm-12","m-3");
+            optionContainer.classList.add("col-md-12","col-sm-12","m-3");
 
             let inputField = document.createElement("input");
-            inputField.id = (type=='radio'?'radio_q_option':'check_q_option')+(opTrack+1);
+            inputField.required = true;
+            inputField.name = (type=='radio'?'radio_q_option':'check_q_option');
             inputField.placeholder = "Option content";
             inputField.classList.add("form-control");
 
             let trueAnsCheck = document.createElement("input");
             trueAnsCheck.type = "radio";
+            trueAnsCheck.required = true;
             trueAnsCheck.name = (type=='radio'?'radio_q_option_chk':'check_q_option_chk');
             trueAnsCheck.classList.add("radio","p-2");
 
@@ -196,28 +207,60 @@
             optionContainer.innerHTML += "<label>True Answer:&nbsp</label>";
             optionContainer.appendChild(trueAnsCheck);
 
-
-            handler_form.appendChild(optionContainer);
+            handler_form.insertBefore(optionContainer,handler_form.childNodes[handler_form.childNodes.length-2]);
         }
 
     }
 
-    /*let data = {questionCount:2, questionsData[
-            {
-                id:1
-                question:"WHAT IS..."
-                answer:"ABC"
-                type:"radio",
-                options:"CSV"
-            },
-            {
-                id:2
-                question:"WHAT IS..."
-                answer:"ABCs"
-                type:"text"
-                options:""
+    function validateQuizDetails(){
+        if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
+            !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
+            document.getElementById("quiz_questions_tab").href = "";
+        }
+        else{
+
+            Qdata.quiz_title = document.getElementsByName("quiz_title")[0].value;
+            Qdata.quiz_desc = document.getElementsByName("quiz_desc")[0].value;
+            Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked;
+            Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
+            Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
+
+            document.getElementById("quiz_questions_tab").href = "#quiz_questions";
+        }
+
+    }
+
+    function addRadioQuestion(){
+
+        let question = document.getElementById("radio_q_question").value;
+        let type = "radio";
+        let mark = document.getElementById("radio_q_marks").value;
+        let options = document.getElementsByName("radio_q_option");
+        let trueOptions = document.getElementsByName("radio_q_option_chk");
+
+        let answer = "";
+        let optionsData = "";
+        for(let i = 0; i < options.length; i++){
+            if(trueOptions[i].checked){
+                answer = options[i].value;
             }
-        ]}*/
+            optionsData += options[i].value+(i < options.length-1?",":"");
+        }
+        let Q = {
+            question:question,
+            answer:answer,
+            type:type,
+            options:optionsData,
+            mark:mark
+        };
+        Qdata.questionData.push(Q);
+    }
+
+function sendQReq(){
+        sendAddQrequest('QuizSave.php',Qdata,(res,type)=>{
+            alert(res);
+        });
+}
 </script>
 </body>
 </html>

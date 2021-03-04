@@ -21,3 +21,7 @@
     opacity: 0.5;
     transform: translate(0,-210px);
 }
+input[type="datetime-local"]:before{
+    color: black;
+    content: attr(placeholder) " : ";
+}

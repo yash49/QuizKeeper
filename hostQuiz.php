@@ -41,8 +41,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <!--onclick="validateQuizDetails()"-->
-                                    <a class="nav-link" id="quiz_questions_tab"  href="#quiz_questions" data-toggle="tab">
+                                    <!---->
+                                    <a class="nav-link" id="quiz_questions_tab" onclick="validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
@@ -185,6 +185,10 @@
         let count = document.getElementById(type=='radio'?"radio_q_options_count":"check_q_options_count").value;
 
         let opTrack = handler_form.childElementCount-4;
+        let optionsPanel = document.createElement("div");
+        optionsPanel.classList.add("row","justify-content-start");
+        optionsPanel.id = "radio_q_options_panel";
+
         for(let i = 0; i < count; i++,opTrack++){
             let optionContainer = document.createElement("div");
             optionContainer.name = type=='radio'?"radio_q_option":"check_q_option";
@@ -207,8 +211,9 @@
             optionContainer.innerHTML += "<label>True Answer:&nbsp</label>";
             optionContainer.appendChild(trueAnsCheck);
 
-            handler_form.insertBefore(optionContainer,handler_form.childNodes[handler_form.childNodes.length-2]);
+            optionsPanel.appendChild(optionContainer);
         }
+        handler_form.insertBefore(optionsPanel,handler_form.childNodes[handler_form.childNodes.length-2]);
 
     }
 
@@ -231,7 +236,7 @@
     }
 
     function addRadioQuestion(){
-
+        event.preventDefault();
         let question = document.getElementById("radio_q_question").value;
         let type = "radio";
         let mark = document.getElementById("radio_q_marks").value;
@@ -254,9 +259,16 @@
             mark:mark
         };
         Qdata.questionData.push(Q);
+        document.getElementById("radio_q_question").value = "";
+        document.getElementById("radio_q_marks").value = "";
+
+        document.getElementById("radio_q_form").removeChild(document.getElementById("radio_q_options_panel"));
+        $.notify({message: "Question Saved"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+
     }
 
     function sendAddQrequest(url, data, callback){
+        console.log(data);
     $.ajax({
         data:data,
         url:url,
@@ -264,7 +276,6 @@
         success:function (response){
             if(response.result == "Success"){
                 callback(response.message,"success");
-                setTimeout(()=>{window.location.href = "verification.php"},2100);
             }
             else{
                 callback(response.message,"danger");
@@ -276,9 +287,9 @@
 
 
 function sendQReq(){
-        sendAddQrequest('backend/QuizSave.php',Qdata,(res,type)=>{
-            alert(res);
-        });
+        sendAddQrequest('backend/QuizSave.php',Qdata,(message,type)=>{
+        $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+    });
 
 
 

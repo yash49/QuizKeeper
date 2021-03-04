@@ -4,3 +4,20 @@
     top:0;
     background: linear-gradient(90deg,#3895D3,#0b75c9);
 }
+.card-header-purple{
+    background: linear-gradient(90deg,#3895D3,#0b75c9);
+}
+.stack-1{
+    transform: translate(0,10px);
+    z-index: 100;
+}
+.stack-2{
+    z-index: 50;
+    opacity: 0.75;
+    transform: translate(0,-100px);
+}
+.stack-3{
+    z-index: 25;
+    opacity: 0.5;
+    transform: translate(0,-210px);
+}

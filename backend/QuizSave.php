@@ -13,7 +13,7 @@
     // returns id of inserted qns
     function insertRadioQuestion($question,$conn)
     {
-        $qns = $question['questoion'];
+        $qns = $question['question'];
         $options = $question['options'];
         $correctans = $question['answer'];
         $sql="INSERT INTO MCQ (qns,options,correctans) VALUES ('".$qns."','".$options."','".$correctans."'); SELECT LAST_INSERT_ID() as yoo;";
@@ -300,8 +300,8 @@
         //     }
         // ]};
 
-        $totalQuestions = $_POST['questionCount'];
-        $questions = $_POST['questionsData'];
+        $questions = $_POST['questionData'];
+        $totalQuestions = count($questions);
 
         for($i=0;$i<$totalQuestions;$i++)
         {

@@ -256,10 +256,32 @@
         Qdata.questionData.push(Q);
     }
 
+    function sendAddQrequest(url, data, callback){
+    $.ajax({
+        data:data,
+        url:url,
+        method:"POST",
+        success:function (response){
+            if(response.result == "Success"){
+                callback(response.message,"success");
+                setTimeout(()=>{window.location.href = "verification.php"},2100);
+            }
+            else{
+                callback(response.message,"danger");
+            }
+        }
+
+    });
+}
+
+
 function sendQReq(){
-        sendAddQrequest('QuizSave.php',Qdata,(res,type)=>{
+        sendAddQrequest('backend/QuizSave.php',Qdata,(res,type)=>{
             alert(res);
         });
+
+
+
 }
 </script>
 </body>

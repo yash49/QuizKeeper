@@ -224,7 +224,7 @@
     header("Content-Type: application/json");
     if(!isset($_SESSION['uid']))
     {
-        echo json_encode(array("message"=>"User not logged in"));
+        echo json_encode(array("result"=>"Failed","message"=>"User not logged in"));
     }
     else if($allareset==1)
     {

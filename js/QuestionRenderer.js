@@ -37,7 +37,7 @@ function renderRadioQuestions(parent, question, options, answer, start){
         qCard.innerHTML += optionContainer;
     }
     let removeBtn = document.createElement("button");
-    removeBtn.classList.add("btn","btn-outline-danger","col-3");
+    removeBtn.classList.add("btn","btn-outline-danger","col-lg-5","col-md-5","col-sm-6","col-xs-6");
     removeBtn.innerText = "Remove";
     removeBtn.id = "remove_q_"+start;
 
@@ -81,7 +81,7 @@ function renderCheckboxQuestions(parent, question, options, answer, start){
         qCard.innerHTML += optionContainer;
     }
     let removeBtn = document.createElement("button");
-    removeBtn.classList.add("btn","btn-outline-danger","col-3");
+    removeBtn.classList.add("btn","btn-outline-danger","col-lg-5","col-md-5","col-sm-6","col-xs-6");
     removeBtn.innerText = "Remove";
     removeBtn.id = "remove_q_"+start;
 
@@ -120,7 +120,7 @@ function renderInputQuestions(parent, question, answer, start){
     qCard.innerHTML += optionContainer;
     let removeBtn = document.createElement("button");
 
-    removeBtn.classList.add("btn","btn-outline-danger","col-3");
+    removeBtn.classList.add("btn","btn-outline-danger","col-lg-5","col-md-5","col-sm-6","col-xs-6");
     removeBtn.innerText = "Remove";
     removeBtn.id = "remove_q_"+start;
 

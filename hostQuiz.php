@@ -164,7 +164,7 @@
                            <input type="number" min="2" max="15" id="radio_q_options_count" value="4" required class="form-control">
                            <input type="button" class="btn btn-info" value="Add Options" onclick="addOptions('radio')">
                        </div>
-
+                        <div id="radio_q_options_panel" class="row justify-content-start"></div>
                        <div class="modal-footer">
                            <button class="btn btn-primary" onclick="addRadioQuestion()">Add Question</button>
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -203,7 +203,7 @@
                                 <input type="number" min="2" max="15" id="check_q_options_count" value="4" required class="form-control">
                                 <input type="button" class="btn btn-info" value="Add Options" onclick="addOptions('checkbox')">
                             </div>
-
+                            <div id="check_q_options_panel" class="row justify-content-start"></div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" onclick="addCheckBoxQuestion()">Add Question</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -318,10 +318,8 @@
 
         let count = document.getElementById(type=='radio'?"radio_q_options_count":"check_q_options_count").value;
 
-        let opTrack = handler_form.childElementCount-4;
-        let optionsPanel = document.createElement("div");
-        optionsPanel.classList.add("row","justify-content-start");
-        optionsPanel.id = type=='radio'?"radio_q_options_panel":"check_q_options_panel";
+        let optionsPanel = document.getElementById(type=='radio'?"radio_q_options_panel":"check_q_options_panel");
+        let opTrack = optionsPanel.childElementCount;
 
         for(let i = 0; i < count; i++,opTrack++){
             let optionContainer = document.createElement("div");
@@ -347,7 +345,7 @@
 
             optionsPanel.appendChild(optionContainer);
         }
-        handler_form.insertBefore(optionsPanel,handler_form.childNodes[handler_form.childNodes.length-2]);
+        //handler_form.insertBefore(optionsPanel,handler_form.childNodes[handler_form.childNodes.length-2]);
 
     }
 
@@ -480,7 +478,7 @@
     }
     function sendAddQrequest(url, data, callback){
         console.log(data);
-    $.ajax({
+    /*$.ajax({
         data:data,
         url:url,
         method:"POST",
@@ -493,7 +491,7 @@
             }
         }
 
-    });
+    });*/
 }
 
 

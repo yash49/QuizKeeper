@@ -41,8 +41,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <!---->
-                                    <a class="nav-link" id="quiz_questions_tab" onclick="validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
+                                    <!--onclick="validateQuizDetails()"-->
+                                    <a class="nav-link" id="quiz_questions_tab"   href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
@@ -92,7 +92,12 @@
 
                         <div class="tab-pane" id="quiz_questions">
                             <div class="row justify-content-center">
-
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div>
+                                        <div id="previewContainer"></div>
+                                        <img id="nopreview" src="assets/img/preview_holder.svg" width="350px" height="350px">
+                                    </div>
+                                </div>
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <div class="list-group">
                                         <h4 class="list-group-item disabled list-group-item-action bg-info text-white">
@@ -101,13 +106,13 @@
                                         <a href="#" data-toggle="modal" data-target="#radio_modal" class="list-group-item list-group-item-action p-3">
                                             <i class="material-icons">radio_button_checked</i> Single Choice Question (Radio buttons)
                                         </a>
-                                        <a href="#" class="list-group-item list-group-item-action p-3">
+                                        <a href="#"  data-toggle="modal" data-target="#checkbox_modal" class="list-group-item list-group-item-action p-3">
                                             <i class="material-icons">check_circle</i> Multiple choice Question (Checkboxes)
                                         </a>
-                                        <a href="#" class="list-group-item list-group-item-action p-3">
+                                        <a href="#" data-toggle="modal" data-target="#strict_text_modal" class="list-group-item list-group-item-action p-3">
                                             <i class="material-icons">article</i> Strict Text Input (Strictly match answer)
                                         </a>
-                                        <a href="#" class="list-group-item list-group-item-action p-3">
+                                        <a href="#" data-toggle="modal" data-target="#loose_text_modal" class="list-group-item list-group-item-action p-3">
                                             <i class="material-icons">assignment_turned_in</i> Loose Text Input (Manual evaluation)
                                         </a>
                                     </div>
@@ -171,12 +176,141 @@
         </div>
     </div>
 
+    <!--------------------------------------------------Checkbox MODAL------------------------------------------------------------->
+
+    <div class="modal fade w-90" id="checkbox_modal" tabindex="-1" role="dialog" aria-labelledby="checkbox_modal_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkbox_modal_title">Checkbox Choice Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="check_q_form" onsubmit="event.preventDefault();" class="row justify-content-center">
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="text" id="check_q_question" placeholder="Question" required class="form-control">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="number" min="0" id="check_q_marks" placeholder="Mark" required class="form-control">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="number" min="2" max="15" id="check_q_options_count" value="4" required class="form-control">
+                                <input type="button" class="btn btn-info" value="Add Options" onclick="addOptions('checkbox')">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" onclick="addCheckBoxQuestion()">Add Question</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------Strict MODAL------------------------------------------------------------->
+
+    <div class="modal fade w-90" id="strict_text_modal" tabindex="-1" role="dialog" aria-labelledby="strict_text_modal_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="strict_text_modal_title">Strict Text Input Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="strict_text_q_form" onsubmit="event.preventDefault();" class="row justify-content-center">
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="text" id="strict_text_q_question" placeholder="Question" required class="form-control">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="number" min="0" id="strict_text_q_marks" placeholder="Mark" required class="form-control">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="text" id="strict_text_q_answer" placeholder="Type Answer: (Case Sensitive)" required class="form-control">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" onclick="addTextInputQuestion('strict')">Add Question</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------loose MODAL------------------------------------------------------------->
+
+    <div class="modal fade w-90" id="loose_text_modal" tabindex="-1" role="dialog" aria-labelledby="loose_text_modal_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loose_text_modal_title">Normal Text Input Question (Manual Evaluation)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="loose_text_q_form" onsubmit="event.preventDefault();" class="row justify-content-center">
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="text" id="loose_text_q_question" placeholder="Question" required class="form-control">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 m-3">
+                                <input type="number" min="0" id="loose_text_q_marks" placeholder="Mark" required class="form-control">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" onclick="addTextInputQuestion('loose')">Add Question</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </div> <!--END OF main-panel class-->
 </div><!--END OF wrapper class-->
 
-
+<script src="js/QuestionRenderer.js"></script>
 <script>
+    function validateQuizDetails(){
+        if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
+            !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
+            document.getElementById("quiz_questions_tab").href = "";
+        }
+        else{
+
+            Qdata.quiz_title = document.getElementsByName("quiz_title")[0].value;
+            Qdata.quiz_desc = document.getElementsByName("quiz_desc")[0].value;
+            Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked?1:0;
+            Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
+            Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
+
+            document.getElementById("quiz_questions_tab").href = "#quiz_questions";
+        }
+
+    }
+
     let Qdata = {questionData:[]};
     function addOptions(type){
 
@@ -187,7 +321,7 @@
         let opTrack = handler_form.childElementCount-4;
         let optionsPanel = document.createElement("div");
         optionsPanel.classList.add("row","justify-content-start");
-        optionsPanel.id = "radio_q_options_panel";
+        optionsPanel.id = type=='radio'?"radio_q_options_panel":"check_q_options_panel";
 
         for(let i = 0; i < count; i++,opTrack++){
             let optionContainer = document.createElement("div");
@@ -201,7 +335,7 @@
             inputField.classList.add("form-control");
 
             let trueAnsCheck = document.createElement("input");
-            trueAnsCheck.type = "radio";
+            trueAnsCheck.type = type;
             trueAnsCheck.required = true;
             trueAnsCheck.name = (type=='radio'?'radio_q_option_chk':'check_q_option_chk');
             trueAnsCheck.classList.add("radio","p-2");
@@ -217,34 +351,29 @@
 
     }
 
-    function validateQuizDetails(){
-        if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
-            !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
-            document.getElementById("quiz_questions_tab").href = "";
-        }
-        else{
-
-            Qdata.quiz_title = document.getElementsByName("quiz_title")[0].value;
-            Qdata.quiz_desc = document.getElementsByName("quiz_desc")[0].value;
-            Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked;
-            Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
-            Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
-
-            document.getElementById("quiz_questions_tab").href = "#quiz_questions";
-        }
-
-    }
-
     function addRadioQuestion(){
-        event.preventDefault();
+        if(!document.getElementById("radio_q_question").validity.valid ||
+            !document.getElementById("radio_q_marks").validity.valid ||
+            !document.getElementById("radio_q_question").validity.valid ){
+            return;
+        }
+
         let question = document.getElementById("radio_q_question").value;
         let type = "radio";
         let mark = document.getElementById("radio_q_marks").value;
         let options = document.getElementsByName("radio_q_option");
         let trueOptions = document.getElementsByName("radio_q_option_chk");
 
+        let isTrueChecked = false;
+        for(let i = 0; i < options.length; i++){
+            isTrueChecked = isTrueChecked || trueOptions[i].checked;
+        }
+        if(!isTrueChecked)return;
+
         let answer = "";
         let optionsData = "";
+
+
         for(let i = 0; i < options.length; i++){
             if(trueOptions[i].checked){
                 answer = options[i].value;
@@ -263,10 +392,92 @@
         document.getElementById("radio_q_marks").value = "";
 
         document.getElementById("radio_q_form").removeChild(document.getElementById("radio_q_options_panel"));
-        $.notify({message: "Question Saved"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+        $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
 
+        renderRadioQuestions(document.getElementById("previewContainer"),question, optionsData.split(","), answer, Qdata.questionData.length);
     }
 
+    function addCheckBoxQuestion(){
+        if(!document.getElementById("check_q_question").validity.valid ||
+            !document.getElementById("check_q_marks").validity.valid ||
+            !document.getElementById("check_q_question").validity.valid ){
+            return;
+        }
+
+        let question = document.getElementById("check_q_question").value;
+        let type = "checkbox";
+        let mark = document.getElementById("check_q_marks").value;
+        let options = document.getElementsByName("check_q_option");
+        let trueOptions = document.getElementsByName("check_q_option_chk");
+
+        let isTrueChecked = false;
+        for(let i = 0; i < options.length; i++){
+            isTrueChecked = isTrueChecked || trueOptions[i].checked;
+        }
+        if(!isTrueChecked)return;
+
+        let answer = "";
+        let optionsData = "";
+
+
+        for(let i = 0; i < options.length; i++){
+            if(trueOptions[i].checked){
+                answer += options[i].value+",";
+            }
+            optionsData += options[i].value+(i < options.length-1?",":"");
+        }
+        answer = answer.slice(0,answer.length-1);
+
+        let Q = {
+            question:question,
+            answer:answer,
+            type:type,
+            options:optionsData,
+            mark:mark
+        };
+        Qdata.questionData.push(Q);
+        document.getElementById("check_q_question").value = "";
+        document.getElementById("check_q_marks").value = "";
+
+        document.getElementById("check_q_form").removeChild(document.getElementById("check_q_options_panel"));
+        $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+
+        renderCheckboxQuestions(document.getElementById("previewContainer"),question, optionsData.split(","), answer, Qdata.questionData.length);
+    }
+
+    function addTextInputQuestion(inType){
+
+            if(!document.getElementById(inType+"_text_q_question").validity.valid ||
+                !document.getElementById(inType+"_text_q_marks").validity.valid){
+                if(inType == 'strict'){
+                    if(!document.getElementById("strict_text_q_answer").validity.valid) return;
+                }
+                return;
+            }
+
+
+
+        let question = document.getElementById(inType+"_text_q_question").value;
+        let type = inType+"_text";
+        let mark = document.getElementById(inType+"_text_q_marks").value;
+        let answer = (inType == "strict")?document.getElementById(inType+"_text_q_answer").value:"";
+
+
+
+        let Q = {
+            question:question,
+            answer:answer,
+            type:type,
+            mark:mark
+        };
+        Qdata.questionData.push(Q);
+        document.getElementById(inType+"_text_q_question").value = "";
+        document.getElementById(inType+"_text_q_marks").value = "";
+        if(inType == "strict")document.getElementById("strict_text_q_answer").value = "";
+
+        $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+        renderInputQuestions(document.getElementById("previewContainer"),question, answer, Qdata.questionData.length);
+    }
     function sendAddQrequest(url, data, callback){
         console.log(data);
     $.ajax({
@@ -294,6 +505,7 @@ function sendQReq(){
 
 
 }
+
 </script>
 </body>
 </html>

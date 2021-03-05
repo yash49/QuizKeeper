@@ -24,6 +24,14 @@
     <script src="assets/js/plugins/nouislider.min.js"></script>
     <script src="assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
 
+    <?php if($tab == 'hostQuiz'){?>
+    <script>
+        window.onbeforeunload = function(event) {
+            return true;
+
+        };
+    </script>
+      <?php }  ?>
 </head>
 
 

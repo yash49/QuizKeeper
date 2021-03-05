@@ -73,7 +73,7 @@
     // returns id of inserted qns
     function insertTextQuestion($question,$conn)
     {
-        $qns = $question['questoion'];
+        $qns = $question['question'];
         $type = getQuestionTypeInt($question['type']);
         $ans = $question['answer'];
 

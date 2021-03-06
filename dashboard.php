@@ -10,9 +10,23 @@ $dbname = "qUH1Egciqc";
 $conn = new mysqli($db_servername, $db_username, $db_password, $dbname);
 $uid=$_SESSION['uid'];
 $query="select * from Users where uid=".$uid.";";
+$hostquery="select * from QuizHost where uid=".$uid.";";
+$attemptquery="select * from QuizAttempt where uid=".$uid.";";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$stmt = $conn->prepare($hostquery);
+$stmt->execute();
+$resulthost = $stmt->get_result();
+
+$stmt = $conn->prepare($attemptquery);
+$stmt->execute();
+$resultattempt = $stmt->get_result();
+
+$totalhost=mysqli_num_rows($resulthost);
+$totalattempt=mysqli_num_rows($resultattempt);
+
 $row = $result->fetch_assoc()
 ?>
             <div class="content ml-3 mr-3">
@@ -61,6 +75,28 @@ call
                                     <font style="color: #283593">
                                         <?php
                                         echo $row['mobile'];
+                                        ?>
+                                    </font>
+
+                                    <br><br>
+
+                                        <!--<span class="material-icons-outlined  fs-3 fw-bold">file_upload</span>-->
+                                    <font style="color: #283593">Quiz's attempted :
+                                    </font>
+                                    <font style="color: #283593">
+                                        <?php
+                                        echo $totalattempt." ";
+                                        ?>
+                                    </font>
+
+                                    <br><br>
+
+                                        <!--<span class="material-icons-outlined">keyboard_arrow_down</span>-->
+                                    <font style="color: #283593">Quiz's hosted :
+                                    </font>
+                                    <font style="color: #283593">
+                                        <?php
+                                        echo $totalhost;
                                         ?>
                                     </font>
 

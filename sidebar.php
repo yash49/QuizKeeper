@@ -27,7 +27,6 @@
     <?php if($tab == 'hostQuiz'){?>
     <script>
         window.onbeforeunload = function(event) {
-            return true;
 
         };
     </script>

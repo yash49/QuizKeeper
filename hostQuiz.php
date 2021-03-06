@@ -32,7 +32,7 @@
                 <div class="card-header card-header-tabs card-header-primary">
                     <div class="nav-tabs-navigation">
                         <div class="nav-tabs-wrapper">
-                            <span class="nav-tabs-title">Host QUIZ:</span>
+                            <span class="nav-tabs-title fs-5 fw-bold">Host QUIZ:</span>
                             <ul class="nav nav-tabs border-0" data-tabs="tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#quiz_details" data-toggle="tab">
@@ -41,14 +41,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <!--onclick="validateQuizDetails()"-->
-                                    <a class="nav-link" id="quiz_questions_tab"   href="#quiz_questions" data-toggle="tab">
+                                    <!--"-->
+                                    <a class="nav-link" id="quiz_questions_tab"  onclick="validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#quiz_participants" data-toggle="tab">
+                                    <a class="nav-link" id="quiz_participants_tab" onclick="validateQuizQuestions()" href="#quiz_participants" data-toggle="tab">
                                         <i class="material-icons">assignment_ind</i>Participants
                                         <div class="ripple-container"></div>
                                     </a>
@@ -117,7 +117,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6 order-5 text-right">
-                                        <button class="mr-4 btn btn-info" onclick="sendQReq()"> Next </button>
+                                        <button class="mr-4 btn btn-info" onclick="validateQuizQuestions()"> Next </button>
                                     </div>
                                 </div>
 
@@ -126,9 +126,23 @@
                         </div>
 
                         <div class="tab-pane" id="quiz_participants">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 col-sm-8 col-xs-12 row justify-content-center">
+                                    <input type="email" placeholder="email address" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="email_inp">
+                                    <input type="button" class="btn-sm btn-success ml-3 col-md-3 col-sm-10 col-xs-10 mt-2" onclick="addEmail()" id="add_email" name="add_email" value="add email address">
+                                    <input type="button" data-toggle="modal" data-target="#email_modal" class="mt-2 btn-sm btn-outline-success ml-3 col-md-5 col-sm-10 col-xs-10" id="add_emailbatch" name="add_emailbatch" value="add batch of email addresses">
+                                </div>
 
+                                <div id="emailContainer" class="col-md-10 col-sm-12 col-xs-12"></div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center" id="noemail">
+                                    <img src="assets/img/email_holder.svg" width="250px" height="250px">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 mt-3">
+                                    <button onclick="sendQReq()" class=" btn btn-info float-right" style="display: none" id="final_save_btn"> Host Quiz </button>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -287,6 +301,66 @@
         </div>
     </div>
 
+    <!--------------------------------------------------EMAIL MODAL------------------------------------->
+    <div class="modal fade w-90" id="email_modal" tabindex="-1" role="dialog" aria-labelledby="email_modal_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="email_modal_title">Add Bunch of email addresses</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                            <div class="m-3">
+                                <textarea  id="bunch_emailbox" placeholder="Enter multiple email addresses ( Comma , separated)" required class="form-control"></textarea>
+                                <div class="alert alert-warning mt-2">Make sure each email address is in valid format</div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" onclick="addEmailBatch()">Add batch</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------CRED MODAL------------------------------------->
+    <div class="modal fade w-90" id="quiz_creds_modal" tabindex="-1" role="dialog" aria-labelledby="quiz_creds_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quiz_creds_title">Save credentials of your QUIZ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid text-center">
+                        <div>
+                            <img src="assets/img/security.gif" width="250px" height="250px">
+                        </div>
+                        <div class="m-3">
+                            Key : <div class="alert alert-success mt-2" id="quiz_creds_key"></div>
+                            Password : <div class="alert alert-success mt-2" id="quiz_creds_pass"></div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#quiz_creds_modal').modal('toggle'); window.location.href='hostQuiz.php';">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </div> <!--END OF main-panel class-->
 </div><!--END OF wrapper class-->
@@ -297,6 +371,7 @@
         if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
             !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
             document.getElementById("quiz_questions_tab").href = "";
+            $.notify({message: "Please fill all details properly"}, {type: 'warning', timer: 1000, placement: {from: 'bottom', align: 'right'}});
         }
         else{
 
@@ -309,6 +384,16 @@
             document.getElementById("quiz_questions_tab").href = "#quiz_questions";
         }
 
+    }
+    function validateQuizQuestions(){
+        if(Qdata.questionData.length === 0){
+            document.getElementById("quiz_participants_tab").href = "";
+            $.notify({message: "Please add question(s)"}, {type: 'warning', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+        }
+        else{
+            document.getElementById("quiz_participants_tab").href = "#quiz_participants";
+            document.getElementById('quiz_participants_tab').click();
+        }
     }
 
     let Qdata = {questionData:[]};
@@ -476,31 +561,104 @@
         $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
         renderInputQuestions(document.getElementById("previewContainer"),question, answer, Qdata.questionData.length);
     }
+
+    let emailList = [];
+    function addEmail(emailAddress = ""){
+        if(emailAddress === "" && !document.getElementById("email_inp").validity.valid && isValidEmail(document.getElementById("email_inp").value))
+            return;
+
+        if(emailAddress === "") emailAddress = document.getElementById("email_inp").value;
+
+        emailList.push(document.getElementById("email_inp").value);
+        let emailDiv = document.createElement("div");
+        emailDiv.id = "email_"+emailList.length;
+        emailDiv.classList.add("d-flex","p-2","mt-3");
+
+        let emailtext = document.createElement("span");
+        emailtext.classList.add("mr-auto","fs-5","align-middle");
+        emailtext.name = "email_data";
+        emailtext.innerText = emailAddress;
+
+        let removeBtn = document.createElement("button");
+        removeBtn.classList.add("btn-sm", "btn-outline-danger","ml-auto","mt-auto");
+        removeBtn.innerText = "Remove";
+
+        removeBtn.onclick = ()=>{
+            emailList.splice(emailList.indexOf(emailtext.innerText),1);
+            emailDiv.remove();
+            console.log(emailList);
+            if(emailList.length === 0){
+                document.getElementById("noemail").style.display = "block";
+                document.getElementById("final_save_btn").style.display = "none";
+            }
+
+        };
+
+        emailDiv.appendChild(emailtext);
+        emailDiv.appendChild(removeBtn);
+        document.getElementById("emailContainer").appendChild(emailDiv);
+        document.getElementById("noemail").style.display = "none";
+        document.getElementById("final_save_btn").style.display = "block";
+        document.getElementById("email_inp").value = "";
+    }
+
+    function addEmailBatch(){
+        if(!document.getElementById("bunch_emailbox").validity.valid) return;
+        let emailsArray = document.getElementById("bunch_emailbox").value.split(',');
+
+        let invalidAddresses = "";
+        for(let i = 0; i < emailsArray.length; i++){
+            if(isValidEmail(emailsArray[i].trim())){
+                addEmail(emailsArray[i]);
+            }
+            else{
+                invalidAddresses+="<br>"+emailsArray[i];
+            }
+        }
+        document.getElementById("bunch_emailbox").value = "";
+        if(invalidAddresses === ""){
+            $.notify({message: "Participants added successfully"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
+        }
+        else $.notify({message: "Following addresses are invalid:"+invalidAddresses}, {type: 'danger', timer: 3000, placement: {from: 'bottom', align: 'center'}});
+
+
+    }
+    function isValidEmail(email) {
+        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return typeof email === 'string'
+            && emailRegex.test(email)
+    }
+
     function sendAddQrequest(url, data, callback){
         console.log(data);
-    /*$.ajax({
+    $.ajax({
         data:data,
         url:url,
         method:"POST",
         success:function (response){
             if(response.result == "Success"){
-                callback(response.message,"success");
+                callback(response,"success");
             }
             else{
-                callback(response.message,"danger");
+                callback(response,"danger");
             }
         }
 
-    });*/
+    });
 }
 
 
 function sendQReq(){
-        sendAddQrequest('backend/QuizSave.php',Qdata,(message,type)=>{
-        $.notify({message: message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
-    });
-
-
+        Qdata.email = emailList;
+        sendAddQrequest('backend/QuizSave.php',Qdata,(response,type)=>{
+        $.notify({message: response.message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+            if(type !== "danger"){
+                document.getElementById("quiz_creds_key").innerText = response.quizKey;
+                document.getElementById("quiz_creds_pass").innerText = response.quizPass;
+                $("#quiz_creds_modal").modal("toggle");
+            }
+    }
+    );
 
 }
 

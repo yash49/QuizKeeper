@@ -314,8 +314,8 @@
                 exit("");
             }
         }
-
-        echo json_encode(array("result"=>"Success","message"=>"Quiz has been created successfully"));
+        //sendMail();
+        echo json_encode(array("result"=>"Success","message"=>"Quiz has been created successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));
 
         $conn->close();
         

@@ -44,6 +44,7 @@ function renderRadioQuestions(parent, question, options, answer, start){
     removeBtn.onclick=()=>{
         Qdata.questionData.splice(start-1,1);
         qCard.remove();
+        console.log(Qdata.questionData);
         parent.innerHTML = "";
         refreshView(parent);
     }

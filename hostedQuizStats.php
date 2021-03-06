@@ -27,13 +27,16 @@ renderSideBar("hostedQuizStats");
                         $result = $stmt->get_result();
                         $i = 1;
                         $dates = array();
-                        $color = RandomColor::one(array('hue'=>array('blue', 'green', 'red'),'luminosity'=>"bright"));
+                        $pastColors = array();
+                        $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
                         while ($row = $result->fetch_assoc()) {
                            // print_r($row);
                             $frDate = date_format(date_create($row['fromdate']),"d/m/Y");
                             if(!in_array($frDate,$dates)){
                                 array_unshift($dates, $frDate);
-                                $color = RandomColor::one(array('hue'=>array('blue', 'green', 'red',),'luminosity'=>"bright"));
+                                $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                                if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                                array_unshift($pastColors, $color);
                             }
                 ?>
 

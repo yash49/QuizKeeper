@@ -4,7 +4,13 @@
     top:0;
     background: linear-gradient(90deg,#3895D3,#0b75c9);
 }
-.card-header-purple{
+.custom-header{
+    border-radius: 5px;
+    z-index: 3;
+    color:white;
+    margin-top: -20px;
+    padding: 15px;
+    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(156 39 176 / 40%);
     background: linear-gradient(90deg,#3895D3,#0b75c9);
 }
 .stack-1{

@@ -1,13 +1,9 @@
 <?php
 require_once 'sidebar.php';
-
+require_once 'backend/connector.php';
 renderSideBar("dashboard");
 
-$db_servername = "remotemysql.com";
-$db_username = "qUH1Egciqc";
-$db_password = "yWQndClncV";
-$dbname = "qUH1Egciqc";
-$conn = new mysqli($db_servername, $db_username, $db_password, $dbname);
+
 $uid=$_SESSION['uid'];
 $query="select * from Users where uid=".$uid.";";
 $hostquery="select * from QuizHost where uid=".$uid.";";
@@ -81,7 +77,7 @@ call
                                     <br><br>
 
                                         <!--<span class="material-icons-outlined  fs-3 fw-bold">file_upload</span>-->
-                                    <font style="color: #283593">Quiz's attempted :
+                                    <font style="color: #283593" class="">Quiz's attempted :
                                     </font>
                                     <font style="color: #283593">
                                         <?php
@@ -107,6 +103,7 @@ call
 
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div> <!--END OF main-panel class-->
             </div><!--END OF wrapper class-->

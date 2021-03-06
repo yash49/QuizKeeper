@@ -23,7 +23,14 @@
     <script src="assets/js/plugins/bootstrap-notify.js"></script>
     <script src="assets/js/plugins/nouislider.min.js"></script>
     <script src="assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
-
+    <style>
+    .f1
+    {
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 25px;
+    }
+    </style>
     <?php if($tab == 'hostQuiz'){?>
     <script>
         window.onbeforeunload = function(event) {

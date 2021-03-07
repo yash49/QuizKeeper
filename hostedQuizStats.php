@@ -42,7 +42,7 @@ renderSideBar("hostedQuizStats");
                             }
                 ?>
 
-                            <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4">
+                            <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4" id="quiz_<?php echo $row['qid'];?>">
                             <div class="card text-center">
                                 <div style="background: <?php echo $color; ?>" class="custom-header ml-3 mr-3">
                                     <div class="row justify-content-center text-center">
@@ -76,16 +76,19 @@ renderSideBar("hostedQuizStats");
                                     </div>
                                 </div>
                                 <div class="card-footer justify-content-center">
-                                    <span class="optionsContainer">
-                                        <form id="<?php echo $row['qid'];?>" method="post" action="/quizkeeper/hostQuiz.php">
+                                    <span class="optionsContainer row justify-content-center">
+                                        <form class="col-md-6 col-sm-6 col-xs-12 col-lg-6" id="<?php echo $row['qid'];?>" method="post" action="/quizkeeper/hostQuiz.php">
                                             <input type="hidden" name="mode" value="ed+<?php echo $row['qid'];?>">
                                             <button name="edit_quiz_btn" class="btn btn-sm btn-outline-success" onclick="">
                                                 Edit Quiz
                                             </button>
+                                        </form>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                             <button name="remove_quiz_btn" onclick="removeQuiz(<?php echo $row['qid'];?>)" class="btn btn-sm btn-outline-danger">
                                                 Remove Quiz
                                             </button>
-                                        </form>
+                                        </div>
+
 
 
                                     </span>

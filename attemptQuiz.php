@@ -12,9 +12,9 @@ renderSideBar("attemptQuiz");
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-sm-8 col-xs-12 justify-content-center">
                         <form action="quizkeeper/backend/AttemptQuiz.php" name="quiz_cred_form" method="post">
-                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="key_inp">
-                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="password_inp">
-                            <button class="btn btn-sm btn-success ml-3 mt-2" onclick="startQuiz()" id="attempt_quiz_btn" name="attempt_quiz_btn">Attempt Quiz</button>
+                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="quiz_key">
+                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_password" name="quiz_password">
+                            <input type="submit" class="btn btn-sm btn-success ml-3 mt-2" id="attempt_quiz_btn" name="attempt_quiz_btn" value="Attempt Quiz">
                         </form>
                     </div>
 
@@ -23,13 +23,6 @@ renderSideBar("attemptQuiz");
                     <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="overflow: hidden" id="attempt_banner">
                         <img src="assets/img/exam_header_bg.svg" width="350px" height="350px">
                     </div>
-                    <form method="POST" action="http://localhost/QuizKeeper/backend/AttemptQuiz.php">
-                    <input type="text" name="quiz_key"/>
-                    <input type="text" name="quiz_password"/>
-                    
-                    <input type="Submit"/>
-
-                </form>
                 </div>
             </div>
         </div>

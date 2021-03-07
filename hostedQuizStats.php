@@ -8,7 +8,7 @@ require_once 'backend/connector.php';
 renderSideBar("hostedQuizStats");
 
 ?>
-
+<script src="js/controller.js"></script>
 <div class="content ml-3 mr-3">
 
         <div class="card card-plain ">

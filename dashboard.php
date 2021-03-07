@@ -44,7 +44,7 @@ $row = $result->fetch_assoc()
                             </div>
                             <div class="card-body justify-content-center fs-3 fw-bold" >
 
-                                <div class="col-md-12 col-sm-12 col-xs-12" style="">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br>
                                     <span class="material-icons fs-3 fw-bold" style="color: #0b3251">
 face

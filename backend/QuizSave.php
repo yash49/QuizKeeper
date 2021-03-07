@@ -4,6 +4,38 @@
     session_start();
     header("Content-Type: application/json");
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+
+    require '../vendor/autoload.php';
+
+    function sendMail($to,$subject,$body)
+    {
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPAuth = true;
+
+        $mail->Username = 'quiz.keeper10@gmail.com';
+        $mail->Password = 'Quiz_100';
+        $mail->setFrom('quiz.keeper10@gmail.com', 'Quiz Keeper');
+
+        foreach($to as $email)
+            $mail->addAddress($email);
+
+        $mail->Subject = $subject;
+
+        $mail->Body = $body;
+
+        if (!$mail->send()) {
+           // echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+           // echo 'Message sent!';
+        }
+    }
+
     function getQuestionTypeInt($s)
     {
         $a = array("radio"=>3,"checkbox"=>2,"loose_text"=>1,"strict_text"=>0);
@@ -214,7 +246,7 @@
 
     }
 
-    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionCount,questionsData");
+    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionCount,questionsData,email");
     
     $allareset = 1;
 
@@ -314,7 +346,25 @@
                 exit("");
             }
         }
-        //sendMail();
+        
+        //send mail to participants
+
+        $emaillist = $_POST['email'];
+
+        $to = $emaillist;
+
+        $subject = "Quiz Keeper | You have been Invited to Attempt a Quiz";
+        $body = "Quiz Title : $quiz_title\n";
+        $body .= "Quiz Description : $quiz_desc\n";
+        $body .= "Quiz Start Date : $quiz_start_date\n";
+        $body .= "Quiz End Date : $quiz_end_date\n\n";
+        $body .= "Quiz Key : $quiz_id\n";
+        $body .= "Quiz Password : $quiz_password\n";
+        
+
+        sendMail($to,$subject,$body);
+    
+
         echo json_encode(array("result"=>"Success","message"=>"Quiz has been created successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));
 
         $conn->close();

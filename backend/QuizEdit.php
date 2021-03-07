@@ -293,9 +293,9 @@
     }
     
 
-    $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData,email");
+    $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionData,email,quiz_key,quiz_password");
     
-    $allareset = 1;
+    $allareset = TRUE;
 
     foreach($mandatory as $i)
     {
@@ -307,7 +307,7 @@
     {
         echo json_encode(array("result"=>"Failed","message"=>"User not logged in"));
     }
-    else if($allareset==1)
+    else if($allareset)
     {
         $qid = $_POST['quiz_id'];
         $quiz_title  = $_POST['quiz_title'];
@@ -315,7 +315,9 @@
         $quiz_start_date  = date("Y-m-d H:i:s",$_POST['quiz_start_date']);
         $quiz_end_date  = date("Y-m-d H:i:s",$_POST['quiz_end_date']);
         $quiz_shuffle  = $_POST['quiz_shuffle'];
-
+        $quiz_id = $_POST['quiz_key'];
+        $quiz_password = $_POST['quiz_password'];
+        
         require 'connector.php';
         
         
@@ -396,6 +398,8 @@
                 exit("");
             }
         }
+
+        
         
         //send mail to participants
 

@@ -4,6 +4,7 @@
     //require_once 'QuestionsRender.php';
     renderSideBar("hostQuiz");
 ?>
+<script src="js/QuestionRenderer.js"></script>
 <div class="content ml-4 mr-4">
     <script>let Qdata = {questionData:[]}; let emailList = []; editMode = false;</script>
         <?php
@@ -86,7 +87,7 @@
                                     temp.type = "<?php echo $question['type'];?>";
                                     Qdata.questionData.push(temp);
                                 <?php } } ?>
-                                console.log(Qdata);
+                                console.log("from php:",Qdata);
                             </script>
     <?php
                         }
@@ -111,13 +112,13 @@
                                 </li>
                                 <li class="nav-item">
                                     <!--"-->
-                                    <a class="nav-link" id="quiz_questions_tab"  onclick="if(!editMode)validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
+                                    <a class="nav-link" id="quiz_questions_tab"  onclick="validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="quiz_participants_tab" onclick="if(!editMode)validateQuizQuestions()" href="#quiz_participants" data-toggle="tab">
+                                    <a class="nav-link" id="quiz_participants_tab" onclick="validateQuizQuestions()" href="#quiz_participants" data-toggle="tab">
                                         <i class="material-icons">assignment_ind</i>Participants
                                         <div class="ripple-container"></div>
                                     </a>
@@ -131,29 +132,29 @@
                         <div class="tab-pane active" id="quiz_details">
                             <form class="row p-3" id="quiz_details_form" onsubmit="event.preventDefault();document.getElementById('quiz_questions_tab').click()">
                                 <div class="col-md-6 mb-4 order-md-0 order-sm-0 order-xs-0 col-sm-12">
-                                    <input type="text" required name="quiz_title" placeholder="Quiz Title"  class="form-control">
+                                    <input type="text" value="<?php if($editMode) echo $quizDetails['title']; ?>" required name="quiz_title" placeholder="Quiz Title"  class="form-control">
                                 </div>
                                 <div class="col-md-6 mb-4 order-md-2 order-sm-1 order-xs-1 col-sm-12">
-                                    <textarea required name="quiz_desc" placeholder="Quiz Description" class="form-control"></textarea>
+                                    <textarea required name="quiz_desc" placeholder="Quiz Description" class="form-control"><?php if($editMode) echo $quizDetails['description']; ?></textarea>
                                 </div>
 
                                 <div class="col-md-6 mb-4 order-md-1 order-sm-2 order-xs-2 col-sm-12">
-                                    <input type="datetime-local" required name="quiz_start_date" placeholder="Start At " class="form-control">
+                                    <input type="datetime-local" value="<?php if($editMode) echo (new DateTime($quizDetails['fromdate']))->setTimezone(new DateTimeZone("Asia/Kolkata"))->format('Y-m-d\TH:i:s'); ?>" required name="quiz_start_date" placeholder="Start At " class="form-control">
                                 </div>
 
                                 <div class="col-md-6 mb-4 order-md-3 order-sm-3 order-xs-3 col-sm-12">
-                                    <input type="datetime-local" required name="quiz_end_date" placeholder="Ends At " class="form-control">
+                                    <input type="datetime-local" value="<?php if($editMode) echo (new DateTime($quizDetails['todate']))->setTimezone(new DateTimeZone("Asia/Kolkata"))->format('Y-m-d\TH:i:s'); ?>" required name="quiz_end_date" placeholder="Ends At " class="form-control">
                                 </div>
 
 
                                 <div class="radio col-md-6 order-md-4 mt-2 order-sm-4 order-xs-4 col-sm-12">
                                         <label class="fs-5 text-dark">
-                                            <input type="checkbox" class="fs-5" name="quiz_shuffle">
+                                            <input type="checkbox" checked="<?php if($editMode) echo $quizDetails['shuffle']?true:false; ?>" class="fs-5" name="quiz_shuffle">
                                             Shuffle Questions?
                                         </label>
                                 </div>
                                 <div class="col-6 order-5 text-right">
-                                    <button class="mr-4 btn btn-info" onclick="if(!editMode)validateQuizDetails()"> Next </button>
+                                    <button class="mr-4 btn btn-info" onclick="validateQuizDetails()"> Next </button>
                                 </div>
                             </form>
 
@@ -186,7 +187,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6 order-5 text-right">
-                                        <button class="mr-4 btn btn-info" onclick="if(!editMode)validateQuizQuestions()"> Next </button>
+                                        <button class="mr-4 btn btn-info" onclick="validateQuizQuestions()"> Next </button>
                                     </div>
                                 </div>
 
@@ -434,8 +435,20 @@
 </div> <!--END OF main-panel class-->
 </div><!--END OF wrapper class-->
 
-<script src="js/QuestionRenderer.js"></script>
+
 <script>
+
+    if(editMode){
+        Qdata.questionData.forEach((temp,index)=>{
+            if(temp.type == "radio")
+                renderRadioQuestions(document.getElementById("previewContainer"),temp.question, temp.options.split(","), temp.answer, index+1);
+            if(temp.type == "checkbox")
+                renderCheckboxQuestions(document.getElementById("previewContainer"),temp.question, temp.options.split(","), temp.answer, index+1);
+            else if(temp.type == "loose_text" || temp.type == "strict_text" )
+                renderInputQuestions(document.getElementById("previewContainer"),temp.question, temp.answer, index+1);
+        })
+
+    }
     function validateQuizDetails(){
         if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
             !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
@@ -447,7 +460,6 @@
             Qdata.quiz_title = document.getElementsByName("quiz_title")[0].value;
             Qdata.quiz_desc = document.getElementsByName("quiz_desc")[0].value;
             Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked?1:0;
-            console.log(document.getElementsByName("quiz_start_date")[0].value);
             Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
             Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
 
@@ -456,6 +468,10 @@
 
     }
     function validateQuizQuestions(){
+        if(editMode && Qdata.questionData.length > 0){
+            document.getElementById("quiz_participants_tab").href = "#quiz_participants";
+            document.getElementById('quiz_participants_tab').click();return;
+        }
         if(Qdata.questionData.length === 0){
             document.getElementById("quiz_participants_tab").href = "";
             $.notify({message: "Please add question(s)"}, {type: 'warning', timer: 1000, placement: {from: 'bottom', align: 'right'}});
@@ -656,7 +672,7 @@
         removeBtn.onclick = ()=>{
             emailList.splice(emailList.indexOf(emailtext.innerText),1);
             emailDiv.remove();
-            console.log(emailList);
+
             if(emailList.length === 0){
                 document.getElementById("noemail").style.display = "block";
                 document.getElementById("final_save_btn").style.display = "none";
@@ -700,7 +716,6 @@
     }
 
     function sendAddQrequest(url, data, callback){
-        console.log(data);
     $.ajax({
         data:data,
         url:url,
@@ -720,16 +735,18 @@
 
 function sendQReq(){
         Qdata.email = emailList;
-        sendAddQrequest('backend/QuizSave.php',Qdata,(response,type)=>{
-        $.notify({message: response.message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
-            if(type !== "danger"){
-                document.getElementById("quiz_creds_key").innerText = response.quizKey;
-                document.getElementById("quiz_creds_pass").innerText = response.quizPass;
-                $("#quiz_creds_modal").modal("toggle");
-            }
-    }
-    );
-
+        console.log(Qdata);
+        if(!editMode){
+            sendAddQrequest('backend/QuizSave.php',Qdata,(response,type)=>{
+                    $.notify({message: response.message}, {type: type, timer: 2000, placement: {from: 'top', align: 'right'}});
+                    if(type !== "danger"){
+                        document.getElementById("quiz_creds_key").innerText = response.quizKey;
+                        document.getElementById("quiz_creds_pass").innerText = response.quizPass;
+                        $("#quiz_creds_modal").modal("toggle");
+                    }
+                }
+            );
+        }
 }
 
 </script>

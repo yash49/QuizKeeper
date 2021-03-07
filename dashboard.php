@@ -6,7 +6,7 @@ renderSideBar("dashboard");
 
 $uid=$_SESSION['uid'];
 $query="select * from Users where uid=".$uid.";";
-$hostquery="select * from QuizHost where uid=".$uid.";";
+$hostquery="select * from Quiz where uid=".$uid.";";
 $attemptquery="select * from QuizAttempt where uid=".$uid.";";
 $stmt = $conn->prepare($query);
 $stmt->execute();

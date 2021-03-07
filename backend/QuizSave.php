@@ -208,7 +208,7 @@
         return $qid;
     }
 
-    function getIdPass($n)
+    function getIdPass($n,$conn)
     {
         $id = "";
         $pass = "";
@@ -218,7 +218,6 @@
         $random=array_rand($a,$n);
         foreach($random as $i) $pass.=$a[$i];
 
-        require 'connector.php';
 
         $stmt = $conn->prepare("select qid from Quiz where quizkey=? or password=?");
         $stmt->bind_param("ss",$id,$pass);
@@ -229,7 +228,7 @@
             if($result -> num_rows>0)
             {
                 $conn->close();
-                return getIdPass($n);
+                return getIdPass($n,$conn);
             }
             else
             {

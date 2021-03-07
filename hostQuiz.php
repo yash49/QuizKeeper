@@ -69,7 +69,7 @@
                             ?>
                             <script>
                                 editMode = true;
-                                Qdata.quiz_id = "<?php echo $questionsDetails['details']['qid']; ?>"
+                                Qdata.quiz_id = "<?php echo $questionsDetails['details']['qid']; ?>";
                                 Qdata.quiz_title = "<?php echo $questionsDetails['details']['title']; ?>";
                                 Qdata.quiz_desc = "<?php echo $questionsDetails['details']['description']; ?>";
                                 Qdata.quiz_start_date = "<?php echo $questionsDetails['details']['fromdate']; ?>";

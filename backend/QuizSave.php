@@ -244,7 +244,7 @@
 
     }
 
-    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData");
+    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionData");
     
     $allareset = 1;
 
@@ -311,7 +311,7 @@
         
         // Question Structure
         
-        // var aaa = {questionsData:[
+        // var aaa = {questionData:[
         //     {
         //         question:"WHAT IS...",
         //         answer:"ABC",

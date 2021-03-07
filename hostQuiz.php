@@ -63,7 +63,7 @@
                                     array_push($questionsDetails, $temp_q);
                                 }
                             }
-
+                                print_r($quizDetails);
                             /*------------Fetch all Questions-----------------*/
 
                             ?>
@@ -75,8 +75,8 @@
                                 Qdata.quiz_start_date = "<?php echo $questionsDetails['details']['fromdate']; ?>";
                                 Qdata.quiz_end_date = "<?php echo $questionsDetails['details']['todate']; ?>";
                                 Qdata.quiz_shuffle = <?php echo $questionsDetails['details']['shuffle']?"true":"false"; ?>;
-                                Qdata.quiz_key = <?php echo $questionsDetails['details']['quizkey']; ?>;
-                                Qdata.quiz_password = <?php echo $questionsDetails['details']['password']; ?>;
+                                Qdata.quiz_key = "<?php echo $quizDetails['quizkey']; ?>";
+                                Qdata.quiz_password = "<?php echo $quizDetails['password']; ?>";
                                 let temp = {};
                                 <?php foreach ($questionsDetails as $key=>$question){
 
@@ -152,7 +152,7 @@
 
                                 <div class="radio col-md-6 order-md-4 mt-2 order-sm-4 order-xs-4 col-sm-12">
                                         <label class="fs-5 text-dark">
-                                            <input type="checkbox" checked="<?php if($editMode) echo ($quizDetails['shuffle'] == 1?true:false); ?>" class="fs-5" name="quiz_shuffle">
+                                            <input type="checkbox" <?php if($editMode) echo ($quizDetails['shuffle'] == 1?"checked":""); ?> class="fs-5" name="quiz_shuffle">
                                             Shuffle Questions?
                                         </label>
                                 </div>

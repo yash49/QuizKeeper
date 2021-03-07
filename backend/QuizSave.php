@@ -268,7 +268,7 @@
 
         require 'connector.php';
         
-        $idpass = getIdPass(8);
+        $idpass = getIdPass(8,$conn);
 
         if($idpass==-1)
         {

@@ -4,6 +4,9 @@
     //require_once 'QuestionsRender.php';
     renderSideBar("hostQuiz");
 ?>
+<script> window.onbeforeunload = ()=>{
+    return confirm("are you sure?");
+    }</script>
 <script src="js/QuestionRenderer.js"></script>
 <div class="content ml-4 mr-4">
     <script>let Qdata = {questionData:[]}; let emailList = []; editMode = false;</script>

@@ -43,7 +43,7 @@
     // returns id of inserted qns
     function insertCheckboxQuestion($question,$conn)
     {
-        $qns = $question['questoion'];
+        $qns = $question['question'];
         $options = $question['options'];
         $correctans = $question['answer'];
         $sql="INSERT INTO CheckboxQns (qns,options,correctans) VALUES ('".$qns."','".$options."','".$correctans."'); SELECT LAST_INSERT_ID() as yoo;";
@@ -112,7 +112,7 @@
         }
         if($question['type']=="checkbox")
         {
-            return insertRadioQuestion($question,$conn);
+            return insertCheckboxQuestion($question,$conn);
         }
         else if($question["type"]=="loose_text" || $question["type"]=="strict_text")
         {

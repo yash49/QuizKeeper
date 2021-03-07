@@ -1,30 +1,99 @@
 <?php
     require_once 'sidebar.php';
-    require_once 'QuestionsRender.php';
+    require_once 'backend/connector.php';
+    //require_once 'QuestionsRender.php';
     renderSideBar("hostQuiz");
 ?>
 <div class="content ml-4 mr-4">
+    <script>let Qdata = {questionData:[]}; let emailList = []; editMode = false;</script>
         <?php
-                /*$start = 1;
-                $qnsans = array(1=>array('question'=>"What is bootstrap?",
-                                        'option'=>array("UI kit", "UI framework", "UI fake", "For Lazy devs.")),
-                                2=>array('question'=>"What is CSS?",
-                                                'option'=>array("JS", "CSS", "SV", "Yash")));
-                renderRadioQuestions($qnsans, $start);
+                function getQuestionTableFromInt($s){
+                    $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
+                    return $a[$s];
+                }
+                function getQuestionTypeInt($s){
+                    $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
+                    return $a[$s];
+                }
 
-                $qnsans = array(3=>array('question'=>"QNS 1 desc?",
-                                        'option'=>array("A","B","C")),
-                                4=>array('question'=>"QNS 2 desc?",
-                                                'option'=>array("SP")));
+                $editMode = false;
+                $qid = -1;
+                if(isset($_POST['mode']) && $_POST['mode'].strpos($_POST['mode'],"ed") != false) {
+                    $editMode = true;
+                    $qid = substr($_POST['mode'], 2);
 
-                renderCheckBoxQuestions($qnsans, $start);
+                    $query = "SELECT * FROM Quiz WHERE qid = ? AND uid = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("ii", $qid, $_SESSION['uid']);
 
-                $qns = array(5=>array("question"=>"Kya aapke toothpaste me namak he?"));
-                renderTextQuestions($qns,$start);
-                
-                $qns = array(6=>array("question"=>"Who is god?"));
-                renderTextQuestions($qns,$start);*/
-        ?>
+                    $quizDetails = null;
+                    if ($stmt->execute() === TRUE) {
+                        $result = $stmt->get_result();
+                        $quizDetails = $result->fetch_assoc();
+
+                        $query = "SELECT * FROM Questions WHERE qid = ?";
+                        $qst_stmt = $conn->prepare($query);
+                        $qst_stmt->bind_param("i", $qid);
+
+                        $questionsDetails = array();
+                        $questionsDetails['details']= $quizDetails;
+                        if ($qst_stmt->execute() === TRUE) {
+                            $result = $qst_stmt->get_result();
+                            while ($qst_row = $result->fetch_assoc()) {
+                                $temp_q = array();
+                                $q_table = getQuestionTableFromInt($qst_row['type']);
+
+                                $query = "SELECT * FROM " . $q_table[0] . " WHERE " . $q_table[1] . " = ?";
+                                $qt_stmt = $conn->prepare($query);
+//                            if(!$qt_stmt)echo $query."<br>";
+
+                                $qt_stmt->bind_param("i", $qst_row['xid']);
+                                if ($qt_stmt->execute() === TRUE) {
+                                    $question_result = $qt_stmt->get_result();
+                                    $temp_q = $question_result->fetch_assoc();
+                                    $temp_q['mark'] = $qst_row['marks'];
+                                    $temp_q['qstid'] = $temp_q[$q_table[1]];
+                                    $temp_q['question'] = $temp_q['qns'];
+                                    $temp_q['type'] = getQuestionTypeInt($qst_row['type']);
+                                    if(isset($temp_q['correctans']))
+                                        $temp_q['answer'] = $temp_q['correctans'];
+                                    else
+                                        $temp_q['answer'] = $temp_q['ans'];
+                                    array_push($questionsDetails, $temp_q);
+                                }
+                            }
+
+                            /*------------Fetch all Questions-----------------*/
+
+                            ?>
+                            <script>
+                                editMode = true;
+                                Qdata.quiz_title = "<?php echo $questionsDetails['details']['title']; ?>";
+                                Qdata.quiz_desc = "<?php echo $questionsDetails['details']['description']; ?>";
+                                Qdata.quiz_start_date = "<?php echo $questionsDetails['details']['fromdate']; ?>";
+                                Qdata.quiz_end_date = "<?php echo $questionsDetails['details']['todate']; ?>";
+                                Qdata.quiz_shuffle = <?php echo $questionsDetails['details']['shuffle']?"true":"false"; ?>;
+                                let temp = {};
+                                <?php foreach ($questionsDetails as $key=>$question){
+
+                                    if($key !== "details"){
+                                ?>
+                                    temp = {};
+                                    temp.question = "<?php echo $question['question'];?>";
+                                    temp.answer = "<?php echo $question['answer'];?>";
+                                    temp.options = "<?php if(isset($question['options']))echo $question['options'];?>";
+                                    temp.mark = "<?php echo $question['mark'];?>";
+                                    temp.type = "<?php echo $question['type'];?>";
+                                    Qdata.questionData.push(temp);
+                                <?php } } ?>
+                                console.log(Qdata);
+                            </script>
+    <?php
+                        }
+                    }
+                }
+
+                        ?>
 
     <div class="row justify-content-center">
         <div class="col-lg-10 col-md-10 col-sm-12">
@@ -42,13 +111,13 @@
                                 </li>
                                 <li class="nav-item">
                                     <!--"-->
-                                    <a class="nav-link" id="quiz_questions_tab"  onclick="validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
+                                    <a class="nav-link" id="quiz_questions_tab"  onclick="if(!editMode)validateQuizDetails()"  href="#quiz_questions" data-toggle="tab">
                                         <i class="material-icons">contact_support</i> Questions
                                         <div class="ripple-container"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="quiz_participants_tab" onclick="validateQuizQuestions()" href="#quiz_participants" data-toggle="tab">
+                                    <a class="nav-link" id="quiz_participants_tab" onclick="if(!editMode)validateQuizQuestions()" href="#quiz_participants" data-toggle="tab">
                                         <i class="material-icons">assignment_ind</i>Participants
                                         <div class="ripple-container"></div>
                                     </a>
@@ -84,7 +153,7 @@
                                         </label>
                                 </div>
                                 <div class="col-6 order-5 text-right">
-                                    <button class="mr-4 btn btn-info" onclick="validateQuizDetails()"> Next </button>
+                                    <button class="mr-4 btn btn-info" onclick="if(!editMode)validateQuizDetails()"> Next </button>
                                 </div>
                             </form>
 
@@ -117,7 +186,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6 order-5 text-right">
-                                        <button class="mr-4 btn btn-info" onclick="validateQuizQuestions()"> Next </button>
+                                        <button class="mr-4 btn btn-info" onclick="if(!editMode)validateQuizQuestions()"> Next </button>
                                     </div>
                                 </div>
 
@@ -378,6 +447,7 @@
             Qdata.quiz_title = document.getElementsByName("quiz_title")[0].value;
             Qdata.quiz_desc = document.getElementsByName("quiz_desc")[0].value;
             Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked?1:0;
+            console.log(document.getElementsByName("quiz_start_date")[0].value);
             Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
             Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
 
@@ -396,7 +466,7 @@
         }
     }
 
-    let Qdata = {questionData:[]};
+
     function addOptions(type){
 
         let handler_form = document.getElementById(type=='radio'?'radio_q_form':'check_q_form');
@@ -562,7 +632,7 @@
         renderInputQuestions(document.getElementById("previewContainer"),question, answer, Qdata.questionData.length);
     }
 
-    let emailList = [];
+
     function addEmail(emailAddress = ""){
         if(emailAddress === "" && !document.getElementById("email_inp").validity.valid && isValidEmail(document.getElementById("email_inp").value))
             return;

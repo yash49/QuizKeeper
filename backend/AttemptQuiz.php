@@ -27,6 +27,25 @@
 
     require 'connector.php';
 
-    $stmt = $conn->prepare("select * from Quiz where")
+    $quiz_key = $_POST['quiz_key'];
+    $quiz_password = $_POST['quiz_password'];
+    
+
+    $stmt = $conn->prepare("select * from Quiz where quizkey=? and password=?");
+    $stmt->bind_param('ss',$quiz_key,$quiz_password);
+
+    if($stmt->execute() === TRUE)
+    {
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $qid = $row['qid'];
+        }
+    }
+    else
+    {
+        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+        die();
+    }
 
 ?>

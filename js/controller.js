@@ -59,3 +59,23 @@ function sendVerifyRequest(url, data, callback){
 }
 
 
+function removeQuiz(qid){
+    let data = {quiz_id:qid};
+    $.ajax({
+        data:data,
+        url:'backend/QuizDelete.php',
+        method:"POST",
+        success:function (response){
+            switch(response.result){
+
+                case "Success":
+                    callback(response.message,"success");
+                    window.location.href = "hostedQuizStats.php";
+                    break;
+                case "Fail":
+                    callback(response.message,"danger");
+                    break;
+            }
+        }
+    });
+}

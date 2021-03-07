@@ -12,7 +12,7 @@ renderSideBar("hostedQuizStats");
 <div class="content ml-3 mr-3">
 
         <div class="card card-plain ">
-            <div class="card-header card-header-primary ml-3 mr-3">
+            <div class="card-header card-header-info ml-3 mr-3">
                 <span class="card-title fs-4 "><span class="material-icons align-middle mr-2">event</span>
                     Upcoming Quizzes
                 </span>
@@ -30,13 +30,13 @@ renderSideBar("hostedQuizStats");
                         $i = 1;
                         $dates = array();
                         $pastColors = array();
-                        $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                        $color = RandomColor::one(array('hue'=>array('green',160),'luminosity'=>"dark"));
                         while ($row = $result->fetch_assoc()) {
                            // print_r($row);
                             $frDate = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y");
                             if(!in_array($frDate,$dates)){
                                 array_unshift($dates, $frDate);
-                                $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                                $color = RandomColor::one(array('hue'=>array('green',160),'luminosity'=>"dark"));
                                 if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
                                 array_unshift($pastColors, $color);
                             }
@@ -82,7 +82,7 @@ renderSideBar("hostedQuizStats");
                                             <button name="edit_quiz_btn" class="btn btn-sm btn-outline-success" onclick="">
                                                 Edit Quiz
                                             </button>
-                                            <button name="remove_quiz_btn" class="btn btn-sm btn-outline-danger">
+                                            <button name="remove_quiz_btn" onclick="removeQuiz(<?php echo $row['qid'];?>)" class="btn btn-sm btn-outline-danger">
                                                 Remove Quiz
                                             </button>
                                         </form>
@@ -119,13 +119,13 @@ renderSideBar("hostedQuizStats");
                 $i = 1;
                 $dates = array();
                 $pastColors = array();
-                $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                $color = RandomColor::one(array('hue'=>array('green', 160),'luminosity'=>"dark"));
                 while ($row = $result->fetch_assoc()) {
                     // print_r($row);
                     $frDate = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y");
                     if(!in_array($frDate,$dates)){
                         array_unshift($dates, $frDate);
-                        $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                        $color = RandomColor::one(array('hue'=>array('green', 160),'luminosity'=>"dark"));
                         if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
                         array_unshift($pastColors, $color);
                     }

@@ -63,7 +63,7 @@
                                     array_push($questionsDetails, $temp_q);
                                 }
                             }
-                                print_r($quizDetails);
+                               // print_r($quizDetails);
                             /*------------Fetch all Questions-----------------*/
 
                             ?>

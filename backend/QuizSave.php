@@ -200,11 +200,10 @@
         }
         else
         {
-            $conn->close();
+
             return -1;
         }
 
-        $conn->close();	
         return $qid;
     }
 
@@ -227,18 +226,15 @@
             $result = $stmt->get_result();
             if($result -> num_rows>0)
             {
-                $conn->close();
                 return getIdPass($n,$conn);
             }
             else
             {
-                $conn->close();
                 return array($id,$pass);
             }
         }
         else
         {
-            $conn->close();
             return -1;
         }
 

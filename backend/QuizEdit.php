@@ -293,7 +293,7 @@
     }
     
 
-    $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionData,email,quiz_key,quiz_password");
+    $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionData,quiz_key,quiz_password");
     
     $allareset = TRUE;
 
@@ -317,7 +317,7 @@
         $quiz_shuffle  = $_POST['quiz_shuffle'];
         $quiz_id = $_POST['quiz_key'];
         $quiz_password = $_POST['quiz_password'];
-        
+
         require 'connector.php';
         
         
@@ -380,8 +380,15 @@
        
         // Logic to delete previous questions
 
-        deleteQuestionsOfQuiz($qid,$conn);
+        $statuss = deleteQuestionsOfQuiz($qid,$conn);
         
+        if($statuss==0)
+        {
+            echo json_encode(array("result"=>"Failed","message"=>"Error while deleting Questions"));
+            $conn->close();
+            exit("");
+        }
+
         // Now I will add neww Questions
 
         $questions = $_POST['questionData'];
@@ -402,22 +409,23 @@
         
         
         //send mail to participants
+        if(isset($_POST['email']))
+        {
+            $emaillist = $_POST['email'];
 
-        $emaillist = $_POST['email'];
+            $to = $emaillist;
 
-        $to = $emaillist;
+            $subject = "Quiz Keeper | You have been Invited to Attempt a Quiz";
+            $body = "Quiz Title : $quiz_title\n";
+            $body .= "Quiz Description : $quiz_desc\n";
+            $body .= "Quiz Start Date : $quiz_start_date\n";
+            $body .= "Quiz End Date : $quiz_end_date\n\n";
+            $body .= "Quiz Key : $quiz_id\n";
+            $body .= "Quiz Password : $quiz_password\n";
+            
 
-        $subject = "Quiz Keeper | You have been Invited to Attempt a Quiz";
-        $body = "Quiz Title : $quiz_title\n";
-        $body .= "Quiz Description : $quiz_desc\n";
-        $body .= "Quiz Start Date : $quiz_start_date\n";
-        $body .= "Quiz End Date : $quiz_end_date\n\n";
-        $body .= "Quiz Key : $quiz_id\n";
-        $body .= "Quiz Password : $quiz_password\n";
-        
-
-        sendMail($to,$subject,$body);
-    
+            sendMail($to,$subject,$body);
+        }
 
         echo json_encode(array("result"=>"Success","message"=>"Quiz has been updated successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));
 

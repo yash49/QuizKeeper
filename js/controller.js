@@ -69,11 +69,13 @@ function removeQuiz(qid){
             switch(response.result){
 
                 case "Success":
-                    callback(response.message,"success");
-                    window.location.href = "hostedQuizStats.php";
+                   // callback(response.message,"success");
+                    $.notify({message: "Quiz deleted"}, {type: 'success', timer: 1000, placement: {from: 'top', align: 'right'}});
+                    document.getElementById("quiz_"+qid).remove();
                     break;
                 case "Fail":
-                    callback(response.message,"danger");
+                    $.notify({message: "Error occured while deleting the quiz!"}, {type: 'danger', timer: 1000, placement: {from: 'top', align: 'right'}});
+                    //callback(response.message,"danger");
                     break;
             }
         }

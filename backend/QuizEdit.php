@@ -391,7 +391,7 @@
             $status = addQuestionToQuiz($qid,$question,$conn);
             if($status==0)
             {
-                echo json_encode(array("result"=>"Failed","message"=>"Error while adding Questions"));
+                echo json_encode(array("result"=>"Failed","message"=>"Error while updating Questions"));
                 $conn->close();
                 exit("");
             }
@@ -415,7 +415,7 @@
         sendMail($to,$subject,$body);
     
 
-        echo json_encode(array("result"=>"Success","message"=>"Quiz has been created successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));
+        echo json_encode(array("result"=>"Success","message"=>"Quiz has been updated successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));
 
         $conn->close();
         

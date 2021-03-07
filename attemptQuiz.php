@@ -23,6 +23,13 @@ renderSideBar("attemptQuiz");
                     <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="overflow: hidden" id="attempt_banner">
                         <img src="assets/img/exam_header_bg.svg" width="350px" height="350px">
                     </div>
+                    <form method="POST" action="http://localhost/QuizKeeper/backend/AttemptQuiz.php">
+                    <input type="text" name="quiz_key"/>
+                    <input type="text" name="quiz_password"/>
+                    
+                    <input type="Submit"/>
+
+                </form>
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@ renderSideBar("hostedQuizStats");
                                 <div style="background: <?php echo $color; ?>" class="custom-header ml-3 mr-3">
                                     <div class="row justify-content-center text-center">
                                         <div class="col-12 text-center">
-                                            <strong class="fs-3 p-2" style="color:#2d2f60; background: #fff;opacity:0.5; border-radius: 8px;"><?php echo $i.".".$row['title']; ?></strong>
+                                            <div class="fs-3 p-2" style="color:#2d2f60; background: #fff;opacity:0.5; border-radius: 8px;"><strong><?php echo $i.".".$row['title']; ?></strong></div>
                                         </div>
 
                                         <div class="col-md-6 col-sm-6 col-xs-6 fs-4 mt-3">

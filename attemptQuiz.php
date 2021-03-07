@@ -11,8 +11,11 @@ renderSideBar("attemptQuiz");
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-sm-8 col-xs-12 justify-content-center">
-                        <input type="email" placeholder="email address" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="email_inp">
-                        <button class="btn btn-sm btn-success ml-3 mt-2" onclick="startQuiz()" id="attempt_quiz_btn" name="attempt_quiz_btn">Attempt Quiz</button>
+                        <form action="quizkeeper/backend/AttemptQuiz.php" name="quiz_cred_form" method="post">
+                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="key_inp">
+                            <input type="email" placeholder="Quiz Key" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="email_inp" name="password_inp">
+                            <button class="btn btn-sm btn-success ml-3 mt-2" onclick="startQuiz()" id="attempt_quiz_btn" name="attempt_quiz_btn">Attempt Quiz</button>
+                        </form>
                     </div>
 
                     <div id="emailContainer" class="col-md-10 col-sm-12 col-xs-12"></div>

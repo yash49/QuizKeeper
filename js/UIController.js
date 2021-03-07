@@ -304,9 +304,10 @@ function sendQReq(){
                 document.getElementById("quiz_creds_key").innerText = response.quizKey;
                 document.getElementById("quiz_creds_pass").innerText = response.quizPass;
                 $("#quiz_creds_modal").modal("toggle");
-                document.getElementById("loadbar").style.display = "none";
 
             }
+            document.getElementById("final_save_btn").disabled = false;
+            document.getElementById("loadbar").style.display = "none";
         }
     );
 

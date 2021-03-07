@@ -75,6 +75,8 @@
                                 Qdata.quiz_start_date = "<?php echo $questionsDetails['details']['fromdate']; ?>";
                                 Qdata.quiz_end_date = "<?php echo $questionsDetails['details']['todate']; ?>";
                                 Qdata.quiz_shuffle = <?php echo $questionsDetails['details']['shuffle']?"true":"false"; ?>;
+                                Qdata.quiz_key = <?php echo $questionsDetails['details']['quizkey']; ?>;
+                                Qdata.quiz_password = <?php echo $questionsDetails['details']['password']; ?>;
                                 let temp = {};
                                 <?php foreach ($questionsDetails as $key=>$question){
 

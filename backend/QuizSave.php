@@ -244,7 +244,7 @@
 
     }
 
-    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData,email");
+    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData");
     
     $allareset = 1;
 
@@ -345,20 +345,23 @@
         
         //send mail to participants
 
-        $emaillist = $_POST['email'];
+        if(isset($_POST['email']))
+        {
+            $emaillist = $_POST['email'];
 
-        $to = $emaillist;
+            $to = $emaillist;
 
-        $subject = "Quiz Keeper | You have been Invited to Attempt a Quiz";
-        $body = "Quiz Title : $quiz_title\n";
-        $body .= "Quiz Description : $quiz_desc\n";
-        $body .= "Quiz Start Date : $quiz_start_date\n";
-        $body .= "Quiz End Date : $quiz_end_date\n\n";
-        $body .= "Quiz Key : $quiz_id\n";
-        $body .= "Quiz Password : $quiz_password\n";
-        
+            $subject = "Quiz Keeper | You have been Invited to Attempt a Quiz";
+            $body = "Quiz Title : $quiz_title\n";
+            $body .= "Quiz Description : $quiz_desc\n";
+            $body .= "Quiz Start Date : $quiz_start_date\n";
+            $body .= "Quiz End Date : $quiz_end_date\n\n";
+            $body .= "Quiz Key : $quiz_id\n";
+            $body .= "Quiz Password : $quiz_password\n";
+            
 
-        sendMail($to,$subject,$body);
+            sendMail($to,$subject,$body);
+        }
     
 
         echo json_encode(array("result"=>"Success","message"=>"Quiz has been created successfully","quizKey"=>$quiz_id, "quizPass"=>$quiz_password));

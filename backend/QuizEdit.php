@@ -1,5 +1,4 @@
 <?php
-
     
     session_start();
     header("Content-Type: application/json");
@@ -36,9 +35,120 @@
         }
     }
 
+    function deleteRadioQuestion($xid,$conn)
+    {
+        $stmt = $conn->prepare("delete from MCQ where mid=?");
+        
+        $stmt->bind_param("i",$xid);
+
+        if($stmt->execute() === TRUE)
+        {
+            // success
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    function deleteCheckboxQuestion($xid,$conn)
+    {
+        $stmt = $conn->prepare("delete from CheckboxQns where cbqid=?");
+        
+        $stmt->bind_param("i",$xid);
+
+        if($stmt->execute() === TRUE)
+        {
+            // success
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    function deleteTextQuestion($xid,$conn)
+    {
+        $stmt = $conn->prepare("delete from TextQns where tqid=?");
+        
+        $stmt->bind_param("i",$xid);
+
+        if($stmt->execute() === TRUE)
+        {
+            // success
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    function deleteQuestionsOfQuiz($qid,$conn)
+    {
+        $stmt = $conn->prepare("select * from Questions where qid=?");
+        
+        $stmt->bind_param("i",$qid);
+
+        if($stmt->execute() === TRUE)
+        {
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                
+                $type=getQuestionTypeChar($row['type']);
+                $xid = $row['xid'];
+
+                $statuss = 1;
+
+                if($type=='radio')
+                {
+                    $statuss = deleteRadioQuestion($xid,$conn);
+                }
+                else if($type=='checkbox')
+                {
+                    $statuss = deleteCheckboxQuestion($xid,$conn);
+                }
+                else
+                {
+                    $statuss = deleteTextQuestion($xid,$conn);
+                }
+
+                if($statuss==0)
+                    return 0;
+            }
+
+            $stmt = $conn->prepare("delete from Questions where qid=?");
+        
+            $stmt->bind_param("i",$qid);
+
+            if($stmt->execute() === TRUE)
+            {
+                // success
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+        return 1;
+    }
+
     function getQuestionTypeInt($s)
     {
         $a = array("radio"=>3,"checkbox"=>2,"loose_text"=>1,"strict_text"=>0);
+        return $a[$s];
+    }
+
+    function getQuestionTypeChar($s)
+    {
+        $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
         return $a[$s];
     }
 
@@ -182,70 +292,8 @@
         }
     }
     
-    function getLatestQid($uid,$conn)
-    {
-        
-        $stmt = $conn->prepare("select max(qid) as yoo from Quiz where uid=?");
-        
-        $stmt->bind_param("i",$uid);
 
-        $qid = -1;
-
-        if($stmt->execute() === TRUE)
-        {
-            $result = $stmt->get_result();
-            while ($row = $result->fetch_assoc()) {
-                $qid=$row['yoo'];
-            }
-        }
-        else
-        {
-            $conn->close();
-            return -1;
-        }
-
-        $conn->close();	
-        return $qid;
-    }
-
-    function getIdPass($n)
-    {
-        $id = "";
-        $pass = "";
-        $a=str_split("1234567890qwertyuiopasdfghjklzxcvbnm");
-        $random=array_rand($a,$n);
-        foreach($random as $i) $id.=$a[$i];
-        $random=array_rand($a,$n);
-        foreach($random as $i) $pass.=$a[$i];
-
-        require 'connector.php';
-
-        $stmt = $conn->prepare("select qid from Quiz where quizkey=? or password=?");
-        $stmt->bind_param("ss",$id,$pass);
-
-        if($stmt->execute() === TRUE)
-        {
-            $result = $stmt->get_result();
-            if($result -> num_rows>0)
-            {
-                $conn->close();
-                return getIdPass($n);
-            }
-            else
-            {
-                $conn->close();
-                return array($id,$pass);
-            }
-        }
-        else
-        {
-            $conn->close();
-            return -1;
-        }
-
-    }
-
-    $mandatory=explode(",","quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData,email");
+    $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionsData,email");
     
     $allareset = 1;
 
@@ -261,6 +309,7 @@
     }
     else if($allareset==1)
     {
+        $qid = $_POST['quiz_id'];
         $quiz_title  = $_POST['quiz_title'];
         $quiz_desc  = $_POST['quiz_desc'];
         $quiz_start_date  = date("Y-m-d H:i:s",$_POST['quiz_start_date']);
@@ -269,65 +318,69 @@
 
         require 'connector.php';
         
-        $idpass = getIdPass(8);
-
-        if($idpass==-1)
-        {
-            echo json_encode(array("result"=>"Fail","message"=>"SQL quizid quizpassword error"));
-            exit("");
-        }
-
-        $quiz_id = $idpass[0];
-        $quiz_password = $idpass[1];
-        $uid = intval($_SESSION['uid']);    
-    
-
-        $stmt = $conn->prepare("INSERT INTO Quiz(uid,title,description,fromdate,todate,shuffle,quizkey,password) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
-        $stmt->bind_param("issssiss",$uid,$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_shuffle,$quiz_id,$quiz_password);
         
-        $qid = -1;
+
+        $stmt = $conn->prepare("Update Quiz set title=?,description=?,fromdate=?,todate=?,shuffle=? where qid = ?");
+
+        $stmt->bind_param("ssssii",$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_shuffle,$qid);
 
         if ($stmt->execute() === TRUE) 
         {
-            // get latest qid by uid
-            $qid = getLatestQid($uid,$conn);
+            // updated successfully
         } 
         else 
         {
-            echo json_encode(array("result"=>"Fail","message"=>"SQL quiz data entry error"));
+            echo json_encode(array("result"=>"Fail","message"=>"SQL quiz data update error"));
             $conn->close();
             exit("");
         }
 
-        if($qid==-1)
-        {
-            echo json_encode(array("result"=>"Fail","message"=>"Quiz id entry has not been generated in Database."));
-            $conn->close();
-            exit("");
-        }
-
-        // Here I have the $qid of the user , now i Need to insert the questions 
-        
+       // Here I need to delete previous questions and add new questions
         // Question Structure
         
-        // var aaa = {questionsData:[
-        //     {
-        //         question:"WHAT IS...",
-        //         answer:"ABC",
-        //         type: radio/checkbox/loose_text/strict_text
-        //         options:"CSV",
-        //         mark:10
-        //     },
-        //     {
-        //         question:"WHAT IS...",
-        //         answer:"ABCs",
-        //         type:"text",
-        //         options:"",
-        //         mark:10
-        //     }
-        // ]};
+        // var aaa = { quiz_id = qid,
+            // "questionData": [
+            //     {
+            //         "question": "Edit mode MCQ q",
+            //         "answer": "B",
+            //         "options": "A,B,C",
+            //         "mark": "1",
+            //         "type": "radio"
+            //     },
+            //     {
+            //         "question": "Checkbox Q in edit mode",
+            //         "answer": "AC,CC",
+            //         "options": "AC,BC,CC",
+            //         "mark": "1",
+            //         "type": "checkbox"
+            //     },
+            //     {
+            //         "question": "Strict Q for edit mode",
+            //         "answer": "edit mode",
+            //         "options": "",
+            //         "mark": "1",
+            //         "type": "strict_text"
+            //     },
+            //     {
+            //         "question": "Tell me about your self in edit mode",
+            //         "answer": "",
+            //         "options": "",
+            //         "mark": "1",
+            //         "type": "loose_text"
+            //     }
+            // ],
+            // "quiz_title": "editing test",
+            // "quiz_desc": "qwerty",
+            // "quiz_start_date": 1615788900,
+            // "quiz_end_date": 1615875300,
+            // "quiz_shuffle": 1,
+            // "email": [] }
+       
+        // Logic to delete previous questions
+
+        deleteQuestionsOfQuiz($qid,$conn);
+        
+        // Now I will add neww Questions
 
         $questions = $_POST['questionData'];
         $totalQuestions = count($questions);

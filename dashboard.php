@@ -43,18 +43,14 @@ $row = $result->fetch_assoc()
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br>
-                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">
-face
-</span>
+                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">face</span>
                                     <font style="color: #283593">
                                         <?php
                                             echo $row['name'];
                                         ?>
                                     </font>
                                     <br><br>
-                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">
-                                            email
-                                        </span>
+                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">email</span>
                                     <font style="color: #283593">
                                         <?php
                                         echo $row['email'];
@@ -62,9 +58,7 @@ face
                                     </font>
 
                                     <br><br>
-                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">
-call
-</span>
+                                    <span class="material-icons fs-3 fw-bold" style="color: #0b3251">call</span>
                                     <font style="color: #283593">
                                         <?php
                                         echo $row['mobile'];
@@ -94,31 +88,72 @@ call
                                     </font>
 
                                     <br>
+                                    <?php
+
+                                    if (isset($_POST['submit'])) {
+                                        $newname=$_POST['name'];
+                                        $newemail=$_POST['email'];
+                                        $newmobile=$_POST['mobile'];
+                                        $success=true;
+                                        $fail1=0;
+                                        $fail2=0;
+                                        if ($newname==""||$newemail==""||$newmobile=="") {
+                                            $success=false;
+                                            $fail1=1;
+                                        }
+                                        if ($success==true)
+                                        {
+                                            $upd="UPDATE users SET name=".$newname." ,email=".$newemail." , mobile=".$newmobile." WHERE uid=".$_SESSION['uid'].";";
+                                            if ($conn->query($upd) === TRUE) {}
+                                            else{$success=false;
+                                                $fail2=1;}
+                                        }
+                                        if ($success!=true)
+                                            echo "<script>alert('Update Failed \n'.$fail1.'\n'.$fail2);</script>";
+
+
+                                    }
+                                    ?>
 
 
                                 </div>
                                 <div class="container justify-content-end" style="">
 
                                     <!-- Trigger the modal with a button -->
-                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="margin-top: 20px;">Edit Profile</button>
+                                    <button type="button" class="btn btn-info btn-lg " data-toggle="modal" data-target="#myModal" style="margin-top: 20px;">Edit Profile</button>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="myModal" role="dialog">
-                                        <div class="modal-dialog">
-
+                                        <div class="modal-dialog modal-lg">
+                                            <form  method="POST">
                                             <!-- Modal content-->
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Modal Header</h4>
+                                                <div class="modal-header bg-info" >
+                                                    <h4 class="modal-title text-white">Edit Profile</h4>
+                                                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Some text in the modal.</p>
+
+                                                    <input type="text" placeholder="Username" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="name" value='<?php
+                                                    echo $row['name'];
+                                                    ?>'>
+                                                    <input type="text" placeholder="Email" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="email" value='<?php
+                                                    echo $row['email'];
+                                                    ?>'>
+                                                    <input type="text" placeholder="Mobile" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="mobile" value='<?php
+                                                    echo $row['mobile'];
+                                                    ?>'>
+
+
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <input type="submit" class="btn btn-dark"  name="submit">
                                                 </div>
                                             </div>
+                                            </form>
+
+
 
                                         </div>
                                     </div>

@@ -4,11 +4,41 @@ require_once 'backend/connector.php';
 renderSideBar("dashboard");
 
 
+if (isset($_POST['submit'])) {
+    $newname=$_POST['name'];
+    $newemail=$_POST['email'];
+    $newmobile=$_POST['mobile'];
+    $success=true;
+    $fail1=0;
+    $fail2=0;
+    if ($newname==""||$newemail==""||$newmobile=="") {
+        $success=false;
+        $fail1=1;
+    }
+    if ($success==true)
+    {
+        $upd="UPDATE users SET name=".$newname."  WHERE uid=".$_SESSION['uid'].";";
+        $conn->query($upd);
+
+    }
+    if ($success!=true)
+        echo "<script>alert('Update Failed \n'.$fail1.'\n'.$fail2);</script>";
+
+
+}
+
 $uid=$_SESSION['uid'];
 $query="select * from Users where uid=".$uid.";";
 $hostquery="select * from Quiz where uid=".$uid.";";
 $attemptquery="select * from QuizAttempt where uid=".$uid.";";
 $stmt = $conn->prepare($query);
+
+
+
+
+
+
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -23,7 +53,11 @@ $resultattempt = $stmt->get_result();
 $totalhost=mysqli_num_rows($resulthost);
 $totalattempt=mysqli_num_rows($resultattempt);
 
-$row = $result->fetch_assoc()
+$row = $result->fetch_assoc();
+
+$conn->close();
+
+
 ?>
             <div class="content ml-3 mr-3">
 
@@ -88,32 +122,7 @@ $row = $result->fetch_assoc()
                                     </font>
 
                                     <br>
-                                    <?php
 
-                                    if (isset($_POST['submit'])) {
-                                        $newname=$_POST['name'];
-                                        $newemail=$_POST['email'];
-                                        $newmobile=$_POST['mobile'];
-                                        $success=true;
-                                        $fail1=0;
-                                        $fail2=0;
-                                        if ($newname==""||$newemail==""||$newmobile=="") {
-                                            $success=false;
-                                            $fail1=1;
-                                        }
-                                        if ($success==true)
-                                        {
-                                            $upd="UPDATE users SET name=".$newname." ,email=".$newemail." , mobile=".$newmobile." WHERE uid=".$_SESSION['uid'].";";
-                                            if ($conn->query($upd) === TRUE) {}
-                                            else{$success=false;
-                                                $fail2=1;}
-                                        }
-                                        if ($success!=true)
-                                            echo "<script>alert('Update Failed \n'.$fail1.'\n'.$fail2);</script>";
-
-
-                                    }
-                                    ?>
 
 
                                 </div>

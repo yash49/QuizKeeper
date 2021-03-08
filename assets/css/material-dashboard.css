@@ -15570,8 +15570,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .main-panel>.content {
-  margin-top: 70px;
-  padding: 30px 15px;
+  margin-top: 20px;
+  padding: 20px 15px;
   min-height: calc(100vh - 123px);
 }
 
@@ -17373,7 +17373,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 
 .card {
   border: 0;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   margin-top: 30px;
   border-radius: 6px;
   color: #333333;

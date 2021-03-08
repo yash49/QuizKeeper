@@ -41,23 +41,17 @@ renderSideBar("hostedQuizStats");
                                 array_unshift($pastColors, $color);
                             }
                 ?>
-
-                            <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4" id="quiz_<?php echo $row['qid'];?>">
-                            <div class="card text-center">
+                         <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4" id="quiz_<?php echo $row['qid'];?>">
+                            <div class="quiz-card card text-center">
                                 <div style="background: <?php echo $color; ?>" class="custom-header ml-3 mr-3">
                                     <div class="row justify-content-center text-center">
                                         <div class="col-12 text-center">
                                             <div class="fs-3 p-2" style="color:#2d2f60; background: #fff;opacity:0.5; border-radius: 8px;"><strong><?php echo $i.".".$row['title']; ?></strong></div>
                                         </div>
 
-                                        <div class="col-md-6 col-sm-6 col-xs-6 fs-4 mt-3">
-                                            <span><span class="material-icons align-middle mr-2 fs-2">quiz</span>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 fs-5 mt-3">
+                                            <span><span class="material-icons align-middle mr-2 fs-2">quiz</span>Questions:
                                                 <?php echo $row['QCount'];?>
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-6 col-sm-6 col-xs-6 fs-4 mt-3">
-                                            <span><span class="material-icons align-middle mr-2 fs-2">people</span><?php echo 10;?>
                                             </span>
                                         </div>
 
@@ -75,26 +69,27 @@ renderSideBar("hostedQuizStats");
                                             </span>
                                     </div>
                                 </div>
-                                <div class="card-footer justify-content-center">
-                                    <span class="optionsContainer row justify-content-center">
-                                        <form class="col-md-6 col-sm-6 col-xs-12 col-lg-6" id="<?php echo $row['qid'];?>" method="post" action="/quizkeeper/hostQuiz.php">
+                                <div class="card-footer ">
+                                    <div class="optionsContainer text-center w-100">
+                                        <form  style="display: inline-block" id="<?php echo $row['qid'];?>" method="post" action="/quizkeeper/hostQuiz.php">
                                             <input type="hidden" name="mode" value="ed+<?php echo $row['qid'];?>">
                                             <button name="edit_quiz_btn" class="btn btn-sm btn-outline-success" onclick="">
                                                 Edit Quiz
                                             </button>
                                         </form>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                             <button name="remove_quiz_btn" onclick="removeQuiz(<?php echo $row['qid'];?>)" class="btn btn-sm btn-outline-danger">
                                                 Remove Quiz
                                             </button>
-                                        </div>
-
-
-
-                                    </span>
+                                    </div>
+                                </div>
+                                <div class="quiz-creds custom-card bg-light" style="border-radius: 50px 8px 8px 50px;">
+                                    <img src="assets/img/shield.png" class="float-left" style="transform: translate(-1px,0px)" width="48px" height="48px">
+                                    <div class="text-center text-white" style="transform: translate(-20px,0px)">
+                                        <div>key:<strong><?php echo $row['quizkey'];?></strong><br>pass:<strong><?php echo $row['password'];?></strong></div>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
+                         </div>
 
                <?php $i++;}}?>
 
@@ -109,7 +104,7 @@ renderSideBar("hostedQuizStats");
                     Ongoing/Past Quizzes
                 </span>
         </div>
-        <div class="card-body p-2 row justify-content-center">
+        <div class="card-body p-4 row justify-content-center">
             <?php
 
 
@@ -135,11 +130,11 @@ renderSideBar("hostedQuizStats");
                     ?>
 
                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 p-3">
-                        <div class="custom-card d-flex text-center">
-                            <span style="background: <?php echo $color; ?>" class="text-white col-md-4 col-sm-4 col-xs-4 mr-auto">
+                        <div class="custom-card row text-center">
+                            <div style="background: <?php echo $color; ?>; border-radius: 8px 0px 0px 8px" class="text-white col-md-4 col-sm-12 col-xs-12 mr-auto">
                                 <div class="row justify-content-center text-center">
                                     <div class="col-12 text-center">
-                                        <strong class="fs-4 p-2" style="color:#2d2f60; background: #fff;opacity:0.5; border-radius: 8px;"><?php echo $i.".".$row['title']; ?></strong>
+                                        <div style="color:#2d2f60; background: #fff;opacity:0.5; border-radius:0px 0px 8px 8px;"> <strong class="fs-4 p-2" ><?php echo $i.".".$row['title']; ?></strong></div>
                                     </div>
 
                                     <div class="col-md-6 col-sm-6 col-xs-6 fs-5 mt-2">
@@ -154,10 +149,10 @@ renderSideBar("hostedQuizStats");
                                     </div>
 
                                 </div>
-                            </span>
-                            <span class="card-body text-center ml-auto">
+                            </div>
+                            <div class="card-body col-md-6 col-sm-12 col-xs-12 text-center ml-auto">
                                 <div class="col-md-12 col-sm-12 col-xs-12 fs-6 mt-2">
-                                            <span class="row">
+                                            <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <span class="material-icons align-middle">date_range</span>
                                                     <span class="">From <strong><?php
@@ -167,9 +162,9 @@ renderSideBar("hostedQuizStats");
                                                         echo $to_date; ?></strong></span>
                                                 </div>
                                                 <span class="col-md-6 col-sm-6 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
-                                            </span>
+                                            </div>
                                 </div>
-                            </span>
+                            </div>
                         </div>
                     </div>
 

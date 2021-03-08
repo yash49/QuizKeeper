@@ -16,6 +16,7 @@
 .custom-card{
     box-shadow: 1px 2px 2px 0px grey, 2px 4px 1px -5px darkgray;
     border-radius: 8px;
+
 }
 .stack-1{
     transform: translate(0,10px);
@@ -35,3 +36,20 @@ input[type="datetime-local"]:before{
     color: black;
     content: attr(placeholder) " : ";
 }
+
+.quiz-creds{
+    box-shadow: 2px 2px 7px gray;
+    background: linear-gradient(120deg, #724bd9,#1d2124);
+    transform: translate(-5px,5px);
+    width: 102%;
+    display: none;
+}
+.quiz-card:hover .quiz-creds{
+    animation: slide-down 0.2s linear;
+    display: block;
+}
+@keyframes slide-down {
+    0%{transform: translate(-5px,0px)}
+    100%{transform: translate(-5px,5px)}
+}
+

@@ -77,9 +77,11 @@ renderSideBar("hostedQuizStats");
                                                 Edit Quiz
                                             </button>
                                         </form>
-                                            <button name="remove_quiz_btn" onclick="removeQuiz(<?php echo $row['qid'];?>)" class="btn btn-sm btn-outline-danger">
-                                                Remove Quiz
-                                            </button>
+                                            <button id="remove_quiz_btn<?php echo $row['qid'];?>" onclick="removeQuiz(<?php echo $row['qid'];?>)" class="btn btn-sm btn-outline-danger">
+                                                Remove Quiz                                            </button>
+                                        <span style="position:relative; display: none; margin-bottom: -10px" id="loadbar<?php echo $row['qid'];?>" class="ml-2 fs-6 spinner-border text-danger">
+                                                </span>
+
                                     </div>
                                 </div>
                                 <div class="quiz-creds custom-card bg-light" style="border-radius: 50px 8px 8px 50px;">

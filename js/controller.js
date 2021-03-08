@@ -61,6 +61,8 @@ function sendVerifyRequest(url, data, callback){
 
 function removeQuiz(qid){
     let data = {quiz_id:qid};
+    document.getElementById("remove_quiz_btn"+qid).disabled = true;
+    document.getElementById("loadbar"+qid).style.display = "inline-block";
     $.ajax({
         data:data,
         url:'backend/QuizDelete.php',
@@ -78,6 +80,12 @@ function removeQuiz(qid){
                     //callback(response.message,"danger");
                     break;
             }
+
+        },
+        error:function (){
+            $.notify({message: "Error occured while deleting the quiz!"}, {type: 'danger', timer: 1000, placement: {from: 'top', align: 'right'}});
+            document.getElementById("remove_quiz_btn"+qid).disabled = false;
+            document.getElementById("loadbar"+qid).style.display = "none";
         }
     });
 }

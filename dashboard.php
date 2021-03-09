@@ -5,24 +5,14 @@ renderSideBar("dashboard");
 
 
 if (isset($_POST['submit'])) {
+
     $newname=$_POST['name'];
-    $newemail=$_POST['email'];
     $newmobile=$_POST['mobile'];
-    $success=true;
-    $fail1=0;
-    $fail2=0;
-    if ($newname==""||$newemail==""||$newmobile=="") {
-        $success=false;
-        $fail1=1;
-    }
-    if ($success==true)
-    {
-        $upd="UPDATE users SET name=".$newname."  WHERE uid=".$_SESSION['uid'].";";
+
+
+        $upd="UPDATE Users SET name='".$newname."' ,mobile='".$newmobile."'   WHERE uid=".$_SESSION['uid'].";";
         $conn->query($upd);
 
-    }
-    if ($success!=true)
-        echo "<script>alert('Update Failed \n'.$fail1.'\n'.$fail2);</script>";
 
 
 }
@@ -123,6 +113,75 @@ $conn->close();
 
                                     <br>
 
+                                <div class="row">
+
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="card card-stats pb-3">
+                                            <div class="card-header card-header-warning card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">name</i>
+                                                </div>
+                                                <p class="card-category">Username</p>
+                                                <h5 class="card-title"><strong><?php
+                                                        echo $row['name'];
+                                                        ?></strong>
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="card card-stats pb-3">
+                                            <div class="card-header card-header-warning card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">email</i>
+                                                </div>
+                                                <p class="card-category">Email</p>
+                                                <h5 class="card-title"><strong><?php
+                                                        echo $row['email'];
+                                                        ?></strong>
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="card card-stats pb-3">
+                                            <div class="card-header card-header-warning card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">email</i>
+                                                </div>
+                                                <p class="card-category">Email</p>
+                                                <h5 class="card-title"><strong>Vaibhavpatel1921@gmail.com</strong>
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="card card-stats pb-3">
+                                            <div class="card-header card-header-warning card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">email</i>
+                                                </div>
+                                                <p class="card-category">Email</p>
+                                                <h5 class="card-title"><strong>Vaibhavpatel1921@gmail.com</strong>
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
 
 
                                 </div>
@@ -146,9 +205,6 @@ $conn->close();
 
                                                     <input type="text" placeholder="Username" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="name" value='<?php
                                                     echo $row['name'];
-                                                    ?>'>
-                                                    <input type="text" placeholder="Email" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="email" value='<?php
-                                                    echo $row['email'];
                                                     ?>'>
                                                     <input type="text" placeholder="Mobile" required  class="mr-auto form-control col-md-12 col-sm-12 col-xs-12" id="quiz_key" name="mobile" value='<?php
                                                     echo $row['mobile'];

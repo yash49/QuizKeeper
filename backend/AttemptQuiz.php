@@ -93,6 +93,12 @@
         die();
     }
 
+    if(strtotime('now')<strtotime($quiz_from_date) || strtotime('now')>strtotime($quiz_to_date))
+    {
+        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+        die();
+    }
+
     function getQuestionTableFromInt($s){
         $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
         return $a[$s];

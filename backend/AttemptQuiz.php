@@ -21,9 +21,6 @@
 
 </head>
 <body>
-<div class="col-md-7 p-4 mt-3 mb-3">
-<div class="row justify-content-center">
-    <form name="answers_form" action="/QuizKeeper/backend/SaveAnswers.php" method="post">
 <?php
 
     session_start();
@@ -189,7 +186,27 @@
     }
 
     $start = 1;
+?>
+<!-------------------------------------------------------------------UI PART---------------------------------------------->
+<nav class="navbar fixed-top  bg-success">
+    <span class="navbar-brand"><h4><span class="material-icons fs-4" style="transform: translateY(5px)">quiz</span> <?php echo $quiz_title; ?> </h4></span>
 
+    <li class="nav-item w-50" style="transform: translate(-20px,-15px)">
+
+        <span class="progress" style="height: 35px; box-shadow: 4px 4px 6px #00353b">
+            <span class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 30%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"><h5 style="transform: translateY(4px)">20:25</h5></span>
+        </span>
+    </li>
+</nav>
+<div class="container-fluid pt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 p-4 mt-3 mb-3">
+            <div class="row justify-content-center">
+                <form name="answers_form" action="/QuizKeeper/backend/SaveAnswers.php" method="post">
+
+
+<?php
     foreach($questions as $question)
     {
         if($question['type']=='radio')
@@ -208,6 +225,13 @@
 
 ?>
     </form>
+</div>
+</div>
+    <!--<div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 navbar-fixed-top mt-3" style="z-index: 1000">
+        <div class="progress" style="height: 30px;">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>-->
 </div>
 </div>
 </body>

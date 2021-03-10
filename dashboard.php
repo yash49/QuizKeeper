@@ -57,8 +57,7 @@ $conn->close();
                             <div class="card-header card-header-tabs card-header-primary">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper d-flex">
-                                        <span class="nav-tabs-title" style="font-size: 20px;">Profile
-                                        <span class="material-icons fs-3 fw-bold" style="transform: translateY(5px)">face</span>
+                                        <span class="nav-tabs-title" style="font-size: 20px;">
                                     <span>
                                         <?php
                                         echo $row['name'];

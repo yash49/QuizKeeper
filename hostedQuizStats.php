@@ -14,14 +14,14 @@ renderSideBar("hostedQuizStats");
         <div class="card card-plain ">
             <div class="card-header card-header-info ml-3 mr-3">
                 <span class="card-title fs-4 "><span class="material-icons align-middle mr-2">event</span>
-                    Upcoming Quizzes
+                    Ongoing/Upcoming Quizzes
                 </span>
             </div>
             <div class="card-body p-2 row justify-content-center">
                 <?php
 
 
-                    $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.fromdate > CURRENT_TIMESTAMP GROUP BY Quiz.qid ORDER BY fromdate";
+                    $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.fromdate >= CURDATE() GROUP BY Quiz.qid ORDER BY fromdate";
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("i",$_SESSION['uid']);
 
@@ -103,14 +103,14 @@ renderSideBar("hostedQuizStats");
     <div class="card card-plain mt-5">
         <div class="card-header card-header-info ml-3 mr-3">
                 <span class="card-title fs-4 "><span class="material-icons align-middle mr-2">event</span>
-                    Ongoing/Past Quizzes
+                    Past Quizzes
                 </span>
         </div>
         <div class="card-body p-4 row justify-content-center">
             <?php
 
 
-            $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.fromdate <= CURRENT_TIMESTAMP GROUP BY Quiz.qid ORDER BY fromdate";
+            $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.todate < CURRENT_TIMESTAMP GROUP BY Quiz.qid ORDER BY fromdate";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i",$_SESSION['uid']);
 

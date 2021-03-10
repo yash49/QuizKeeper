@@ -319,6 +319,10 @@ function sendQReq(){
 
 function setTime(duration, total){
     if(duration >= 0){
+        if(duration == 60){
+            document.getElementById("quiz_attempt_navbar").classList.remove("bg-success");
+            document.getElementById("quiz_attempt_navbar").classList.add("bg-danger");
+        }
         localStorage.setItem("lastTspot",end);
         let seconds = parseInt((duration) % 60);
         let minutes = parseInt((duration) / 60) % 60;
@@ -332,7 +336,7 @@ function setTime(duration, total){
 }
 function startQuizProcess(time){
     let lastPoint = localStorage.getItem("lastTspot");
-    end = (lastPoint == null)?360:lastPoint;
+    end = (lastPoint == null)?66:lastPoint;
     let total = end;
     let handler = ()=>{setTime(end,total);end-=1;};
 

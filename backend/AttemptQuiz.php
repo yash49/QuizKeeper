@@ -257,7 +257,7 @@
     $start = 1;
 ?>
 <!-------------------------------------------------------------------UI PART---------------------------------------------->
-<nav class="navbar fixed-top  bg-success">
+<nav class="navbar fixed-top  bg-success" id="quiz_attempt_navbar">
     <span class="navbar-brand"><h4><span class="material-icons fs-4" style="transform: translateY(5px)">quiz</span> <?php echo $quiz_title; ?> </h4></span>
 
     <li class="nav-item w-50" style="transform: translate(-20px,-15px)">

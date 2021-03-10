@@ -27,6 +27,11 @@
 
      <?php
         session_start();
+        if(isset($_SESSION['qid']))
+        {
+          header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/backend/AttemptQuiz.php");
+          die();
+        }
         if(isset($_SESSION['uid'])){
      ?>
             <script> window.location.href = "dashboard.php";</script>

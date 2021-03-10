@@ -46,7 +46,7 @@
                    <div class="col-md-12 col-sm-12 col-xs-12">
                        <div class="radio">
                            <label class="fs-5 text-dark">
-                               <input type="checkbox" class="fs-2" name="<?php echo $question['qnsid'];?>" value="<?php echo $optionvalue;?>">
+                               <input type="checkbox" class="fs-2" name="<?php echo $question['qnsid'];?>[]" value="<?php echo $optionvalue;?>">
                                <?php echo $optionvalue;?>
                            </label>
                        </div>

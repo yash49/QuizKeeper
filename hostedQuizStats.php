@@ -21,7 +21,7 @@ renderSideBar("hostedQuizStats");
                 <?php
 
 
-                    $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.fromdate >= CURDATE() GROUP BY Quiz.qid ORDER BY fromdate";
+                    $query = "SELECT Quiz.qid,(SELECT COUNT(Questions.xid) FROM Questions WHERE Questions.qid = Quiz.qid) AS QCount,Quiz.title,Quiz.description, Quiz.fromdate, Quiz.todate, Quiz.uid, Quiz.quizkey, Quiz.password FROM `Quiz`,Questions WHERE Quiz.uid = ? AND Quiz.todate >= CURDATE() GROUP BY Quiz.qid ORDER BY fromdate";
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("i",$_SESSION['uid']);
 

@@ -45,46 +45,90 @@
         $allareset &= isset($_POST[$i]);
     }
 
+    $qid = -1;
+
     if($allareset==FALSE)
     {
-        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
-        die();
+        if(isset($_SESSION['qid']))
+        {
+            $qid = $_SESSION['qid'];
+        }
+        else
+        {    
+            header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+            die();
+        }
     }
-
     require 'connector.php';
 
-    $quiz_key = $_POST['quiz_key'];
-    $quiz_password = $_POST['quiz_password'];
-    
-
-    $stmt = $conn->prepare("select * from Quiz where quizkey=? and password=?");
-    $stmt->bind_param('ss',$quiz_key,$quiz_password);
-
-    $qid = -1;
-    $quiz_title = '';
-    $quiz_desc = '';
-    $quiz_from_date = '';
-    $quiz_to_date = '';
-    $quiz_shuffle = -1;
-
-
-    if($stmt->execute() === TRUE)
+    if($qid==-1)
     {
-        $result = $stmt->get_result();
+        
 
-        while ($row = $result->fetch_assoc()) {
-            $qid = $row['qid'];
-            $quiz_title = $row['title'];
-            $quiz_desc = $row['description'];
-            $quiz_from_date = $row['fromdate'];
-            $quiz_to_date = $row['todate'];
-            $quiz_shuffle = $row['shuffle'];
+        $quiz_key = $_POST['quiz_key'];
+        $quiz_password = $_POST['quiz_password'];
+        
+
+        $stmt = $conn->prepare("select * from Quiz where quizkey=? and password=?");
+        $stmt->bind_param('ss',$quiz_key,$quiz_password);
+
+        $quiz_title = '';
+        $quiz_desc = '';
+        $quiz_from_date = '';
+        $quiz_to_date = '';
+        $quiz_shuffle = -1;
+
+
+        if($stmt->execute() === TRUE)
+        {
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $qid = $row['qid'];
+                $quiz_title = $row['title'];
+                $quiz_desc = $row['description'];
+                $quiz_from_date = $row['fromdate'];
+                $quiz_to_date = $row['todate'];
+                $quiz_shuffle = $row['shuffle'];
+            }
+        }
+        else
+        {
+            header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+            die();
         }
     }
     else
     {
-        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
-        die();
+        
+        $stmt = $conn->prepare("select * from Quiz where qid=?");
+        $stmt->bind_param('i',$qid);
+
+        $quiz_title = '';
+        $quiz_desc = '';
+        $quiz_from_date = '';
+        $quiz_to_date = '';
+        $quiz_shuffle = -1;
+
+
+        if($stmt->execute() === TRUE)
+        {
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $qid = $row['qid'];
+                $quiz_title = $row['title'];
+                $quiz_desc = $row['description'];
+                $quiz_from_date = $row['fromdate'];
+                $quiz_to_date = $row['todate'];
+                $quiz_shuffle = $row['shuffle'];
+            }
+        }
+        else
+        {
+            header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+            die();
+        }
     }
 
     if($qid==-1)
@@ -108,6 +152,8 @@
         $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
         return $a[$s];
     }
+
+    $_SESSION['qid'] = $qid;
 
     $stmt = $conn->prepare("Select * from Questions where qid=?");
     $stmt->bind_param('i',$qid);
@@ -205,6 +251,8 @@
             renderTextQuestion($question,$start);
         }
     }
+
+    $conn->close();
 
 ?>
     </form>

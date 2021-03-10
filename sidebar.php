@@ -45,6 +45,11 @@
 <?php
 session_start();
 if(!isset($_SESSION['uid'])) echo "<script>window.location.href = 'index.php'</script>";
+if(isset($_SESSION['qid']))
+{
+	header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/backend/AttemptQuiz.php");
+	die();
+}
 ?>
 <div class="wrapper">
     <div class="sidebar" data-color="green" data-background-color="white"  data-image="assets/img/control_panel.svg">

@@ -1,5 +1,6 @@
 <html>
     <head>
+        
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>QUIZKepeer</title>
@@ -39,6 +40,22 @@
     </head>
 
     <body>
+
+    <?php
+            session_start();
+            if(isset($_SESSION['qid']))
+            {
+                header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/backend/AttemptQuiz.php");
+                die();
+            }
+            if(isset($_SESSION['uid']))
+            {
+                header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
+                die();
+            }
+            
+    ?>
+
     <div class="container mt-5 p-4">
 
         <div class="row justify-content-center">

@@ -57,7 +57,14 @@ $conn->close();
                             <div class="card-header card-header-tabs card-header-primary">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper d-flex">
-                                        <span class="nav-tabs-title" style="font-size: 20px;">Profile</span>
+                                        <span class="nav-tabs-title" style="font-size: 20px;">Profile
+                                        <span class="material-icons fs-3 fw-bold" style="transform: translateY(5px)">face</span>
+                                    <span>
+                                        <?php
+                                        echo $row['name'];
+                                        ?>
+                                    </span>
+                                        </span>
 
 
                                     </div>
@@ -66,82 +73,82 @@ $conn->close();
                             <div class="card-body justify-content-center fs-3 fw-bold" >
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <br>
+                                    <!--<br>
                                     <span class="material-icons fs-3 fw-bold" style="color: #0b3251">face</span>
                                     <font style="color: #283593">
                                         <?php
-                                            echo $row['name'];
-                                        ?>
+/*                                            echo $row['name'];
+                                        */?>
                                     </font>
                                     <br><br>
                                     <span class="material-icons fs-3 fw-bold" style="color: #0b3251">email</span>
                                     <font style="color: #283593">
                                         <?php
-                                        echo $row['email'];
-                                        ?>
+/*                                        echo $row['email'];
+                                        */?>
                                     </font>
 
                                     <br><br>
                                     <span class="material-icons fs-3 fw-bold" style="color: #0b3251">call</span>
                                     <font style="color: #283593">
                                         <?php
-                                        echo $row['mobile'];
-                                        ?>
+/*                                        echo $row['mobile'];
+                                        */?>
                                     </font>
 
                                     <br><br>
 
-                                        <!--<span class="material-icons-outlined  fs-3 fw-bold">file_upload</span>-->
+                                        <span class="material-icons-outlined  fs-3 fw-bold">file_upload</span>s
                                     <font style="color: #283593" class="">Quiz's attempted :
                                     </font>
                                     <font style="color: #283593">
                                         <?php
-                                        echo $totalattempt." ";
-                                        ?>
+/*                                        echo $totalattempt." ";
+                                        */?>
                                     </font>
 
                                     <br><br>
 
-                                        <!--<span class="material-icons-outlined">keyboard_arrow_down</span>-->
+                                        <span class="material-icons-outlined">keyboard_arrow_down</span>
                                     <font style="color: #283593">Quiz's hosted :
                                     </font>
                                     <font style="color: #283593">
                                         <?php
-                                        echo $totalhost;
-                                        ?>
+/*                                        echo $totalhost;
+                                        */?>
                                     </font>
 
-                                    <br>
+                                    <br>-->
 
                                 <div class="row">
 
 
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="card card-stats pb-3">
-                                            <div class="card-header card-header-warning card-header-icon">
-                                                <div class="card-icon">
-                                                    <i class="material-icons">name</i>
-                                                </div>
-                                                <p class="card-category">Username</p>
-                                                <h5 class="card-title"><strong><?php
-                                                        echo $row['name'];
-                                                        ?></strong>
-                                                </h5>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="card card-stats pb-3">
-                                            <div class="card-header card-header-warning card-header-icon">
+                                            <div class="card-header card-header-success card-header-icon">
                                                 <div class="card-icon">
                                                     <i class="material-icons">email</i>
                                                 </div>
-                                                <p class="card-category">Email</p>
-                                                <h5 class="card-title"><strong><?php
+                                                <p class="card-category">email</p>
+                                                <p class="card-title fs-6 fw-bold"><?php
                                                         echo $row['email'];
+                                                        ?>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="card card-stats pb-3">
+                                            <div class="card-header card-header-success card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">call</i>
+                                                </div>
+                                                <p class="card-category">Mobile</p>
+                                                <h5 class="card-title"><strong><?php
+                                                        echo $row['mobile'];
                                                         ?></strong>
                                                 </h5>
                                             </div>
@@ -153,12 +160,14 @@ $conn->close();
 
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="card card-stats pb-3">
-                                            <div class="card-header card-header-warning card-header-icon">
+                                            <div class="card-header card-header-success card-header-icon">
                                                 <div class="card-icon">
-                                                    <i class="material-icons">email</i>
+                                                    <i class="material-icons">public</i>
                                                 </div>
-                                                <p class="card-category">Email</p>
-                                                <h5 class="card-title"><strong>Vaibhavpatel1921@gmail.com</strong>
+                                                <p class="card-category">Quiz Hosted</p>
+                                                <h5 class="card-title"><strong><?php
+                                                        echo $totalhost." ";
+                                                        ?></strong>
                                                 </h5>
                                             </div>
 
@@ -168,12 +177,15 @@ $conn->close();
 
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="card card-stats pb-3">
-                                            <div class="card-header card-header-warning card-header-icon">
+                                            <div class="card-header card-header-success card-header-icon">
                                                 <div class="card-icon">
-                                                    <i class="material-icons">email</i>
+                                                    <i class="material-icons">library_books</i>
                                                 </div>
-                                                <p class="card-category">Email</p>
-                                                <h5 class="card-title"><strong>Vaibhavpatel1921@gmail.com</strong>
+                                                <p class="card-category">Quiz Attempted</p>
+                                                <h5 class="card-title"><strong>
+                                                        <?php
+                                                        echo $totalattempt." ";
+                                                        ?></strong>
                                                 </h5>
                                             </div>
 

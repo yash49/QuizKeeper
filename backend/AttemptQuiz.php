@@ -58,6 +58,7 @@
     }
     require 'connector.php';
 
+
     if($qid==-1)
     {
         
@@ -135,6 +136,28 @@
     }
 
     if(strtotime('now')<strtotime($quiz_from_date) || strtotime('now')>strtotime($quiz_to_date))
+    {
+        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+        die();
+    }
+
+    $uid = $_SESSION['uid'];
+    $stmt = $conn->prepare("select count(qaid) as yoo from QuizAttempt where uid=? and qid=?");
+    $stmt->bind_param('ii',$uid,$qid);
+
+    if($stmt->execute()==TRUE)
+    {
+        $result = $stmt->get_result();
+        while($row=$result->fetch_assoc())
+        {
+            if($row['yoo']>0)
+            {
+                header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+                die();
+            }
+        }
+    }
+    else
     {
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
         die();

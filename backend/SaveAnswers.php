@@ -38,12 +38,14 @@
     }
     else
     {
+        $conn->close();
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
         die();
     }
 
     if(strtotime('now')<strtotime($quiz_from_date) || strtotime('now')>strtotime($quiz_to_date))
     {
+        $conn->close();
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
         die();
     }
@@ -77,6 +79,7 @@
     }
     else
     {
+        $conn->close();
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
         die();
     }
@@ -92,6 +95,7 @@
     }
     else
     {
+        $conn->close();
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
         die();
     }
@@ -123,11 +127,14 @@
         }
         else
         {
+            
+            $conn->close();
             header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
             die();
         }
     }
 
+    $conn->close();
     unset($_SESSION['qid']);
     header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
     die();

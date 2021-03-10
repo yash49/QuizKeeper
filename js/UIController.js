@@ -1,13 +1,15 @@
-if(editMode){
-    Qdata.questionData.forEach((temp,index)=>{
-        if(temp.type == "radio")
-            renderRadioQuestions(document.getElementById("previewContainer"),temp.question, temp.options.split(","), temp.answer, index+1);
-        if(temp.type == "checkbox")
-            renderCheckboxQuestions(document.getElementById("previewContainer"),temp.question, temp.options.split(","), temp.answer, index+1);
-        else if(temp.type == "loose_text" || temp.type == "strict_text" )
-            renderInputQuestions(document.getElementById("previewContainer"),temp.question, temp.answer, index+1);
-    })
+if(typeof editMode != "undefined") {
+    if (editMode) {
+        Qdata.questionData.forEach((temp, index) => {
+            if (temp.type == "radio")
+                renderRadioQuestions(document.getElementById("previewContainer"), temp.question, temp.options.split(","), temp.answer, index + 1);
+            if (temp.type == "checkbox")
+                renderCheckboxQuestions(document.getElementById("previewContainer"), temp.question, temp.options.split(","), temp.answer, index + 1);
+            else if (temp.type == "loose_text" || temp.type == "strict_text")
+                renderInputQuestions(document.getElementById("previewContainer"), temp.question, temp.answer, index + 1);
+        })
 
+    }
 }
 function validateQuizDetails(){
     if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
@@ -311,5 +313,31 @@ function sendQReq(){
         }
     );
 
+
+}
+
+
+function setTime(duration, total){
+    if(duration >= 0){
+        localStorage.setItem("lastTspot",end);
+        let seconds = parseInt((duration) % 60);
+        let minutes = parseInt((duration) / 60) % 60;
+        let hours = parseInt((duration ) / 3600) % 24;
+        document.getElementById("time").innerText = hours +":"+ minutes + ":" + seconds;
+        let width = parseInt(duration*100/total);
+        document.getElementById("time_bar").style.width = width+"%";
+        // submit form automatically
+    }
+
+}
+function startQuizProcess(time){
+    let lastPoint = localStorage.getItem("lastTspot");
+    end = (lastPoint == null)?360:lastPoint;
+    let total = end;
+    let handler = ()=>{setTime(end,total);end-=1;};
+
+    if(end > 0){
+        setInterval(handler, 1000);
+    }else{clearInterval(handler);}
 
 }

@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
     <script src="../js/controller.js"></script>
-
+    <script src="../js/UIController.js"></script>
     <script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 
@@ -239,11 +239,13 @@
 
     <li class="nav-item w-50" style="transform: translate(-20px,-15px)">
 
-        <span class="progress" style="height: 35px; box-shadow: 4px 4px 6px #00353b">
-            <span class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 30%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"><h5 style="transform: translateY(4px)">20:25</h5></span>
+        <span class="progress" style="height: 35px; box-shadow: 4px 4px 6px #00353b;background:linear-gradient(90deg,#3895D3,#0b75c9);">
+            <h5 style="transform: translateY(4px);position:absolute;margin-left: 10px; text-shadow: black 2px 2px;" id="time">HH:MM:SS</h5>
+            <span class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" id="time_bar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></span>
         </span>
     </li>
 </nav>
+<script>startQuizProcess(new Date('<?php echo $quiz_to_date; ?>') );</script>
 <div class="container-fluid pt-5">
 
     <div class="row justify-content-center">
@@ -272,15 +274,11 @@
     $conn->close();
 
 ?>
-<input type="submit"/>
+<input type="submit" class="btn btn-success btn-lg ml-auto mr-auto mt-2"/>
     </form>
 </div>
 </div>
-    <!--<div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 navbar-fixed-top mt-3" style="z-index: 1000">
-        <div class="progress" style="height: 30px;">
-            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-    </div>-->
+
 </div>
 </div>
 </body>

@@ -56,7 +56,7 @@ renderSideBar("myResults");
 
                         $color = "#2a9865";
 
-                        $stmt = $conn->prepare("SELECT Quiz.qid as qid,title,description,fromdate,todate,count(Questions.qnsid) as qcount FROM Quiz,Questions where Quiz.qid=Questions.qid and Quiz.qid=? GROUP BY Quiz.qid");
+                        $stmt = $conn->prepare("SELECT Quiz.qid as qid,title,description,fromdate,todate,count(Questions.qnsid) as qcount,sum(Questions.marks) as totalmarks FROM Quiz,Questions where Quiz.qid=Questions.qid and Quiz.qid=? GROUP BY Quiz.qid");
                         
 
                         foreach($quizes as $qid)
@@ -80,14 +80,18 @@ renderSideBar("myResults");
                     <div class="col-12 text-center">
                         <div style="color:#2d2f60; background: #fff;opacity:0.5; border-radius:0px 0px 8px 8px;"> <strong class="fs-4 p-2" ><?php echo $row['title']; ?></strong></div>
                     </div>
-
-                    <div class="col-md-6 col-sm-6 col-xs-6 fs-5 mt-2">
+                    <div class="col-md-4 col-sm-4 col-xs-4 fs-5 mt-3 align-middle">
+                            <span>Marks : 
+                                <?php echo $row['totalmarks'];?>
+                            </span>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 fs-5 mt-3">
                             <span><span class="material-icons align-middle mr-2 fs-4">quiz</span>
                                 <?php echo $row['qcount'];?>
                             </span>
                     </div>
 
-                    <div class="col-md-6 col-sm-6 col-xs-6 fs-5 mt-2">
+                    <div class="col-md-4 col-sm-4 col-xs-4 fs-5 mt-3">
                             <span><span class="material-icons align-middle mr-2 fs-4">people</span><?php echo $totalusers;?>
                             </span>
                     </div>

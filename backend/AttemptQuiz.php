@@ -294,6 +294,22 @@
         }
     }
 
+    // ATTEMPT ENTRY FOR USER
+
+    $stmt = $conn->prepare("insert into QuizAttempt(uid,qid) VALUES(?,?)");
+    $stmt->bind_param('ii',$uid,$qid);
+
+    if($stmt->execute()===TRUE)
+    {
+        
+    }
+    else
+    {
+        $conn->close();
+        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
+        die();
+    }
+
     $conn->close();
 
 ?>

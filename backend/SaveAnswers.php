@@ -86,19 +86,19 @@
 
     // attempt
 
-    $stmt = $conn->prepare("insert into QuizAttempt(uid,qid) VALUES(?,?)");
-    $stmt->bind_param('ii',$uid,$qid);
+    // $stmt = $conn->prepare("insert into QuizAttempt(uid,qid) VALUES(?,?)");
+    // $stmt->bind_param('ii',$uid,$qid);
 
-    if($stmt->execute()===TRUE)
-    {
+    // if($stmt->execute()===TRUE)
+    // {
         
-    }
-    else
-    {
-        $conn->close();
-        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
-        die();
-    }
+    // }
+    // else
+    // {
+    //     $conn->close();
+    //     header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
+    //     die();
+    // }
 
     // save ans
 

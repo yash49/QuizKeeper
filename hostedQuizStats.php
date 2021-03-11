@@ -87,7 +87,7 @@ renderSideBar("hostedQuizStats");
                                 <div class="quiz-creds custom-card bg-light" style="border-radius: 50px 8px 8px 50px;">
                                     <img src="assets/img/shield.png" class="float-left" style="transform: translate(-1px,0px)" width="48px" height="48px">
                                     <div class="text-center text-white" style="transform: translate(-20px,0px)">
-                                        <div>key:<strong><?php echo $row['quizkey'];?></strong><br>pass:<strong><?php echo $row['password'];?></strong></div>
+                                        <div>key:&nbsp;<strong><?php echo $row['quizkey'];?></strong><br>password:&nbsp;<strong><?php echo $row['password'];?></strong></div>
                                     </div>
                                 </div>
                             </div>

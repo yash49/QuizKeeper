@@ -60,7 +60,7 @@ function renderRadioQuestions(parent, question, options, answer, start){
 function renderCheckboxQuestions(parent, question, options, answer, start){
 
     let qCard = document.createElement("div");
-
+    let answerArray = answer.split(",");
     qCard.id = "qcard_"+start;
     qCard.classList.add("card","p-2","col-md-12","col-xs-12","col-sm-12");
 
@@ -75,7 +75,7 @@ function renderCheckboxQuestions(parent, question, options, answer, start){
             "                        <div class=\"checkbox\">\n" +
             "                            <label class=\"fs-5 text-dark\">\n" +
             "                                <input type=\"checkbox\" class=\"fs-2\" name='"+start+"' value=\""+options[i]+"\">\n" +
-            options[i] +(answer.includes(options[i])?"<span class='ml-2 material-icons text-success'>verified</span>":"")+
+            options[i] +(answerArray.includes(options[i])?"<span class='ml-2 material-icons text-success'>verified</span>":"")+
             "                            </label>\n" +
             "                        </div>\n" +
             "                    </div>";

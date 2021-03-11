@@ -122,7 +122,8 @@ function addRadioQuestion(){
     document.getElementById("radio_q_question").value = "";
     document.getElementById("radio_q_marks").value = "";
 
-    document.getElementById("radio_q_form").removeChild(document.getElementById("radio_q_options_panel"));
+    document.getElementById("radio_q_options_panel").innerHTML = "";
+
     $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
 
     renderRadioQuestions(document.getElementById("previewContainer"),question, optionsData.split(","), answer, Qdata.questionData.length);
@@ -170,9 +171,8 @@ function addCheckBoxQuestion(){
     document.getElementById("check_q_question").value = "";
     document.getElementById("check_q_marks").value = "";
 
-    document.getElementById("check_q_form").removeChild(document.getElementById("check_q_options_panel"));
+    document.getElementById("check_q_options_panel").innerHTML = "";
     $.notify({message: "Question added"}, {type: 'success', timer: 1000, placement: {from: 'bottom', align: 'right'}});
-
     renderCheckboxQuestions(document.getElementById("previewContainer"),question, optionsData.split(","), answer, Qdata.questionData.length);
 }
 

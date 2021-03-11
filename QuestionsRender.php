@@ -8,7 +8,9 @@
 
             <div class="card-header card-header-info p-2">
                 <div class="question_badge pl-2 pr-2 pt-2 h-100 fs-5">Q.<?php echo $start; $start++;?></div>
-                <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?></div>
+                <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?>
+                    <span class="badge badge-success float-right mt-1"> <?php echo $question['mark'];?> mark</span>
+                </div>
             </div>
 
             <div class="row m-3">
@@ -38,7 +40,9 @@
 
            <div class="card-header card-header-info p-2">
                <div class="question_badge pl-2 pr-2 pt-2 h-100 fs-5">Q.<?php echo $start; $start++;?></div>
-               <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?></div>
+               <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?>
+                   <span class="badge badge-success float-right mt-1"> <?php echo $question['mark'];?> mark</span>
+               </div>
            </div>
 
            <div class="row m-3">
@@ -65,7 +69,9 @@
 
             <div class="card-header card-header-info p-2">
                 <div class="question_badge pl-2 pr-2 pt-2 h-100 fs-5">Q.<?php echo $start; $start++;?></div>
-                <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?></div>
+                <div class="card-title ml-5 text-lowercase fs-5 fw-bold"><?php echo $question['question']; ?>
+                    <span class="badge badge-success float-right mt-1"> <?php echo $question['mark'];?> mark</span>
+                </div>
             </div>
 
             <div class="row m-3 justify-content-center">

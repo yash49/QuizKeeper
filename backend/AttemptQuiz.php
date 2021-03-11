@@ -263,7 +263,7 @@
     <li class="nav-item w-50" style="transform: translate(-20px,-15px)">
 
         <span class="progress" style="height: 35px; box-shadow: 4px 4px 6px #00353b;background:linear-gradient(90deg,#3895D3,#0b75c9);">
-            <h5 style="transform: translateY(4px);position:absolute;margin-left: 10px; text-shadow: black 2px 2px;" id="time">HH:MM:SS</h5>
+            <h5 style="transform: translateY(4px);position:absolute;margin-left: 10px;" id="time">HH:MM:SS</h5>
             <span class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" id="time_bar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></span>
         </span>
     </li>

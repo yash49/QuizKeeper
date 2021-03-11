@@ -54,7 +54,7 @@ $conn->close();
                 <div class="row justify-content-center">
                     <div class="col-lg-10 col-md-10 col-sm-12">
                         <div class="card">
-                            <div class="card-header card-header-tabs card-header-primary">
+                            <div class="card-header card-header-tabs card-header-info">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper d-flex">
                                         <span class="nav-tabs-title" style="font-size: 20px;">

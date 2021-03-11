@@ -5,7 +5,7 @@ renderSideBar("attemptQuiz");
 
 <div class="content ml-3 mr-3" >
         <div class="card">
-            <div class="card-header card-header-primary fs-4 fw-bold">
+            <div class="card-header card-header-info fs-4 fw-bold">
                 Quiz Credentials
             </div>
             <div class="card-body">

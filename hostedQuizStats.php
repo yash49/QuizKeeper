@@ -7,6 +7,23 @@ require_once 'backend/connector.php';
 
 renderSideBar("hostedQuizStats");
 
+function getAttemptedUsers($qid,$conn)
+{
+        $stmt=$conn->prepare("SELECT count(QuizAttempt.qaid) as ucount FROM Quiz,QuizAttempt where QuizAttempt.qid=Quiz.qid and Quiz.qid=? GROUP BY Quiz.qid");
+        $stmt->bind_param('i',$qid);
+        if($stmt->execute()==TRUE)
+        {
+                $result = $stmt->get_result();
+                while($row=$result->fetch_assoc())
+                {
+                        return $row['ucount'];
+                }
+                return "0";
+        }
+        else
+                return "SQL Err";
+}
+
 ?>
 <script src="js/controller.js"></script>
 <div class="content ml-3 mr-3">
@@ -146,7 +163,7 @@ renderSideBar("hostedQuizStats");
                                     </div>
 
                                     <div class="col-md-6 col-sm-6 col-xs-6 fs-5 mt-2">
-                                            <span><span class="material-icons align-middle mr-2 fs-4">people</span><?php echo 10;?>
+                                            <span><span class="material-icons align-middle mr-2 fs-4">people</span><?php echo getAttemptedUsers($row['qid'],$conn);?>
                                             </span>
                                     </div>
 

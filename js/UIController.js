@@ -317,9 +317,9 @@ function sendQReq(){
 }
 
 
-function setTime(duration, total){
+function setTime(duration, total, handler){
     if(duration >= 0){
-        if(duration == 60){
+        if(duration <= 60){
             document.getElementById("quiz_attempt_navbar").classList.remove("bg-success");
             document.getElementById("quiz_attempt_navbar").classList.add("bg-danger");
         }
@@ -332,16 +332,23 @@ function setTime(duration, total){
         document.getElementById("time_bar").style.width = width+"%";
         // submit form automatically
     }
+    else{
+        localStorage.removeItem("lastTspot");
+        console.log(document.getElementById("answers_form"));
+        document.getElementById("answers_form").submit();
+        clearInterval(handler);
+
+    }
 
 }
 function startQuizProcess(time){
     let lastPoint = localStorage.getItem("lastTspot");
-    end = (lastPoint == null)?66:lastPoint;
+    end = (lastPoint == null)?1800:lastPoint;
     let total = end;
-    let handler = ()=>{setTime(end,total);end-=1;};
+    let handler = null;
 
     if(end > 0){
-        setInterval(handler, 1000);
-    }else{clearInterval(handler);}
+        handler = setInterval(()=>{setTime(end,total, handler);end-=1;}, 1000);
+    }
 
 }

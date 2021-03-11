@@ -274,7 +274,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7 p-4 mt-3 mb-3">
             <div class="row justify-content-center">
-                <form name="answers_form" action="/QuizKeeper/backend/SaveAnswers.php" method="post">
+                <form name="answers_form" id="answers_form" action="/QuizKeeper/backend/SaveAnswers.php" method="post">
 
 
 <?php

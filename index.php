@@ -29,6 +29,7 @@
         session_start();
         if(isset($_SESSION['qid']))
         {
+          //print_r($_SESSION);
           header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/backend/AttemptQuiz.php");
           die();
         }

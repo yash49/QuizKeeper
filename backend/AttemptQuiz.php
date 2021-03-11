@@ -24,6 +24,8 @@
 <?php
 
     session_start();
+    
+   
 
     if(!isset($_SESSION['uid']))
     {
@@ -43,11 +45,13 @@
     }
 
     $qid = -1;
-
+    
     if($allareset==FALSE)
     {
+       
         if(isset($_SESSION['qid']))
         {
+            
             $qid = $_SESSION['qid'];
         }
         else
@@ -98,7 +102,7 @@
     }
     else
     {
-        
+       
         $stmt = $conn->prepare("select * from Quiz where qid=?");
         $stmt->bind_param('i',$qid);
 
@@ -129,11 +133,15 @@
         }
     }
 
+    
+
     if($qid==-1)
     {
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
         die();
     }
+
+    
 
     if(strtotime('now')<strtotime($quiz_from_date) || strtotime('now')>strtotime($quiz_to_date))
     {
@@ -141,27 +149,33 @@
         die();
     }
 
-    $uid = $_SESSION['uid'];
-    $stmt = $conn->prepare("select count(qaid) as yoo from QuizAttempt where uid=? and qid=?");
-    $stmt->bind_param('ii',$uid,$qid);
-
-    if($stmt->execute()==TRUE)
+    
+    if(!isset($_SESSION['thisisoriginalbrowser']))
     {
-        $result = $stmt->get_result();
-        while($row=$result->fetch_assoc())
+        $uid = $_SESSION['uid'];
+        $stmt = $conn->prepare("select count(qaid) as yoo from QuizAttempt where uid=? and qid=?");
+        $stmt->bind_param('ii',$uid,$qid);
+
+        if($stmt->execute()==TRUE)
         {
-            if($row['yoo']>0)
+        
+            $result = $stmt->get_result();
+            while($row=$result->fetch_assoc())
             {
-                header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
-                die();
+                if($row['yoo']>0)
+                {
+                    header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+                    die();
+                }
             }
         }
+        else
+        {
+            header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
+            die();
+        }
     }
-    else
-    {
-        header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/attemptQuiz.php");
-        die();
-    }
+
 
     function getQuestionTableFromInt($s){
         $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
@@ -295,7 +309,8 @@
     }
 
     // ATTEMPT ENTRY FOR USER
-
+    if(!isset($_SESSION['thisisoriginalbrowser']))
+    {
     $stmt = $conn->prepare("insert into QuizAttempt(uid,qid) VALUES(?,?)");
     $stmt->bind_param('ii',$uid,$qid);
 
@@ -309,7 +324,8 @@
         header("Location: http://{$_SERVER['SERVER_NAME']}/QuizKeeper/dashboard.php");
         die();
     }
-
+    }
+    $_SESSION['thisisoriginalbrowser'] = TRUE;
     $conn->close();
 
 ?>

@@ -112,7 +112,7 @@ renderSideBar("myResults");
                                     </strong></span>
                                 </div>
                                 <form class="col-md-6 col-sm-6 col-xs-12 text-right" action="ViewQuiz.php" method="POST">
-                                <input type="hidden" name="qid" value="<?php echo $row['qid']; ?>" />
+                                <input type="hidden" name="qid" value="<?php echo $row['qid'].",".$totalusers; ?>" />
                                 <span ><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
                                 </form>
                             </div>

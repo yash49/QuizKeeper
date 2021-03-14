@@ -2,7 +2,7 @@
 <?php
 
 require_once 'sidebar.php';
-renderSideBar("myResults");
+renderSideBar("hostedQuizStats");
 require_once 'backend/connector.php';
 $qid=$_POST['qid'];
 function getAttemptedUsers($qid,$conn)

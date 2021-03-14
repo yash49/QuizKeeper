@@ -1,3 +1,4 @@
+let quizData = [];
 if(typeof editMode != "undefined") {
     if (editMode) {
         Qdata.questionData.forEach((temp, index) => {
@@ -353,43 +354,63 @@ function startQuizProcess(time){
 
 }
 
-function prepareQuizTimeline(quizData){
-    google.charts.load('current', {'packages':['gantt']});
-    google.charts.setOnLoadCallback(()=>{drawChart(quizData)});
+function prepareQuizTimeline(){
+    google.charts.load('current', {'packages':['timeline']});
+    google.charts.setOnLoadCallback(drawChart);
 }
-function drawChart(quizData){
-    //console.log(quizData);
+function drawChart(){
+    console.log(quizData);
     var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Task ID');
-    data.addColumn('string', 'Task Name');
-    data.addColumn('string', 'Resource');
-    data.addColumn('date', 'Start Date');
-    data.addColumn('date', 'End Date');
-    data.addColumn('number', 'Duration');
-    data.addColumn('number', 'Percent Complete');
-    data.addColumn('string', 'Dependencies');
 
+    data.addColumn('string', 'Quiz Name');
+    data.addColumn('string', 'Quiz Bar');
+    data.addColumn({ type: 'string', role: 'tooltip' });
+    data.addColumn('date', 'Start');
+    data.addColumn('date', 'End');
 
-    for(let i = 0; i < quizData.length; i++){
-        let duration = 3600;
-        if(i == 0){
-            duration = null;
-        }
-        data.addRow([quizData[i].qid,quizData[i].qname,i+"", new Date(quizData[i].startDate), new Date(quizData[i].endDate),duration, null, null]);
-    }
-    console.log(data);
-
+    var chart = new google.visualization.Timeline(document.getElementById('quizTimelineChart'));
     var options = {
         height: 'auto',
         width:'auto',
+
+        animation:{
+            startup:true,
+            duration: 2000,
+            easing: 'out'
+        },
+        hAxis: {
+            title: 'Time',
+            format: 'dd/MM/yyyy HH:mm'
+        },
+
         gantt: {
             trackHeight: 30,
-            innerGridTrack: {fill: 'transparent'},
-            innerGridDarkTrack: {fill: 'transparent'}
         }
     };
 
-    var chart = new google.visualization.Gantt(document.getElementById('quizTimelineChart'));
-
+    for(let i = 0; i < quizData.length; i++){
+        var startDate = new Date(parseInt(quizData[i].startDate)*1000);
+        var endDate = new Date(parseInt(quizData[i].endDate)*1000);
+        data.addRow([quizData[i].qname, null,  customTimelineHover(quizData[i].qname,startDate,endDate),startDate, endDate]);
+    }
     chart.draw(data, options);
+
+    //console.log(data);
 }
+
+function customTimelineHover(quizName, starts, ends) {
+    return '<div style="padding:5px 5px 5px 5px; z-index: 5000">' +
+        '<table class="table table-responsive">' +
+        '<tr><td>Title</td>' +
+        '<td><b>' + quizName + '</b></td>' + '</tr>' + '<tr>' +
+        '<td>Starts at</td>' +
+        '<td><b>' + starts.toLocaleString('en-IN',{dateStyle:"short",timeStyle:"short",hour12:true})+ '</b></td>' + '</tr>' + '<tr>' +
+        '<td>Ends at</td>' +
+        '<td><b>' + ends.toLocaleString('en-IN',{dateStyle:"short",timeStyle:"short",hour12:true}) + '</b></td>' + '</tr>' + '</table>' + '</div>';
+
+}
+
+$(window).resize(function(){
+    drawChart();
+});
+

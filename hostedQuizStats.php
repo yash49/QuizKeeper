@@ -28,16 +28,17 @@ function getAttemptedUsers($qid,$conn)
 <script src="js/controller.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="js/UIController.js"></script>
-<script>let quizData = [];let temp = {};</script>
+
+<script>let temp = {};</script>
 <div class="content ml-3 mr-3">
 
-        <div class="card">
+        <div class="card  ">
             <div class="card-header card-header-success">
-                <div id="quizTimelineChart"></div>
+                <h4 class="card-title">Quizzes Timeline </h4>
+
             </div>
             <div class="card-body">
-                <h4 class="card-title">Quizes Timeline </h4>
-
+                <div id="quizTimelineChart" class="chart mt-2"></div>
             </div>
         </div>
 
@@ -75,8 +76,8 @@ function getAttemptedUsers($qid,$conn)
                               temp = {
                                   qid:"<?php echo $row['qid']; ?>",
                                   qname:"<?php echo $row['title']; ?>",
-                                  startDate:"<?php echo $row['fromdate']; ?>",
-                                  endDate:"<?php echo $row['todate']; ?>"
+                                  startDate:"<?php echo date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->getTimestamp(); ?>",
+                                  endDate:"<?php echo date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->getTimestamp();?>"
                               }
                               quizData.push(temp);
                           </script>
@@ -136,7 +137,7 @@ function getAttemptedUsers($qid,$conn)
                          </div>
 
                <?php $i++;}}?>
-                <script>prepareQuizTimeline(quizData);</script>
+                <script>prepareQuizTimeline();</script>
             </div>
         </div>
 

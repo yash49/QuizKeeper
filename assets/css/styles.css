@@ -49,6 +49,14 @@ input[type="datetime-local"]:before{
     animation: slide-down 0.2s linear;
     display: block;
 }
+
+.chart{
+    width: 100%;
+    height: fit-content;
+    z-index: 5000;
+
+
+}
 @keyframes slide-down {
     0%{transform: translate(-5px,0px)}
     100%{transform: translate(-5px,5px)}

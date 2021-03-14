@@ -405,6 +405,13 @@ function customTimelineHover(quizName, starts, ends) {
 }
 
 $(window).resize(function(){
-    drawChart();
+    if(quizData != null && quizData.length > 0 )
+        drawChart();
 });
 
+
+function questionWiseChart(){
+
+    // md.startAnimationForLineChart(dailySalesChart);
+
+}

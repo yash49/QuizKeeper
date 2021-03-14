@@ -352,3 +352,44 @@ function startQuizProcess(time){
     }
 
 }
+
+function prepareQuizTimeline(quizData){
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(()=>{drawChart(quizData)});
+}
+function drawChart(quizData){
+    //console.log(quizData);
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Task ID');
+    data.addColumn('string', 'Task Name');
+    data.addColumn('string', 'Resource');
+    data.addColumn('date', 'Start Date');
+    data.addColumn('date', 'End Date');
+    data.addColumn('number', 'Duration');
+    data.addColumn('number', 'Percent Complete');
+    data.addColumn('string', 'Dependencies');
+
+
+    for(let i = 0; i < quizData.length; i++){
+        let duration = 3600;
+        if(i == 0){
+            duration = null;
+        }
+        data.addRow([quizData[i].qid,quizData[i].qname,i+"", new Date(quizData[i].startDate), new Date(quizData[i].endDate),duration, null, null]);
+    }
+    console.log(data);
+
+    var options = {
+        height: 'auto',
+        width:'auto',
+        gantt: {
+            trackHeight: 30,
+            innerGridTrack: {fill: 'transparent'},
+            innerGridDarkTrack: {fill: 'transparent'}
+        }
+    };
+
+    var chart = new google.visualization.Gantt(document.getElementById('quizTimelineChart'));
+
+    chart.draw(data, options);
+}

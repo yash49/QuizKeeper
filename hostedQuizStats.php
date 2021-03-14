@@ -26,9 +26,22 @@ function getAttemptedUsers($qid,$conn)
 
 ?>
 <script src="js/controller.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="js/UIController.js"></script>
+<script>let quizData = [];let temp = {};</script>
 <div class="content ml-3 mr-3">
 
-        <div class="card card-plain ">
+        <div class="card">
+            <div class="card-header card-header-success">
+                <div id="quizTimelineChart"></div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Quizes Timeline </h4>
+
+            </div>
+        </div>
+
+    <div class="card card-plain ">
             <div class="card-header card-header-info ml-3 mr-3">
                 <span class="card-title fs-4 "><span class="material-icons align-middle mr-2">event</span>
                     Ongoing/Upcoming Quizzes
@@ -58,6 +71,15 @@ function getAttemptedUsers($qid,$conn)
                                 array_unshift($pastColors, $color);
                             }
                 ?>
+                          <script>
+                              temp = {
+                                  qid:"<?php echo $row['qid']; ?>",
+                                  qname:"<?php echo $row['title']; ?>",
+                                  startDate:"<?php echo $row['fromdate']; ?>",
+                                  endDate:"<?php echo $row['todate']; ?>"
+                              }
+                              quizData.push(temp);
+                          </script>
                          <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4" id="quiz_<?php echo $row['qid'];?>">
                             <div class="quiz-card card">
                                 <div style="background: <?php echo $color; ?>" class="custom-header ml-3 mr-3">
@@ -114,7 +136,7 @@ function getAttemptedUsers($qid,$conn)
                          </div>
 
                <?php $i++;}}?>
-
+                <script>prepareQuizTimeline(quizData);</script>
             </div>
         </div>
 

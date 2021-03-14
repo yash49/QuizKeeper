@@ -114,7 +114,9 @@ function getTotalQuestions($qid,$conn)
                     <thead class="text-info">
                     <tr><th>User name</th>
                         <th>Email</th>
+                        <th>Mobile</th>
                         <th>Marks</th>
+                        <th>More</th>
                     </tr></thead>
                     <tbody>
                     <?php
@@ -127,6 +129,7 @@ function getTotalQuestions($qid,$conn)
                         <tr>
                             <td><?php echo $row['name'];?></td>
                             <td><?php  echo $row['email'];?></td>
+                            <td><?php  echo $row['mobile'];?></td>
                             <td><?php
                                 function getQuestionTableFromInt($s){
                                     $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
@@ -210,7 +213,16 @@ function getTotalQuestions($qid,$conn)
                                 echo $obtainedMarks."/".$totalMarks;
 
                                 ?></td>
+                                <td>
+                                    <form method="post" action="">
+                                        <input type="hidden" value="<?php echo $qid ?>" name="qid" >
+                                        <input type="hidden" value="<?php echo $row['uid'] ?>" name="uid" >
+                                        <span class="col-md-3 col-sm-3 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
+                                    </form>
+                                </td>
                         </tr>
+
+
                     <?php } ?>
 
 

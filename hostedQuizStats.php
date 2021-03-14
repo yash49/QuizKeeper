@@ -31,9 +31,9 @@ function getAttemptedUsers($qid,$conn)
 <script>let quizData = [];let temp = {};</script>
 <div class="content ml-3 mr-3">
 
-        <div class="card card-chart">
+        <div class="card">
             <div class="card-header card-header-success">
-                <div class="ct-chart" id="quizTimelineChart"></div>
+                <div id="quizTimelineChart"></div>
             </div>
             <div class="card-body">
                 <h4 class="card-title">Quizes Timeline </h4>

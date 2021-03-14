@@ -375,13 +375,13 @@ function drawChart(quizData){
         if(i == 0){
             duration = null;
         }
-        data.addRow([quizData[i].qid,quizData[i].qname,null, new Date(quizData[i].startDate), new Date(quizData[i].endDate),duration, null, null]);
+        data.addRow([quizData[i].qid,quizData[i].qname,i+"", new Date(quizData[i].startDate), new Date(quizData[i].endDate),duration, null, null]);
     }
     console.log(data);
 
     var options = {
         height: 'auto',
-        width:'100%',
+        width:'auto',
         gantt: {
             trackHeight: 30,
             innerGridTrack: {fill: 'transparent'},

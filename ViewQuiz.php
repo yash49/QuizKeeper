@@ -78,7 +78,7 @@ require_once 'backend/connector.php';
                         else
                             $tempQ['true_answer'] = ($q_row['type'] == 0)?$singleQ['ans']:"<span class='badge badge-info'>MANUAL EVALUATION</span>";
 
-                        $ans = getUserAnswer($q_row['qnsid']);
+                        $ans = getUserAnswer($q_row['qnsid'],($q_row['type'] == 2)?true:false);
                         $tempQ['type'] = $q_row['type'];
                         $tempQ['mark'] = $q_row['marks'];
 

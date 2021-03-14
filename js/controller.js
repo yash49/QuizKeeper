@@ -89,3 +89,30 @@ function removeQuiz(qid){
         }
     });
 }
+
+function updateManualQuestion(ansid, marks){
+    let data = {ansid: ansid};
+    $.ajax({
+        data:data,
+        url:'backend/SaveManualQuestion.php',
+        method:"POST",
+        success:function (response){
+            switch(response.result){
+
+                case "Success":
+                    // callback(response.message,"success");
+                    $.notify({message: "Marks granted"}, {type: 'success', timer: 1000, placement: {from: 'top', align: 'right'}});
+                    document.getElementById('marks_'+ansid).innerText = marks;
+                    break;
+                case "Fail":
+                    $.notify({message: "Error occured while saving the marks!"}, {type: 'danger', timer: 1000, placement: {from: 'top', align: 'right'}});
+                    //callback(response.message,"danger");
+                    break;
+            }
+
+        },
+        error:function (){
+            $.notify({message: "Error occured while deleting the quiz!"}, {type: 'danger', timer: 1000, placement: {from: 'top', align: 'right'}});
+        }
+    });
+}

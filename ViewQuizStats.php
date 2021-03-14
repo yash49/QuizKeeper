@@ -45,9 +45,9 @@ function getUserAnswer($qnsid, $sort,$uid){
         if($sort == true){
             $ansArray = explode(",",$row['ans']);
             sort($ansArray);
-            return implode(",",$ansArray);
+            $row['ans'] = implode(",",$ansArray);
         }
-        return $row['ans'];
+        return $row;
     }
     return "";
 }
@@ -193,11 +193,14 @@ function getTotalQuestions($qid,$conn)
                                                 $tempQ['type'] = $q_row['type'];
                                                 $tempQ['mark'] = $q_row['marks'];
 
-                                                $tempQ['user_answer'] = ($q_row['type'] == 2)?substr($ans,0,strlen($ans)-1):$ans;
+                                                $tempQ['user_answer'] = $ans['ans'];
                                                 $tempQ['question'] = $singleQ['qns'];
 
+                                                $tempQ['ansid'] = $ans['ansid'];
                                                 $tempQ['obtain_mark'] = 0;
-                                                if($tempQ['user_answer'] == $tempQ['true_answer']){
+                                                $tempQ['marks_granted'] = $ans['marks_granted'];
+
+                                                if($tempQ['marks_granted'] == TRUE || $tempQ['user_answer'] == $tempQ['true_answer']){
                                                     $obtainedMarks += $q_row['marks'];
                                                     $tempQ['obtain_mark'] = $q_row['marks'];
                                                 }

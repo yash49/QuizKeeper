@@ -31,9 +31,9 @@ require_once 'backend/connector.php';
                     $ansArray = explode(",",$row['ans']);
                     unset($ansArray[count($ansArray)-1]);
                     sort($ansArray);
-                    return implode(",",$ansArray);
+                    $row['ans'] = implode(",",$ansArray);
                 }
-                return $row['ans'];
+                return $row;
             }
             return "";
         }
@@ -87,14 +87,17 @@ require_once 'backend/connector.php';
                         $ans = getUserAnswer($q_row['qnsid'],($q_row['type'] == 2)?true:false);
                         $tempQ['type'] = $q_row['type'];
                         $tempQ['mark'] = $q_row['marks'];
-
-                        $tempQ['user_answer'] = $ans;
+                        $tempQ['user_answer'] = $ans['ans'];
                         $tempQ['question'] = $singleQ['qns'];
 
+                        $tempQ['ansid'] = $ans['ansid'];
                         $tempQ['obtain_mark'] = 0;
-                        if($tempQ['user_answer'] == $tempQ['true_answer']){
+                        $tempQ['marks_granted'] = $ans['marks_granted'];
+
+                        if($ans['marks_granted'] == TRUE || $tempQ['user_answer'] == $tempQ['true_answer']){
                             $obtainedMarks += $q_row['marks'];
                             $tempQ['obtain_mark'] = $q_row['marks'];
+
                         }
 
                         if(strlen($tempQ['user_answer']) == 0) $tempQ['user_answer'] = "<span class='badge badge-info'>Not Attempted</span>";
@@ -106,6 +109,8 @@ require_once 'backend/connector.php';
         }
 
 ?>
+
+<script src="js/controller.js"></script>
 <div class="content ml-3 mr-3">
     <h3><span class="badge badge-success"><?php echo $row['title'];?></span></h3>
     <div class="row justify-content-center">
@@ -177,14 +182,14 @@ require_once 'backend/connector.php';
                                  <td><?php echo $ui_question['question'] ?></td>
                                  <td><?php echo $ui_question['true_answer']; ?></td>
                                  <td style="background:<?php echo
-                                 ($ui_question['type'] != 1)?($ui_question['user_answer'] == $ui_question['true_answer'])?'#198754':'#dc3545' : '#fd7e14'?> " class="text-white"><?php echo $ui_question['user_answer']; ?></td>
+                                 ($ui_question['type'] != 1)?($ui_question['marks_granted'] == TRUE || $ui_question['user_answer'] == $ui_question['true_answer'])?'#198754':'#dc3545' : '#fd7e14'?> " class="text-white"><?php echo $ui_question['user_answer']; ?></td>
                                 <td>
                                     <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success
                                 '?>">
-                                        <?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?>
+                                       <span id="marks_<?php echo $ui_question['ansid'];?>"> <?php echo $ui_question['obtain_mark']?></span> <?php echo "/".$ui_question['mark']; ?>
                                     </span>
-                                    <?php if(isset($_POST['mode']) && $ui_question['type'] == 1){ ?>
-                                        <button class="btn btn-sm btn-success" onclick="saveManualQuestion()">give marks</button>
+                                    <?php if(isset($_POST['mode']) && $ui_question['type'] == 1 && $ui_question['marks_granted'] == FALSE){ ?>
+                                        <button class="btn btn-sm btn-success" onclick="updateManualQuestion(<?php echo $ui_question['ansid']?>,<?php echo $ui_question['mark']?>)">give marks</button>
                                     <?php }?>
                                 </td>
                              </tr>

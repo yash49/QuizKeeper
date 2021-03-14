@@ -9,6 +9,7 @@
 
     require '../vendor/autoload.php';
 
+
     function sendMail($to,$subject,$body)
     {
         $mail = new PHPMailer();

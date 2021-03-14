@@ -291,6 +291,23 @@
             return 0;
         }
     }
+
+    function getAttemptedUsers($qid,$conn)
+    {
+            $stmt=$conn->prepare("SELECT count(QuizAttempt.qaid) as ucount FROM Quiz,QuizAttempt where QuizAttempt.qid=Quiz.qid and Quiz.qid=? GROUP BY Quiz.qid");
+            $stmt->bind_param('i',$qid);
+            if($stmt->execute()==TRUE)
+            {
+                    $result = $stmt->get_result();
+                    while($row=$result->fetch_assoc())
+                    {
+                            return $row['ucount'];
+                    }
+                    return "0";
+            }
+            else
+                    return "SQL Err";
+    }
     
 
     $mandatory=explode(",","quiz_id,quiz_title,quiz_desc,quiz_start_date,quiz_end_date,quiz_shuffle,questionData,quiz_key,quiz_password");
@@ -320,7 +337,22 @@
 
         require 'connector.php';
         
-        
+        // check if someone has attempted the quiz or not
+
+        $userCount = getAttemptedUsers($qid,$conn);
+
+        if($userCount=="SQL Err")
+        {
+            echo json_encode(array("result"=>"Fail","message"=>"SQL error while getting the user count"));
+            $conn->close();
+            exit("");
+        } 
+        if($userCount>0)
+        {
+            echo json_encode(array("result"=>"Fail","message"=>"One or more User has already Attemped the Quiz"));
+            $conn->close();
+            exit("");
+        }
 
         $stmt = $conn->prepare("Update Quiz set title=?,description=?,fromdate=?,todate=?,shuffle=? where qid = ?");
 

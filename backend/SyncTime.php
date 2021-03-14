@@ -11,7 +11,9 @@
         {
             if(isset($_POST['key']))
             {
-
+                $key = $_POST['key'];
+                $value = $_SESSION[$key];
+                echo json_encode(array("result"=>"Success","message"=>"You have successfully fetched the key","value"=>$value));
             }
             else
             {
@@ -22,7 +24,10 @@
         {
             if(isset($_POST['key']) && isset($_POST['value']))
             {
-
+                $key = $_POST['key'];
+                $value = $_POST['value'];
+                $_SESSION[$key] = $value;
+                echo json_encode(array("result"=>"Success","message"=>"You have successfully saved the key & value."));
             }
             else
             {

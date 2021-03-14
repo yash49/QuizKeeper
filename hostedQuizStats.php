@@ -54,12 +54,12 @@ function getAttemptedUsers($qid,$conn)
                             if(!in_array($frDate,$dates)){
                                 array_unshift($dates, $frDate);
                                 $color = RandomColor::one(array('hue'=>array('green',160),'luminosity'=>"dark"));
-                                if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                                if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('green',160),'luminosity'=>"dark"));
                                 array_unshift($pastColors, $color);
                             }
                 ?>
                          <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 pl-4" id="quiz_<?php echo $row['qid'];?>">
-                            <div class="quiz-card card text-center">
+                            <div class="quiz-card card">
                                 <div style="background: <?php echo $color; ?>" class="custom-header ml-3 mr-3">
                                     <div class="row justify-content-center text-center">
                                         <div class="col-12 text-center">
@@ -74,14 +74,17 @@ function getAttemptedUsers($qid,$conn)
 
                                     </div>
                                 </div>
-                                <div class="card-body row text-center">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 fs-6 mt-2">
+                                <div class="card-body row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mt-2 pl-4 pr-4 text-justify">
+                                        <span class="material-icons align-middle mr-auto">info</span> <?php echo $row['description']; ?>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 fs-6 mt-3 text-center">
                                             <span class="d-flex justify-content-around">
                                                 <span class="material-icons align-middle mr-auto">date_range</span>
                                                 <span class=" flex-grow-1 mr-4">From <strong><?php
-                                                        $fr_date = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s");
+                                                        $fr_date = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s A");
                                                         echo $fr_date; ?></strong><br/> To
-                                                    <strong><?php $to_date = date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s");
+                                                    <strong><?php $to_date = date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s A");
                                                         echo $to_date; ?></strong></span>
                                             </span>
                                     </div>
@@ -143,7 +146,7 @@ function getAttemptedUsers($qid,$conn)
                     if(!in_array($frDate,$dates)){
                         array_unshift($dates, $frDate);
                         $color = RandomColor::one(array('hue'=>array('green', 160),'luminosity'=>"dark"));
-                        if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('purple', 180, 'red'),'luminosity'=>"dark"));
+                        if(in_array($color,$pastColors)) $color = RandomColor::one(array('hue'=>array('green',160),'luminosity'=>"dark"));
                         array_unshift($pastColors, $color);
                     }
                     ?>
@@ -172,15 +175,19 @@ function getAttemptedUsers($qid,$conn)
                             <div class="card-body col-md-6 col-sm-12 col-xs-12 text-center ml-auto">
                                 <div class="col-md-12 col-sm-12 col-xs-12 fs-6 mt-2">
                                             <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 mt-2 pl-4 pr-4 text-justify">
+                                                    <span class="material-icons align-middle mr-auto">info</span> <?php echo $row['description']; ?>
+                                                </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <span class="material-icons align-middle">date_range</span>
                                                     <span class="">From <strong><?php
-                                                        $fr_date = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s");
+                                                        $fr_date = date_create($row['fromdate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s A");
                                                         echo $fr_date; ?></strong><br/> To
-                                                    <strong><?php $to_date = date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s");
+                                                    <strong><?php $to_date = date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s A");
                                                         echo $to_date; ?></strong></span>
+                                                    <span class="col-md-3 col-sm-3 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
                                                 </div>
-                                                <span class="col-md-6 col-sm-6 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
+
                                             </div>
                                 </div>
                             </div>

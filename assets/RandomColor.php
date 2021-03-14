@@ -126,7 +126,7 @@ class RandomColor
         break;
 
       case 'dark':
-        $range[0] = $range[1] - 10;
+        $range[0] = $range[1] - 30;
         break;
 
       case 'light':
@@ -153,7 +153,7 @@ class RandomColor
       switch (@$options['luminosity'])
       {
         case 'dark':
-          $range[1] = $range[0] + 20;
+          $range[1] = $range[0]+10;
           break;
 
         case 'light':

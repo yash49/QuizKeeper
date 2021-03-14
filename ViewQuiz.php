@@ -21,7 +21,9 @@ require_once 'backend/connector.php';
             if ($stmt->execute() == TRUE) {
                 $result = $stmt->get_result();
                 $row = $result->fetch_assoc();
-                return $row['ans'];
+                $ansArray = explode(",",$row['ans']);
+                sort($ansArray);
+                return implode(",",$ansArray);
             }
             return "";
         }
@@ -64,8 +66,11 @@ require_once 'backend/connector.php';
                 if ($qt_stmt->execute() === TRUE) {
                     $singleResult = $qt_stmt->get_result();
                     while($singleQ = $singleResult->fetch_assoc()){
-                        if(isset($singleQ['correctans']))
-                            $tempQ['true_answer'] = $singleQ['correctans'];
+                        if(isset($singleQ['correctans'])) {
+                            $ansArray = explode(",",$singleQ['correctans']);
+                            sort($ansArray);
+                            $tempQ['true_answer'] = implode(",",$ansArray);
+                        }
                         else
                             $tempQ['true_answer'] = ($q_row['type'] == 0)?$singleQ['ans']:"<span class='badge badge-info'>MANUAL EVALUATION</span>";
 
@@ -162,7 +167,8 @@ require_once 'backend/connector.php';
                                  <td><?php echo $ui_question['true_answer']; ?></td>
                                  <td style="background:<?php echo
                                  ($ui_question['type'] != 1)?($ui_question['user_answer'] == $ui_question['true_answer'])?'#198754':'#dc3545' : '#fd7e14'?> " class="text-white"><?php echo $ui_question['user_answer']; ?></td>
-                                <td> <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success'?>"><?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?></span> </td>
+                                <td> <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success
+                                '?>"><?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?></span> </td>
                              </tr>
                         <?php } ?>
                     </tbody>

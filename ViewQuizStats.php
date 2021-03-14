@@ -24,7 +24,33 @@ function getAttemptedUsers($qid,$conn)
     else
         return 0;
 }
+function getQuestionTableFromInt($s){
+    $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
+    return $a[$s];
+}
+function getQuestionTypeInt($s){
+    $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
+    return $a[$s];
+}
 
+function getUserAnswer($qnsid, $sort,$uid){
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM Answers WHERE qnsid = ? AND userid = ?");
+    $stmt->bind_param('ii', $qnsid, $uid);
+
+    if ($stmt->execute() == TRUE) {
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if($sort == true){
+            $ansArray = explode(",",$row['ans']);
+            sort($ansArray);
+            return implode(",",$ansArray);
+        }
+        return $row['ans'];
+    }
+    return "";
+}
 $stmt=$conn->prepare("SELECT sum(marks) as total FROM Questions WHERE qid = '".$qid."';");
 $totalmarks=0;
 if($stmt->execute()==TRUE)
@@ -81,7 +107,7 @@ function getTotalQuestions($qid,$conn)
                     </div>
                     <p class="card-category">Total Users Attempted</p>
                     <h3 class="card-title">
-                        <?php echo getAttemptedUsers($qid,$conn); ?>
+                        <?php $totalUsers = getAttemptedUsers($qid,$conn); echo $totalUsers; ?>
                     </h3>
                 </div>
             </div>
@@ -131,33 +157,7 @@ function getTotalQuestions($qid,$conn)
                             <td><?php  echo $row['email'];?></td>
                             <td><?php  echo $row['mobile'];?></td>
                             <td><?php
-                                function getQuestionTableFromInt($s){
-                                    $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
-                                    return $a[$s];
-                                }
-                                function getQuestionTypeInt($s){
-                                    $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
-                                    return $a[$s];
-                                }
 
-                                function getUserAnswer($qnsid, $sort,$uid){
-                                    global $conn;
-                                    $stmt = $conn->prepare("SELECT * FROM Answers WHERE qnsid = ? AND userid = ?");
-                                    $stmt->bind_param('ii', $qnsid, $uid);
-
-                                    if ($stmt->execute() == TRUE) {
-                                        $result = $stmt->get_result();
-                                        $row = $result->fetch_assoc();
-
-                                        if($sort == true){
-                                            $ansArray = explode(",",$row['ans']);
-                                            sort($ansArray);
-                                            return implode(",",$ansArray);
-                                        }
-                                        return $row['ans'];
-                                    }
-                                    return "";
-                                }
 
                                 $questionStmt = $conn->prepare("SELECT * FROM Questions WHERE qid=?");
                                 $questionStmt->bind_param('i',$qid);
@@ -214,9 +214,11 @@ function getTotalQuestions($qid,$conn)
 
                                 ?></td>
                                 <td>
-                                    <form method="post" action="">
-                                        <input type="hidden" value="<?php echo $qid ?>" name="qid" >
+                                    <form method="post" action="ViewQuiz.php">
+                                        <input type="hidden" value="<?php echo $qid.",".$totalUsers; ?>" name="qid" >
                                         <input type="hidden" value="<?php echo $row['uid'] ?>" name="uid" >
+                                        <input type="hidden" value="<?php echo $row['name'] ?>" name="uname" >
+                                        <input type="hidden" name="mode" value="hostMode">
                                         <span class="col-md-3 col-sm-3 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
                                     </form>
                                 </td>

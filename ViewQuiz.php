@@ -1,6 +1,7 @@
 <?php
 require_once 'sidebar.php';
-renderSideBar("myResults");
+renderSideBar((isset($_POST['mode']))?"hostedQuizStats":"myResults");
+
 
 require_once 'backend/connector.php';
 
@@ -15,8 +16,12 @@ require_once 'backend/connector.php';
 
         function getUserAnswer($qnsid, $sort){
             global $conn;
+            $uid = $_SESSION['uid'];
+            if(isset($_POST['mode'])){
+                $uid = $_POST['uid'];
+            }
             $stmt = $conn->prepare("SELECT * FROM Answers WHERE qnsid = ? AND userid = ?");
-            $stmt->bind_param('ii', $qnsid, $_SESSION['uid']);
+            $stmt->bind_param('ii', $qnsid, $uid);
 
             if ($stmt->execute() == TRUE) {
                 $result = $stmt->get_result();
@@ -101,6 +106,7 @@ require_once 'backend/connector.php';
 
 ?>
 <div class="content ml-3 mr-3">
+    <h3><span class="badge badge-success"><?php echo $row['title'];?></span></h3>
     <div class="row justify-content-center">
         <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="card card-stats">
@@ -148,7 +154,7 @@ require_once 'backend/connector.php';
     <div class="row justify-content-center mt-5">
         <div class="card">
             <div class="card-header card-header-info">
-                <h4 class="card-title">Evaluation Details</h4>
+                <h4 class="card-title">Evaluation Details <?php if(isset($_POST['mode'])) echo " of ".$_POST['uname']; ?></h4>
                 <p class="card-category">Check and compare your answers with correct one</p>
             </div>
             <div class="card-body table-responsive">
@@ -167,12 +173,19 @@ require_once 'backend/connector.php';
 
                         ?>
                                 <td><?php echo $start; $start++; ?></td>
-                                 <td><?php echo $ui_question['question']; ?></td>
+                                 <td><?php echo $ui_question['question'] ?></td>
                                  <td><?php echo $ui_question['true_answer']; ?></td>
                                  <td style="background:<?php echo
                                  ($ui_question['type'] != 1)?($ui_question['user_answer'] == $ui_question['true_answer'])?'#198754':'#dc3545' : '#fd7e14'?> " class="text-white"><?php echo $ui_question['user_answer']; ?></td>
-                                <td> <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success
-                                '?>"><?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?></span> </td>
+                                <td>
+                                    <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success
+                                '?>">
+                                        <?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?>
+                                    </span>
+                                    <?php if(isset($_POST['mode']) && $ui_question['type'] == 1){ ?>
+                                        <button class="btn btn-sm btn-success" onclick="saveManualQuestion()">give marks</button>
+                                    <?php }?>
+                                </td>
                              </tr>
                         <?php } ?>
                     </tbody>

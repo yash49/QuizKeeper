@@ -106,8 +106,8 @@ function getTotalQuestions($qid,$conn)
     <div class="row justify-content-center mt-5">
         <div class="card">
             <div class="card-header card-header-info">
-                <h4 class="card-title">Evaluation Details</h4>
-                <p class="card-category">Check and compare your answers with correct one</p>
+                <h4 class="card-title">Quiz Details</h4>
+                <p class="card-category">Check Attempted users details</p>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-striped table-hover">
@@ -118,6 +118,7 @@ function getTotalQuestions($qid,$conn)
                     </tr></thead>
                     <tbody>
                     <?php
+                    //$result=$conn->query("SELECT * FROM Users,QuizAttempt where Users.uid=QuizAttempt.uid;");
                     $result=$conn->query("SELECT * FROM Users,QuizAttempt where Users.uid=QuizAttempt.uid and qid=".$qid.";");
 
                         while($row=$result->fetch_assoc())
@@ -126,7 +127,89 @@ function getTotalQuestions($qid,$conn)
                         <tr>
                             <td><?php echo $row['name'];?></td>
                             <td><?php  echo $row['email'];?></td>
-                            <td><?php ?></td>
+                            <td><?php
+                                function getQuestionTableFromInt($s){
+                                    $a = array(0=>array("TextQns","tqid"), 1=>array("TextQns","tqid"), 2=>array("CheckboxQns","cbqid"), 3=> array("MCQ","mid"));
+                                    return $a[$s];
+                                }
+                                function getQuestionTypeInt($s){
+                                    $a = array(3=>"radio",2=>"checkbox",1=>"loose_text",0=>"strict_text");
+                                    return $a[$s];
+                                }
+
+                                function getUserAnswer($qnsid, $sort,$uid){
+                                    global $conn;
+                                    $stmt = $conn->prepare("SELECT * FROM Answers WHERE qnsid = ? AND userid = ?");
+                                    $stmt->bind_param('ii', $qnsid, $uid);
+
+                                    if ($stmt->execute() == TRUE) {
+                                        $result = $stmt->get_result();
+                                        $row = $result->fetch_assoc();
+
+                                        if($sort == true){
+                                            $ansArray = explode(",",$row['ans']);
+                                            sort($ansArray);
+                                            return implode(",",$ansArray);
+                                        }
+                                        return $row['ans'];
+                                    }
+                                    return "";
+                                }
+
+                                $questionStmt = $conn->prepare("SELECT * FROM Questions WHERE qid=?");
+                                $questionStmt->bind_param('i',$qid);
+                                $obtainedMarks = 0;
+                                $totalMarks = 0;
+                                $questionsDetails = array();
+                                if($questionStmt->execute() == TRUE){
+
+                                    $q_result = $questionStmt->get_result();
+
+                                    while($q_row = $q_result->fetch_assoc()){
+                                        $tempQ = $q_row;
+                                        $totalMarks += $q_row['marks'];
+
+                                        $q_table = getQuestionTableFromInt($q_row['type']);
+
+                                        $query = "SELECT * FROM " . $q_table[0] . " WHERE " . $q_table[1] . " = ?";
+                                        $qt_stmt = $conn->prepare($query);
+
+                                        $qt_stmt->bind_param("i", $q_row['xid']);
+                                        if ($qt_stmt->execute() === TRUE) {
+                                            $singleResult = $qt_stmt->get_result();
+                                            while($singleQ = $singleResult->fetch_assoc()){
+                                                if(isset($singleQ['correctans'])) {
+                                                    $ansArray = explode(",",$singleQ['correctans']);
+                                                    sort($ansArray);
+                                                    $tempQ['true_answer'] = implode(",",$ansArray);
+                                                }
+                                                else
+                                                    $tempQ['true_answer'] = ($q_row['type'] == 0)?$singleQ['ans']:"<span class='badge badge-info'>MANUAL EVALUATION</span>";
+
+                                                $ans = getUserAnswer($q_row['qnsid'],($q_row['type'] == 2)?true:false,$row['uid']);
+                                                $tempQ['type'] = $q_row['type'];
+                                                $tempQ['mark'] = $q_row['marks'];
+
+                                                $tempQ['user_answer'] = ($q_row['type'] == 2)?substr($ans,0,strlen($ans)-1):$ans;
+                                                $tempQ['question'] = $singleQ['qns'];
+
+                                                $tempQ['obtain_mark'] = 0;
+                                                if($tempQ['user_answer'] == $tempQ['true_answer']){
+                                                    $obtainedMarks += $q_row['marks'];
+                                                    $tempQ['obtain_mark'] = $q_row['marks'];
+                                                }
+
+                                                if(strlen($tempQ['user_answer']) == 0) $tempQ['user_answer'] = "<span class='badge badge-info'>Not Attempted</span>";
+                                                // print_r($tempQ);
+                                            }
+                                            array_push($questionsDetails, $tempQ);
+                                        }
+                                    }
+                                }
+
+                                echo $obtainedMarks."/".$totalMarks;
+
+                                ?></td>
                         </tr>
                     <?php } ?>
 

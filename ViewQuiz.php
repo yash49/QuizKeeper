@@ -124,7 +124,7 @@ require_once 'backend/connector.php';
                     </div>
                     <p class="card-category">Marks obtained</p>
                     <h3 class="card-title">
-                        <?php echo $obtainedMarks."/".$totalMarks; ?>
+                            <?php echo $obtainedMarks."/".$totalMarks; ?>
                     </h3>
                 </div>
             </div>

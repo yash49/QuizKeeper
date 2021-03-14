@@ -24,6 +24,19 @@ function getAttemptedUsers($qid,$conn)
     else
         return 0;
 }
+
+$stmt=$conn->prepare("SELECT sum(marks) as total FROM Questions WHERE qid = '".$qid."';");
+$totalmarks=0;
+if($stmt->execute()==TRUE)
+    {
+        $result = $stmt->get_result();
+        if($row=$result->fetch_assoc())
+        {
+            $totalmarks= $row['total'];
+        }
+
+    }
+
 function getTotalQuestions($qid,$conn)
 {
     $stmt=$conn->prepare("SELECT count(qnsid) as qcount FROM Questions where qid=?");
@@ -40,7 +53,6 @@ function getTotalQuestions($qid,$conn)
     else
         return -1;
 }
->>>>>>> Stashed changes
 ?>
 <div class="content ml-3 mr-3">
     <div class="row justify-content-center">
@@ -75,6 +87,20 @@ function getTotalQuestions($qid,$conn)
             </div>
         </div>
 
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon p-2">
+                    <div class="card-icon">
+                        <i class="material-icons">add_task</i>
+                    </div>
+                    <p class="card-category">Total Marks</p>
+                    <h3 class="card-title">
+                        <?php echo $totalmarks ?>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row justify-content-center mt-5">
@@ -92,18 +118,15 @@ function getTotalQuestions($qid,$conn)
                     </tr></thead>
                     <tbody>
                     <?php
+                    $result=$conn->query("SELECT * FROM Users,QuizAttempt where Users.uid=QuizAttempt.uid and qid=".$qid.";");
 
-                    $start = 1;
-                    foreach ($questionsDetails as $ui_question){
-
+                        while($row=$result->fetch_assoc())
+                        {
                         ?>
-                        <td><?php echo $start; $start++; ?></td>
-                        <td><?php echo $ui_question['question']; ?></td>
-                        <td><?php echo $ui_question['true_answer']; ?></td>
-                        <td style="background:<?php echo
-                        ($ui_question['type'] != 1)?($ui_question['user_answer'] == $ui_question['true_answer'])?'#198754':'#dc3545' : '#fd7e14'?> " class="text-white"><?php echo $ui_question['user_answer']; ?></td>
-                        <td> <span class="badge <?php echo ($ui_question['obtain_mark'] == 0)?'badge-danger':'badge-success
-                                '?>"><?php echo $ui_question['obtain_mark']."/".$ui_question['mark']; ?></span> </td>
+                        <tr>
+                            <td><?php echo $row['name'];?></td>
+                            <td><?php  echo $row['email'];?></td>
+                            <td><?php ?></td>
                         </tr>
                     <?php } ?>
 

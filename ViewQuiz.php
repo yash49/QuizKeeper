@@ -13,7 +13,7 @@ require_once 'backend/connector.php';
             return $a[$s];
         }
 
-        function getUserAnswer($qnsid){
+        function getUserAnswer($qnsid, $sort){
             global $conn;
             $stmt = $conn->prepare("SELECT * FROM Answers WHERE qnsid = ? AND userid = ?");
             $stmt->bind_param('ii', $qnsid, $_SESSION['uid']);
@@ -21,9 +21,13 @@ require_once 'backend/connector.php';
             if ($stmt->execute() == TRUE) {
                 $result = $stmt->get_result();
                 $row = $result->fetch_assoc();
-                $ansArray = explode(",",$row['ans']);
-                sort($ansArray);
-                return implode(",",$ansArray);
+
+                if($sort == true){
+                    $ansArray = explode(",",$row['ans']);
+                    sort($ansArray);
+                    return implode(",",$ansArray);
+                }
+                return $row['ans'];
             }
             return "";
         }

@@ -185,7 +185,10 @@ function getAttemptedUsers($qid,$conn)
                                                         echo $fr_date; ?></strong><br/> To
                                                     <strong><?php $to_date = date_create($row['todate'])->setTimezone(new DateTimeZone("Asia/Kolkata"))->format("d/m/Y g:i:s A");
                                                         echo $to_date; ?></strong></span>
+                                                    <form method="post" action="ViewQuizStats.php">
+                                                        <input type="hidden" value="<?php echo $row['qid'] ?>" name="qid" >
                                                     <span class="col-md-3 col-sm-3 col-xs-12 text-right"><button class="btn btn-sm btn-outline-info"><span class="material-icons align-middle">analytics</span> Details</button></span>
+                                                    </form>
                                                 </div>
 
                                             </div>

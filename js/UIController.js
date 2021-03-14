@@ -370,14 +370,8 @@ function drawChart(){
 
     var chart = new google.visualization.Timeline(document.getElementById('quizTimelineChart'));
     var options = {
-        height: 'auto',
+        height:quizData.length*60,
         width:'auto',
-
-        animation:{
-            startup:true,
-            duration: 2000,
-            easing: 'out'
-        },
         hAxis: {
             title: 'Time',
             format: 'dd/MM/yyyy HH:mm'

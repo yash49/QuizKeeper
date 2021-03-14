@@ -29,6 +29,7 @@ require_once 'backend/connector.php';
 
                 if($sort == true){
                     $ansArray = explode(",",$row['ans']);
+                    unset($ansArray[count($ansArray)-1]);
                     sort($ansArray);
                     return implode(",",$ansArray);
                 }
@@ -87,7 +88,7 @@ require_once 'backend/connector.php';
                         $tempQ['type'] = $q_row['type'];
                         $tempQ['mark'] = $q_row['marks'];
 
-                        $tempQ['user_answer'] = ($q_row['type'] == 2)?substr($ans,0,strlen($ans)-1):$ans;
+                        $tempQ['user_answer'] = $ans;
                         $tempQ['question'] = $singleQ['qns'];
 
                         $tempQ['obtain_mark'] = 0;

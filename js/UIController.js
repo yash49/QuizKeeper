@@ -380,7 +380,7 @@ function drawChart(quizData){
     console.log(data);
 
     var options = {
-        height: 400,
+        height: 'auto',
         width:'100%',
         gantt: {
             trackHeight: 30,

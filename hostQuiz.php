@@ -77,6 +77,7 @@
                                 Qdata.quiz_desc = "<?php echo $questionsDetails['details']['description']; ?>";
                                 Qdata.quiz_start_date = "<?php echo $questionsDetails['details']['fromdate']; ?>";
                                 Qdata.quiz_end_date = "<?php echo $questionsDetails['details']['todate']; ?>";
+                                Qdata.quiz_duration = "<?php echo $questionsDetails['details']['duration']; ?>";
                                 Qdata.quiz_shuffle = <?php echo $questionsDetails['details']['shuffle']?"true":"false"; ?>;
                                 Qdata.quiz_key = "<?php echo $quizDetails['quizkey']; ?>";
                                 Qdata.quiz_password = "<?php echo $quizDetails['password']; ?>";
@@ -152,6 +153,9 @@
                                     <input type="datetime-local" value="<?php if($editMode) echo (new DateTime($quizDetails['todate']))->setTimezone(new DateTimeZone("Asia/Kolkata"))->format('Y-m-d\TH:i:s'); ?>" required name="quiz_end_date" placeholder="Ends At " class="form-control">
                                 </div>
 
+                                <div class="col-md-6 mb-4 order-md-3 order-sm-3 order-xs-3 col-sm-12">
+                                    <input type="number" min="1" value="<?php if($editMode) echo $quizDetails['duration']; ?>" required name="quiz_duration" placeholder="Attempt Duration (in minutes)" class="form-control">
+                                </div>
 
                                 <div class="radio col-md-6 order-md-4 mt-2 order-sm-4 order-xs-4 col-sm-12">
                                         <label class="fs-5 text-dark">

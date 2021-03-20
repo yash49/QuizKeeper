@@ -261,6 +261,7 @@
         $quiz_desc  = $_POST['quiz_desc'];
         $quiz_start_date  = date("Y-m-d H:i:s",$_POST['quiz_start_date']);
         $quiz_end_date  = date("Y-m-d H:i:s",$_POST['quiz_end_date']);
+        $quiz_duration = $_POST['quiz_duration'];
         $quiz_shuffle  = $_POST['quiz_shuffle'];
 
         require 'connector.php';
@@ -278,10 +279,10 @@
         $uid = intval($_SESSION['uid']);    
     
 
-        $stmt = $conn->prepare("INSERT INTO Quiz(uid,title,description,fromdate,todate,shuffle,quizkey,password) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO Quiz(uid,title,description,fromdate,todate,duration,shuffle,quizkey,password) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("issssiss",$uid,$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_shuffle,$quiz_id,$quiz_password);
+        $stmt->bind_param("issssiiss",$uid,$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_duration,$quiz_shuffle,$quiz_id,$quiz_password);
         
         $qid = -1;
 

@@ -14,7 +14,7 @@ if(typeof editMode != "undefined") {
 }
 function validateQuizDetails(){
     if (!document.getElementsByName("quiz_title")[0].validity.valid || !document.getElementsByName("quiz_desc")[0].validity.valid ||
-        !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid){
+        !document.getElementsByName("quiz_end_date")[0].validity.valid || !document.getElementsByName("quiz_start_date")[0].validity.valid || !document.getElementsByName("quiz_duration")[0].validity.valid){
         document.getElementById("quiz_questions_tab").href = "";
         $.notify({message: "Please fill all details properly"}, {type: 'warning', timer: 1000, placement: {from: 'bottom', align: 'right'}});
     }
@@ -25,7 +25,7 @@ function validateQuizDetails(){
         Qdata.quiz_shuffle = document.getElementsByName("quiz_shuffle")[0].checked?1:0;
         Qdata.quiz_start_date = new Date(document.getElementsByName("quiz_start_date")[0].value).getTime()/1000;
         Qdata.quiz_end_date = new Date(document.getElementsByName("quiz_end_date")[0].value).getTime()/1000;
-
+        Qdata.quiz_duration = document.getElementsByName("quiz_duration")[0].value;
         document.getElementById("quiz_questions_tab").href = "#quiz_questions";
     }
 

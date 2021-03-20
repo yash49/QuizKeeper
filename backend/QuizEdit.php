@@ -331,6 +331,7 @@
         $quiz_desc  = $_POST['quiz_desc'];
         $quiz_start_date  = date("Y-m-d H:i:s",$_POST['quiz_start_date']);
         $quiz_end_date  = date("Y-m-d H:i:s",$_POST['quiz_end_date']);
+        $quiz_duration = $_POST['quiz_duration'];
         $quiz_shuffle  = $_POST['quiz_shuffle'];
         $quiz_id = $_POST['quiz_key'];
         $quiz_password = $_POST['quiz_password'];
@@ -354,9 +355,9 @@
             exit("");
         }
 
-        $stmt = $conn->prepare("Update Quiz set title=?,description=?,fromdate=?,todate=?,shuffle=? where qid = ?");
+        $stmt = $conn->prepare("Update Quiz set title=?,description=?,fromdate=?,todate=?,duration=?,shuffle=? where qid = ?");
 
-        $stmt->bind_param("ssssii",$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_shuffle,$qid);
+        $stmt->bind_param("ssssiii",$quiz_title,$quiz_desc,$quiz_start_date,$quiz_end_date,$quiz_duration,$quiz_shuffle,$qid);
 
         if ($stmt->execute() === TRUE) 
         {

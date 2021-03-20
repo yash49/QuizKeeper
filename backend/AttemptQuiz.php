@@ -79,6 +79,7 @@
         $quiz_desc = '';
         $quiz_from_date = '';
         $quiz_to_date = '';
+        $quiz_duration = 0;
         $quiz_shuffle = -1;
 
 
@@ -92,6 +93,7 @@
                 $quiz_desc = $row['description'];
                 $quiz_from_date = $row['fromdate'];
                 $quiz_to_date = $row['todate'];
+                $quiz_duration = $row['duration'];
                 $quiz_shuffle = $row['shuffle'];
             }
         }
@@ -111,6 +113,7 @@
         $quiz_desc = '';
         $quiz_from_date = '';
         $quiz_to_date = '';
+        $quiz_duration = 0;
         $quiz_shuffle = -1;
 
 
@@ -124,6 +127,7 @@
                 $quiz_desc = $row['description'];
                 $quiz_from_date = $row['fromdate'];
                 $quiz_to_date = $row['todate'];
+                $quiz_duration = $row['duration'];
                 $quiz_shuffle = $row['shuffle'];
             }
         }
@@ -318,7 +322,7 @@
 
     if($stmt->execute()===TRUE)
     {
-        $_SESSION['lastTspot'] = 3600;
+        $_SESSION['lastTspot'] = $quiz_duration*60;
     }
     else
     {

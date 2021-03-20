@@ -1,11 +1,16 @@
 <?php
     session_start();
-
+    //print_r($_REQUEST);
     header("Content-Type: application/json");
-    
-    if(isset($_POST['type']))
+    $rawValue = file_get_contents('php://input');
+    $data = json_decode($rawValue);
+
+    //print_r($data);
+
+    if(isset($data->type) || isset($_POST['type']))
     {
-        $type = $_POST['type'];
+
+        $type = isset($data->type)?$data->type:($_POST['type']);
 
         if($type=="fetch")
         {
@@ -22,10 +27,11 @@
         }
         else if($type=="save")
         {
-            if(isset($_POST['key']) && isset($_POST['value']))
+
+            if(isset($data->key) && isset($data->value))
             {
-                $key = $_POST['key'];
-                $value = $_POST['value'];
+                $key = $data->key;
+                $value = $data->value;
                 $_SESSION[$key] = $value;
                 echo json_encode(array("result"=>"Success","message"=>"You have successfully saved the key & value."));
             }
@@ -43,11 +49,4 @@
     {
         echo json_encode(array("result"=>"Fail","message"=>"Bad Request - 400 - type not defined"));
     }
-    
-        
-    
-    echo json_encode(array("result"=>"Success","message"=>"Signup successfully! check email for verification"));
-    echo json_encode(array("result"=>"Fail","message"=>"Something went wrong!"));
-
-  
 ?>

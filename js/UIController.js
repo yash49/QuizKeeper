@@ -318,6 +318,7 @@ function sendQReq(){
 }
 
 
+/*
 function setTime(duration, total, handler){
     if(duration >= 0){
         if(duration <= 60){
@@ -343,6 +344,7 @@ function setTime(duration, total, handler){
 
 }
 function startQuizProcess(time){
+
     let lastPoint = localStorage.getItem("lastTspot");
     end = (lastPoint == null)?1800:lastPoint;
     let total = end;
@@ -353,6 +355,7 @@ function startQuizProcess(time){
     }
 
 }
+*/
 
 function prepareQuizTimeline(){
     google.charts.load('current', {'packages':['timeline']});

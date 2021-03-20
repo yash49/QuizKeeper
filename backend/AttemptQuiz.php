@@ -16,6 +16,7 @@
 
     <script src="../js/controller.js"></script>
     <script src="../js/UIController.js"></script>
+    <script src="../js/TimeController.js"></script>
     <script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 
@@ -25,7 +26,7 @@
 
     session_start();
     
-   
+   print_r($_SESSION);
 
     if(!isset($_SESSION['uid']))
     {
@@ -269,6 +270,7 @@
     }
 
     $start = 1;
+
 ?>
 <!-------------------------------------------------------------------UI PART---------------------------------------------->
 <nav class="navbar fixed-top  bg-success" id="quiz_attempt_navbar">
@@ -282,7 +284,7 @@
         </span>
     </li>
 </nav>
-<script>startQuizProcess(new Date('<?php echo $quiz_to_date; ?>') );</script>
+
 <div class="container-fluid pt-5">
 
     <div class="row justify-content-center">
@@ -316,7 +318,7 @@
 
     if($stmt->execute()===TRUE)
     {
-        
+        $_SESSION['lastTspot'] = 3600;
     }
     else
     {
@@ -326,7 +328,9 @@
     }
     }
     $_SESSION['thisisoriginalbrowser'] = TRUE;
+
     $conn->close();
+
 
 ?>
 <input type="submit" class="btn btn-success btn-lg ml-auto mr-auto mt-2"/>

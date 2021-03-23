@@ -56,7 +56,28 @@
                 <img width="450" height="450" src="assets/img/Exams_header_animated.gif"/>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-12 mt-2 text-center">
-                <h1><strong style="text-shadow: #0a6ebd;">Host or attempt the quiz with ease!</strong></h1>
+              <section style="
+                overflow:show;
+                background: linear-gradient(5deg,transparent, #4b8bcf);
+                position:absolute;
+                width:90%;
+                height: 100%;
+                z-index:0;
+                margin-top: -40px;
+                margin-left:-20px;
+                clip-path: polygon(0% 0,100% 11%,100% 85%,0 100%);"></section>
+                <section style="
+                overflow:show;
+                background: linear-gradient(-15deg,#22b573 , transparent);
+                position:absolute;
+                width:90%;
+                height: 100%;
+                z-index:0;
+                margin-top: -30px;
+                margin-left:-30px;
+                clip-path: polygon(0% 0,100% 11%,100% 85%,0 100%);"></section>
+
+                <!-- <h1><strong style="text-shadow: #0a6ebd;">Host or attempt the quiz with ease!</strong></h1> -->
                 <div class="card">
                 <div class="card-header card-header-success">
                   <h4 class="card-title">Signup</h4>

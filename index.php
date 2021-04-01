@@ -39,10 +39,10 @@
       <?php }
 
       else { ?>
-    <form class="d-flex" method="post">
-      <input class="form-control" type="text" placeholder="Email" name="login_email">
-      <input class="form-control ml-2" type="Password" placeholder="Password" name="login_password">
-      <input class="btn btn-secondary ml-2" type="button" onclick="prepareLoginRequest('backend/login.php')" name="login_submit" value="Login">
+    <form class="d-flex" method="post" onsubmit="event.preventDefault()">
+      <input class="form-control" required type="text" placeholder="Email" name="login_email">
+      <input class="form-control ml-2" required type="Password" placeholder="Password" name="login_password">
+      <input class="btn btn-secondary ml-2" type="submit" onclick="prepareLoginRequest('backend/login.php')" name="login_submit" value="Login">
     </form>
      <?php } ?>
 
@@ -84,35 +84,35 @@
                   <p class="card-category">Fill the following details</p>
                 </div>
                 <div class="card-body">
-                  <form method="Post">
+                  <form method="Post" onsubmit="event.preventDefault()">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name</label>
-                          <input type="text" name="signup_name" class="form-control">
+                          <input type="text" required name="signup_name" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Email</label>
-                          <input type="Email" name="signup_email" class="form-control">
+                          <input type="Email" required name="signup_email" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Phone</label>
-                          <input type="tel" name="signup_phone" class="form-control">
+                          <input type="tel" required name="signup_phone" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Password</label>
-                          <input type="password" name="signup_password" class="form-control">
+                          <input type="password" required name="signup_password" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-12 text-center">
                         <div class="text-center">
-                          <input type="button" onclick="prepareSignupRequest('backend/signup.php')" name="signup_submit" value="Create Account" class="btn btn-success"/>
+                          <button  onclick="prepareSignupRequest('backend/signup.php')" name="signup_submit" value="" class="btn btn-success">Create Account</button>
                             <div style="position:absolute; display: none; margin-bottom:-12px; right:15px;bottom:15px" id="loadbar" class="ml-2 spinner-border text-success">
                             </div>
                         </div>

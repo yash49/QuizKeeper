@@ -214,9 +214,12 @@ function addTextInputQuestion(inType){
 
 function addEmail(emailAddress = ""){
     if(emailAddress === "" && !document.getElementById("email_inp").validity.valid && isValidEmail(document.getElementById("email_inp").value))
-    {console.log("here");return;}
+    {
+        console.log("here");
+        return;
+    }
 
-    if(emailAddress === "") emailAddress = document.getElementById("email_inp").value;
+    if(emailAddress == "") emailAddress = document.getElementById("email_inp").value;
 
     emailList.push(emailAddress);
     let emailDiv = document.createElement("div");
